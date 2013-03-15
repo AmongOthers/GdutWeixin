@@ -1,18 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GdutWeixin.Models;
+using GdutWeixin.Models.Message;
+using GdutWeixin.Utils;
 
 namespace GdutWeixin.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public string Index()
         {
-            ViewBag.Message = "修改此模板以快速启动你的 ASP.NET MVC 应用程序。";
+            bool isFromWeixin = false;
+            if (!String.IsNullOrEmpty(Request["signature"]))
+            {
+                if (Utils.CheckSignature.Check(Request["signature"], Request["timestamp"], Request["nonce"]))
+                {
+                    isFromWeixin = true;
+                }
+            }
+            if (!isFromWeixin)
+            {
+                return "验证错误";
+            }
+			//微信接入消息
+            if (Request.HttpMethod == "GET")
+            {
+                return Request["echostr"];
+            }
+            else
+            {
+				string postBody = null;
+                using (var reader = new StreamReader(Request.InputStream))
+                {
+                    postBody = reader.ReadToEnd();
+                    HttpContext.ApplicationInstance.GetLogger().Info(String.Format("req: {0}", postBody));
+                    var reqMsg = RequestMsgFactory.Parse(postBody);
+                    if (reqMsg != null)
+                    {
+						var rsp = onRequestMsgReceived(reqMsg);
+                        return rsp;
+                    }
+                }
+                return "未知消息";
+            }
+        }
 
-            return View();
+        private string onRequestMsgReceived(Request reqMsg)
+        {
+            Response msg = null;
+            if (reqMsg is TextRequestMsg)
+            {
+                msg = new TextResponseMsg {
+					ToUserName = new Response.StringXmlCDataSection(reqMsg.FromUserName),
+                    Content = new Response.StringXmlCDataSection((reqMsg as TextRequestMsg).Content),
+					FuncFlag = 0
+                };
+            }
+            var msgStr = msg == null ? null : msg.ToString();
+			HttpContext.ApplicationInstance.GetLogger().Info(String.Format("rsp: {0}", msgStr));
+			return msgStr;
         }
 
         public ActionResult About()
