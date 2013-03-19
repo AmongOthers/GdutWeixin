@@ -14,7 +14,7 @@ namespace GdutWeixin.Utils
         /// </summary>
         /// <param name="dateTimeFromXml">微信DateTime</param>
         /// <returns></returns>
-        public static DateTime GetDateTimeFromXml(long dateTimeFromXml)
+        public static DateTime Timestamp2DateTime(long dateTimeFromXml)
         {
             return BaseTime.AddTicks((dateTimeFromXml + 8 * 60 * 60) * 10000000);
         }
@@ -23,9 +23,9 @@ namespace GdutWeixin.Utils
         /// </summary>
         /// <param name="dateTimeFromXml">微信DateTime</param>
         /// <returns></returns>
-        public static DateTime GetDateTimeFromXml(string dateTimeFromXml)
+        public static DateTime Timestamp2DateTime(string dateTimeFromXml)
         {
-            return GetDateTimeFromXml(long.Parse(dateTimeFromXml));
+            return Timestamp2DateTime(long.Parse(dateTimeFromXml));
         }
 
         /// <summary>
@@ -33,9 +33,14 @@ namespace GdutWeixin.Utils
         /// </summary>
         /// <param name="dateTime">时间</param>
         /// <returns></returns>
-        public static long GetWeixinDateTime(DateTime dateTime)
+        public static long Timestamp(DateTime dateTime)
         {
             return (dateTime.Ticks - BaseTime.Ticks) / 10000000 - 8 * 60 * 60;
+        }
+
+        public static long Timestamp()
+        {
+            return Timestamp(DateTime.Now);
         }
     }
 }

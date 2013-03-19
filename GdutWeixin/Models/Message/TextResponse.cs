@@ -8,12 +8,16 @@ using System.Xml.Serialization;
 namespace GdutWeixin.Models.Message
 {
 	[XmlRoot("xml")]
-    public class TextResponseMsg : Response
+    public class TextResponse : Response
     {
         public StringXmlCDataSection Content { get; set; }
-        public int FuncFlag { get; set; }
 
-        public TextResponseMsg()
+        public TextResponse()
+        {
+        }
+
+        public TextResponse(string reqFromUserName)
+			: base(reqFromUserName)
         {
             MsgType = new Response.StringXmlCDataSection("text");
         }

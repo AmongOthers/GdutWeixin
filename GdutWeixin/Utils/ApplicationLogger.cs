@@ -6,9 +6,9 @@ using log4net;
 
 namespace GdutWeixin.Utils
 {
-    public static class ApplicationLogger
+    public class ApplicationLogger
     {
-        public static ILog GetLogger(this HttpApplication app)
+        public static ILog GetLogger()
         {
             return LogManager.GetLogger("log4net");
         }

@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace GdutWeixin.Models.Message
 {
-    public class Response
+    public abstract class Response
     {
         public class StringXmlCDataSection : XmlCDataSection
         {
@@ -24,6 +24,7 @@ namespace GdutWeixin.Models.Message
         public StringXmlCDataSection FromUserName { get; set; }
         public string CreateTime { get; set; }
         public StringXmlCDataSection MsgType { get; set; }
+        public int FuncFlag { get; set; }
 
         class NoNameSpaceXsn : XmlSerializerNamespaces
         {
@@ -34,10 +35,16 @@ namespace GdutWeixin.Models.Message
         }
 
         static NoNameSpaceXsn sXsn = new NoNameSpaceXsn();
+
         public Response()
         {
+        }
+
+        public Response(string reqFromUserName)
+        {
+            ToUserName = new StringXmlCDataSection(reqFromUserName);
             FromUserName = new StringXmlCDataSection("tv_search");
-            CreateTime = Utils.DateTimeHelper.GetWeixinDateTime(DateTime.Now).ToString();
+            CreateTime = Utils.DateTimeHelper.Timestamp(DateTime.Now).ToString();
         }
 
 		public override string ToString()

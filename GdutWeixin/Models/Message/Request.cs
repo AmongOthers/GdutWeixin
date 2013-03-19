@@ -5,7 +5,7 @@ using System.Web;
 
 namespace GdutWeixin.Models.Message
 {
-    public class Request
+    public abstract class Request
     {
         public string ToUserName { get; set; }
         public string FromUserName { get; set; }

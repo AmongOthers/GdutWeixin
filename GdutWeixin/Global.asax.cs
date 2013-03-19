@@ -25,10 +25,13 @@ namespace GdutWeixin
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             log4net.Config.XmlConfigurator.Configure();
-            for (int i = 0; i < 200; i++)
-            {
-				this.GetLogger().Debug("hello" + i);
-            }
+			this.Error += MvcApplication_Error;
+        }
+
+        private void MvcApplication_Error(object sender, EventArgs e)
+        {
+            var error = Server.GetLastError();
+			ApplicationLogger.GetLogger().Error(String.Format("{0}", error.Message));
         }
     }
 }

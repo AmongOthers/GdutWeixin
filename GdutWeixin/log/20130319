@@ -1,0 +1,735 @@
+2013-03-19 00:29:34,517 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></FromUserName>
+<CreateTime>1363624175</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[java]]></Content>
+<MsgId>5856721235659981178</MsgId>
+</xml>
+2013-03-19 00:29:36,814 search library with java consume 2146 ms
+2013-03-19 00:29:36,908 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624176</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>10</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 java 的结果]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=java&dept=ALL&cl=1&timestamp=1363624174]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/S980.2(2)] Java Web开发教程 [专著] (孙霞主编)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=598029]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/C441-6] Java开发宝典 [专著]＝The bible for java developer (陈丹丹, 李银龙等编著)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=598021]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/G384] Java程序性能优化 [专著]：让你的Java程序更快、更稳定 (葛一鸣...等编著)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597171]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/H973-2] Java 7入门经典 [专著] ((美)Ivor Horton著；梁峰译)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=596149]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/S967-7] Java ME程序设计＝Java ME programming (孙更新, 宾晟编著)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=594581]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TN929.53/X544] Java ME移动开发教程 [专著]＝Mobile internet development in Java ME：项目式 (谢景明编著)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=594547]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/H150(2)] Java面向对象程序设计 [专著]＝Object-oriented programming with Java (韩雪主编)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=594504]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/W373.1(2)] Java实用教程 [专著]＝Java programming (王小科, 罗二平, 刘会衡主编)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=594409]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[查看更多]]></Title>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/arrow.png]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=java&dept=ALL&cl=1&timestamp=1363624174]]></Url>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:29:37,638 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></FromUserName>
+<CreateTime>1363624178</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[java]]></Content>
+<MsgId>5856721248544883067</MsgId>
+</xml>
+2013-03-19 00:29:37,639 search library with java consume 0 ms
+2013-03-19 00:29:37,639 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624177</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>10</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 java 的结果]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=java&dept=ALL&cl=1&timestamp=1363624174]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/S980.2(2)] Java Web开发教程 [专著] (孙霞主编)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=598029]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/C441-6] Java开发宝典 [专著]＝The bible for java developer (陈丹丹, 李银龙等编著)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=598021]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/G384] Java程序性能优化 [专著]：让你的Java程序更快、更稳定 (葛一鸣...等编著)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597171]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/H973-2] Java 7入门经典 [专著] ((美)Ivor Horton著；梁峰译)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=596149]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/S967-7] Java ME程序设计＝Java ME programming (孙更新, 宾晟编著)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=594581]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TN929.53/X544] Java ME移动开发教程 [专著]＝Mobile internet development in Java ME：项目式 (谢景明编著)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=594547]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/H150(2)] Java面向对象程序设计 [专著]＝Object-oriented programming with Java (韩雪主编)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=594504]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/W373.1(2)] Java实用教程 [专著]＝Java programming (王小科, 罗二平, 刘会衡主编)]]></Title>
+      <Description><![CDATA[java]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=594409]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[查看更多]]></Title>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/arrow.png]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=java&dept=ALL&cl=1&timestamp=1363624174]]></Url>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:29:41,200 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></FromUserName>
+<CreateTime>1363624181</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[编程]]></Content>
+<MsgId>5856721261429784956</MsgId>
+</xml>
+2013-03-19 00:29:42,413 search library with 编程 consume 1211 ms
+2013-03-19 00:29:42,413 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624182</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>2</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 编程 的结果]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%e7%bc%96%e7%a8%8b&dept=ALL&cl=1&timestamp=1363624181]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[没有匹配项]]></Title>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:29:43,998 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></FromUserName>
+<CreateTime>1363624184</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[编程]]></Content>
+<MsgId>5856721274314686845</MsgId>
+</xml>
+2013-03-19 00:29:43,999 search library with 编程 consume 0 ms
+2013-03-19 00:29:43,999 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624183</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>2</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 编程 的结果]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%e7%bc%96%e7%a8%8b&dept=ALL&cl=1&timestamp=1363624181]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[没有匹配项]]></Title>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:29:51,418 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></FromUserName>
+<CreateTime>1363624192</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[编程]]></Content>
+<MsgId>5856721308674425214</MsgId>
+</xml>
+2013-03-19 00:29:51,419 search library with 编程 consume 0 ms
+2013-03-19 00:29:51,423 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624191</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>2</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 编程 的结果]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%e7%bc%96%e7%a8%8b&dept=ALL&cl=1&timestamp=1363624181]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[没有匹配项]]></Title>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:30:05,859 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></FromUserName>
+<CreateTime>1363624206</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[编程]]></Content>
+<MsgId>5856721368803967359</MsgId>
+</xml>
+2013-03-19 00:30:05,859 search library with 编程 consume 0 ms
+2013-03-19 00:30:05,859 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624205</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>2</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 编程 的结果]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%e7%bc%96%e7%a8%8b&dept=ALL&cl=1&timestamp=1363624181]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[没有匹配项]]></Title>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:30:58,606 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></FromUserName>
+<CreateTime>1363624259</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[编程]]></Content>
+<MsgId>5856721596437234048</MsgId>
+</xml>
+2013-03-19 00:31:28,389 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></FromUserName>
+<CreateTime>1363624276</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[Mvc]]></Content>
+<MsgId>5856721669451678081</MsgId>
+</xml>
+2013-03-19 00:31:29,741 search library with 编程 consume 30930 ms
+2013-03-19 00:31:29,764 search library with Mvc consume 1374 ms
+2013-03-19 00:31:29,788 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624289</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>2</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 Mvc 的结果]]></Title>
+      <Description><![CDATA[Mvc]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=Mvc&dept=ALL&cl=1&timestamp=1363624288]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[没有匹配项]]></Title>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:31:29,788 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624289</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>2</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 编程 的结果]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%e7%bc%96%e7%a8%8b&dept=ALL&cl=1&timestamp=1363624258]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[没有匹配项]]></Title>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:32:00,049 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></FromUserName>
+<CreateTime>1363624320</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[Mvc]]></Content>
+<MsgId>5856721858430239106</MsgId>
+</xml>
+2013-03-19 00:32:00,050 search library with Mvc consume 0 ms
+2013-03-19 00:32:00,050 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624320</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>2</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 Mvc 的结果]]></Title>
+      <Description><![CDATA[Mvc]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=Mvc&dept=ALL&cl=1&timestamp=1363624288]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[没有匹配项]]></Title>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:32:13,835 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></FromUserName>
+<CreateTime>1363624334</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[编程]]></Content>
+<MsgId>5856721918559781251</MsgId>
+</xml>
+2013-03-19 00:32:30,739 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></FromUserName>
+<CreateTime>1363624335</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[MVC]]></Content>
+<MsgId>5856721922854748548</MsgId>
+</xml>
+2013-03-19 00:32:31,951 search library with 编程 consume 18015 ms
+2013-03-19 00:32:31,998 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjojO7CPoYMh9j0uT8w07NTQ]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624351</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>10</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 编程 的结果]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%b1%e0%b3%cc&dept=ALL&cl=1&timestamp=1363624333]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311/C15] 编程ING [专著]：人人都能学会程序设计 (蔡学镛著)]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=595766]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[K816.16/L11] 编程大师访谈录 [专著]＝Programmers at work interviews with 19 programmers who shaped the computer industry ((美)Susan Lammers著；李琳骁,张菁,吴咏炜译)]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=594459]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312/P13] 编程语言实现模式 [专著] ((美) Terence Parr著；李袁奎译)]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=581074]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TG659.022/D77] 轻松掌握华中宏程序 [专著]：编程技巧与实例精解 (杜军, 龚水平编著)]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=578487]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.1/S811.1] 编程原本 [专著]＝Elements of programming ((美) Alexander Stepanov, Paul McJones著；裘宗燕译)]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=576204]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.1/G82] 编程算法新手自学手册 [专著] (管西京...等编著)]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=568797]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.11/G65] 编程匠艺 [专著]：编写卓越的代码＝Code craft：the practice of writing excellent code ((美)Pete Goodliffe著；韩江,陈玉译)]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=575569]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP312JA/C460.2] 会当凌绝顶 [专著]：Java开发修行实录 (陈强等编著)]]></Title>
+      <Description><![CDATA[编程]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=552369]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[查看更多]]></Title>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/arrow.png]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%b1%e0%b3%cc&dept=ALL&cl=1&timestamp=1363624333]]></Url>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:32:32,841 search library with MVC consume 2101 ms
+2013-03-19 00:32:32,841 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624352</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>2</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 MVC 的结果]]></Title>
+      <Description><![CDATA[MVC]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=MVC&dept=ALL&cl=1&timestamp=1363624350]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[没有匹配项]]></Title>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:33:30,318 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></FromUserName>
+<CreateTime>1363624410</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[MVC]]></Content>
+<MsgId>5856722244977295749</MsgId>
+</xml>
+2013-03-19 00:33:31,518 search library with MVC consume 1127 ms
+2013-03-19 00:33:31,554 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624411</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>2</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 MVC 的结果]]></Title>
+      <Description><![CDATA[MVC]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=MVC&dept=ALL&cl=1&timestamp=1363624410]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[没有匹配项]]></Title>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:33:58,944 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></FromUserName>
+<CreateTime>1363624439</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[敏捷软件]]></Content>
+<MsgId>5856722369531347334</MsgId>
+</xml>
+2013-03-19 00:34:02,777 search library with 敏捷软件 consume 3832 ms
+2013-03-19 00:34:02,778 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624442</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>10</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 敏捷软件 的结果]]></Title>
+      <Description><![CDATA[敏捷软件]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%c3%f4%bd%dd%c8%ed%bc%fe&dept=ALL&cl=1&timestamp=1363624438]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.52/S18] 敏捷技能修炼：敏捷软件开发与设计的最佳实践＝Essential skills for the agile developer：a guide to better programming and design ((美) Alan Shalloway ... [等] 著；郑立, 邹骏, 黄灵译)]]></Title>
+      <Description><![CDATA[敏捷软件]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=592879]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.56/K424] 敏捷软件测试 [专著]：测试人员与敏捷团队的实践指南 ((美) Lisa Crispin, Janet Gregory著；孙伟峰, 崔康译)]]></Title>
+      <Description><![CDATA[敏捷软件]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=537446]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.52/M144-2(2)] 敏捷软件开发原则、模式与实践 (C#版) [中译文]＝Agile principles,patterns,and practices in C# ((美) Robert C. Martin, Micah Martin著；邓辉, 孙鸣译)]]></Title>
+      <Description><![CDATA[敏捷软件]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=528516]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.52/S14] 敏捷软件开发方法与实践 [专著] (桑大勇,王瑛,吴丽华编著)]]></Title>
+      <Description><![CDATA[敏捷软件]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=526299]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.52/K581] 敏捷软件开发 [专著]＝Agile software development：the cooperative game ((美)Alistair Cockburn；苏敬凯等译)]]></Title>
+      <Description><![CDATA[敏捷软件]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=458791]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.52/M144-2] 敏捷软件开发 [专著]：原则、模式与实践：C#版＝Agile principles, patterns, and practices in C# ((美)Robert C. Martin,(美)Micah Martin著；邓辉,孙鸣译)]]></Title>
+      <Description><![CDATA[敏捷软件]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=446157]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.52/B874] 敏捷软件开发工具 [专著]：精益开发方法 ((美) Mary Poppendieck, Tom Poppendieck著；朱崇高译)]]></Title>
+      <Description><![CDATA[敏捷软件]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=238383]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TP311.52/H12-2] 敏捷软件开发生态系统 [专著]＝ Agile software development ecosystems ((美)Jim Highsmith著；姚旺生, 杨鹏等译)]]></Title>
+      <Description><![CDATA[敏捷软件]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=231667]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[查看更多]]></Title>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/arrow.png]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%c3%f4%bd%dd%c8%ed%bc%fe&dept=ALL&cl=1&timestamp=1363624438]]></Url>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:34:34,608 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></FromUserName>
+<CreateTime>1363624475</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[中国]]></Content>
+<MsgId>5856722524150169991</MsgId>
+</xml>
+2013-03-19 00:34:49,505 search library with 中国 consume 14896 ms
+2013-03-19 00:34:49,506 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624489</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>10</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 中国 的结果]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%d6%d0%b9%fa&dept=ALL&cl=1&timestamp=1363624474]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TU767-64/L32-10] 中国家装好设计7000例 [图表]：餐厅厨卫 (李江军编)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597626]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[J063/C45#1] 设计·色彩 [专著] (邬烈炎主编；陈嘉全著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597572]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[J510/J44] 图形创意 [专著] (江明著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597569]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[J524.3/C92-2] 广告设计 [专著] (崔生国著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597484]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[F812.7/Q67] 中国区际税收竞争分析 [专著] (秦成逊著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=601341]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[I25/W314] 中国式忏悔 [专著] (王春来著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=600431]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[D668/W29] 中国需要工业精神 [专著]＝Industrial spirit and Chinese modernization (汪中求著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=600338]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[F321.1/Y425] 中国城乡结合部地区土地利用困境 [专著]：路径抉择与机制设计＝Land use dilemma in the rural-urban continuum of China：path choice and mechanism design (叶剑平著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=600206]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[查看更多]]></Title>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/arrow.png]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%d6%d0%b9%fa&dept=ALL&cl=1&timestamp=1363624474]]></Url>
+    </item>
+  </Articles>
+</xml>
+2013-03-19 00:35:10,150 req: <xml><ToUserName><![CDATA[gh_82258e7890c8]]></ToUserName>
+<FromUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></FromUserName>
+<CreateTime>1363624510</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[中国]]></Content>
+<MsgId>5856722674474025352</MsgId>
+</xml>
+2013-03-19 00:35:10,150 search library with 中国 consume 0 ms
+2013-03-19 00:35:10,151 rsp: <?xml version="1.0"?>
+<xml>
+  <ToUserName><![CDATA[oITvjjhjWUk0vZxauNlvViqRgvmE]]></ToUserName>
+  <FromUserName><![CDATA[tv_search]]></FromUserName>
+  <CreateTime>1363624510</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <FuncFlag>0</FuncFlag>
+  <Content><![CDATA[]]></Content>
+  <ArticleCount>10</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[搜索 中国 的结果]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/images/lib.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%d6%d0%b9%fa&dept=ALL&cl=1&timestamp=1363624474]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[TU767-64/L32-10] 中国家装好设计7000例 [图表]：餐厅厨卫 (李江军编)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597626]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[J063/C45#1] 设计·色彩 [专著] (邬烈炎主编；陈嘉全著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597572]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[J510/J44] 图形创意 [专著] (江明著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597569]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[J524.3/C92-2] 广告设计 [专著] (崔生国著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=597484]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[F812.7/Q67] 中国区际税收竞争分析 [专著] (秦成逊著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=601341]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[I25/W314] 中国式忏悔 [专著] (王春来著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=600431]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[D668/W29] 中国需要工业精神 [专著]＝Industrial spirit and Chinese modernization (汪中求著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=600338]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[[F321.1/Y425] 中国城乡结合部地区土地利用困境 [专著]：路径抉择与机制设计＝Land use dilemma in the rural-urban continuum of China：path choice and mechanism design (叶剑平著)]]></Title>
+      <Description><![CDATA[中国]]></Description>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/question_mark.jpg]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/bookinfo.aspx?ctrlno=600206]]></Url>
+    </item>
+    <item>
+      <Title><![CDATA[查看更多]]></Title>
+      <PicUrl><![CDATA[http://221.179.6.74/Content/Images/arrow.png]]></PicUrl>
+      <Url><![CDATA[http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f=%d6%d0%b9%fa&dept=ALL&cl=1&timestamp=1363624474]]></Url>
+    </item>
+  </Articles>
+</xml>

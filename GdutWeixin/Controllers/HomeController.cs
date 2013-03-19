@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using GdutWeixin.Models;
+using GdutWeixin.Models.Library;
 using GdutWeixin.Models.Message;
 using GdutWeixin.Utils;
 
@@ -12,6 +15,8 @@ namespace GdutWeixin.Controllers
 {
     public class HomeController : Controller
     {
+        private Stopwatch libStopwatch = Stopwatch.StartNew();
+		
         public string Index()
         {
             bool isFromWeixin = false;
@@ -37,11 +42,12 @@ namespace GdutWeixin.Controllers
                 using (var reader = new StreamReader(Request.InputStream))
                 {
                     postBody = reader.ReadToEnd();
-                    HttpContext.ApplicationInstance.GetLogger().Info(String.Format("req: {0}", postBody));
-                    var reqMsg = RequestMsgFactory.Parse(postBody);
+                    ApplicationLogger.GetLogger().Info(String.Format("req: {0}", postBody));
+                    var reqMsg = RequestFactory.Parse(postBody);
                     if (reqMsg != null)
                     {
 						var rsp = onRequestMsgReceived(reqMsg);
+						ApplicationLogger.GetLogger().Info(String.Format("rsp: {0}", rsp));
                         return rsp;
                     }
                 }
@@ -51,18 +57,42 @@ namespace GdutWeixin.Controllers
 
         private string onRequestMsgReceived(Request reqMsg)
         {
-            Response msg = null;
-            if (reqMsg is TextRequestMsg)
+            Response rsp = null;
+            if (reqMsg is TextRequest)
             {
-                msg = new TextResponseMsg {
-					ToUserName = new Response.StringXmlCDataSection(reqMsg.FromUserName),
-                    Content = new Response.StringXmlCDataSection((reqMsg as TextRequestMsg).Content),
-					FuncFlag = 0
-                };
+                var req = reqMsg as TextRequest;
+                var user = reqMsg.FromUserName;
+				var keyword = req.Content;
+                libStopwatch.Restart();
+				object error;
+                var result = Library.GetInstance().SearchBooksFor(user, keyword, out error);
+                if (error == null)
+                {
+                    rsp = LibrarySearchResponse.Create(Request, user, keyword, result.Books, result.MoreUrl);
+                    libStopwatch.Stop();
+                    ApplicationLogger.GetLogger().Info(String.Format("search library with {0} consume {1} ms",
+                        keyword,
+                        libStopwatch.ElapsedMilliseconds));
+                }
+                else
+                {
+                    rsp = new TextResponse(req.FromUserName)
+                    {
+                        Content = new Response.StringXmlCDataSection(String.Format("查询出错： {0}", error))
+                    };
+                }
             }
-            var msgStr = msg == null ? null : msg.ToString();
-			HttpContext.ApplicationInstance.GetLogger().Info(String.Format("rsp: {0}", msgStr));
+            else if (reqMsg is ImageRequest)
+            {
+                rsp = NewsResponse.GetTestMsg(reqMsg.FromUserName);
+            }
+            var msgStr = rsp == null ? null : rsp.ToString();
 			return msgStr;
+        }
+
+        public RedirectResult Image()
+        {
+            return new RedirectResult("http://www.dxcjjzx.com/Pic/20090417112635decrow.jpg");
         }
 
         public ActionResult About()
