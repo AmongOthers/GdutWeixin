@@ -25,7 +25,6 @@ namespace GdutWeixin.Models.Library
         private LibrarySearchResponse(HttpRequestBase request, string reqFromUserName, string keyword, List<Book> books, string moreUrl)
             : base(reqFromUserName)
         {
-
             var converter = new UrlToAbsConverter(request);
             this.Articles = new List<Article>()
                 {
@@ -42,7 +41,7 @@ namespace GdutWeixin.Models.Library
                 var bookArticles = from book in books
                                    select new Article
                                    {
-                                       Title = new StringXmlCDataSection(String.Format("[{0} (1)/(2)] {3} ({4})",
+                                       Title = new StringXmlCDataSection(String.Format("[{0} {1}/{2}] {3} ({4})",
                                            book.Index, book.Available, book.Total, book.Title, book.Author)),
                                        Description = new StringXmlCDataSection(keyword),
                                        PicUrl = new StringXmlCDataSection(converter.Convert("/Content/Images/question_mark.jpg")),

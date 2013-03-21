@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,6 +10,7 @@ using System.Threading;
 using System.Web;
 using System.Xml.Serialization;
 using GdutWeixin.Models.Library;
+using GdutWeixin.Models.Message;
 using GdutWeixin.Utils;
 
 namespace GdutWeixin.Models.Library
@@ -52,6 +54,30 @@ namespace GdutWeixin.Models.Library
         }
 
         static readonly LibrarySearchOption DEFAULT = new LibrarySearchOption();
+
+        public string GetRspForSearch(HttpRequestBase request, string user, string keyword)
+        {
+            WeixinResponse rsp = null;
+            object error;
+            var libStopwatch = Stopwatch.StartNew();
+            var result = Library.GetInstance().SearchBooksFor(user, keyword, out error);
+            if (error == null)
+            {
+                libStopwatch.Stop();
+                rsp = LibrarySearchResponse.Create(request, user, keyword, result.Books, result.MoreUrl);
+                ApplicationLogger.GetLogger().Info(String.Format("search library with {0} consume {1} ms",
+                    keyword,
+                    libStopwatch.ElapsedMilliseconds));
+            }
+            else
+            {
+                rsp = new TextResponse(user)
+                {
+                    Content = new WeixinResponse.StringXmlCDataSection(String.Format("查询出错： {0}", error))
+                };
+            }
+            return rsp.ToString();
+        }
 
         public LibrarySearchResult SearchBooksFor(string user, string keyword, out object error, LibrarySearchOption option = null)
         {

@@ -31,7 +31,7 @@ namespace GdutWeixin
         private void MvcApplication_Error(object sender, EventArgs e)
         {
             var error = Server.GetLastError();
-			ApplicationLogger.GetLogger().Error(String.Format("{0}", error.Message));
+			ApplicationLogger.GetLogger().Error(String.Format("{0}", error.StackTrace));
         }
     }
 }

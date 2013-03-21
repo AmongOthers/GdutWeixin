@@ -13,11 +13,9 @@ using GdutWeixin.Utils;
 
 namespace GdutWeixin.Controllers
 {
-	[SessionState(System.Web.SessionState.SessionStateBehavior.Disabled)]
     public class HomeController : Controller
     {
-		
-        public RedirectResult Index()
+        public ContentResult Index()
         {
             bool isFromWeixin = false;
             if (!String.IsNullOrEmpty(Request["signature"]))
@@ -29,13 +27,12 @@ namespace GdutWeixin.Controllers
             }
             if (!isFromWeixin)
             {
-                return new ErrorRedirectResult("仅用于微信接入验证");
+                return Content("仅用于微信接入验证");
             }
             //微信接入验证消息
             else if (Request.HttpMethod == "GET")
             {
-                return new RedirectResult(String.Format("/Home/WeixinValidate?echostr=",
-                    HttpUtility.UrlEncode(Request["echostr"])));
+                return Content(Request["echostr"]);
             }
             //微信新消息
             else
@@ -47,55 +44,29 @@ namespace GdutWeixin.Controllers
                     var reqMsg = RequestFactory.Parse(postBody);
                     if (reqMsg != null)
                     {
-                        return redirectRequest(reqMsg);
+                        return onWeixinRequestReceived(reqMsg);
                     }
                     else
                     {
-                        return new ErrorRedirectResult("无法解析消息: " + postBody.ToString());
+                        return Content("无法解析消息: " + postBody.ToString());
                     }
                 }
             }
         }
 
-        private RedirectResult redirectRequest(WeixinRequest reqMsg)
+        private ContentResult onWeixinRequestReceived(WeixinRequest reqMsg)
         {
             if (reqMsg is TextRequest)
             {
                 var req = reqMsg as TextRequest;
                 var user = reqMsg.FromUserName;
 				var keyword = req.Content;
-				return new RedirectResult(String.Format("/Library/Search?keyword={0}&user={1}" +
-                    HttpUtility.UrlEncode(keyword), HttpUtility.UrlEncode(user)));
+                return Content(Library.GetInstance().GetRspForSearch(Request, user, keyword).ToString());
             }
 			else
             {
-                return new RedirectResult("/Home/Unknown");
+                return Content("暂未支持");
             }
-        }
-
-        public string WeixinValidate()
-        {
-            var str = Request["echostr"];
-            return str;
-        }
-
-        public string Unknown()
-        {
-            return "暂未支持";
-        }
-
-		public class ErrorRedirectResult : RedirectResult
-        {
-            public ErrorRedirectResult(string error)
-				: base(String.Format("/Home/Error?error={0}", HttpUtility.UrlEncode(error)))
-            {
-            }
-        }
-
-        public string Error()
-        {
-            var error = Request["error"];
-            return error;
         }
 
         public RedirectResult Image()
