@@ -13,11 +13,11 @@ using GdutWeixin.Utils;
 
 namespace GdutWeixin.Controllers
 {
+	[SessionState(System.Web.SessionState.SessionStateBehavior.Disabled)]
     public class HomeController : Controller
     {
-        private Stopwatch libStopwatch = Stopwatch.StartNew();
 		
-        public string Index()
+        public RedirectResult Index()
         {
             bool isFromWeixin = false;
             if (!String.IsNullOrEmpty(Request["signature"]))
@@ -29,65 +29,73 @@ namespace GdutWeixin.Controllers
             }
             if (!isFromWeixin)
             {
-                return "验证错误";
+                return new ErrorRedirectResult("仅用于微信接入验证");
             }
-			//微信接入消息
-            if (Request.HttpMethod == "GET")
+            //微信接入验证消息
+            else if (Request.HttpMethod == "GET")
             {
-                return Request["echostr"];
+                return new RedirectResult(String.Format("/Home/WeixinValidate?echostr=",
+                    HttpUtility.UrlEncode(Request["echostr"])));
             }
+            //微信新消息
             else
             {
-				string postBody = null;
+                string postBody = null;
                 using (var reader = new StreamReader(Request.InputStream))
                 {
                     postBody = reader.ReadToEnd();
-                    ApplicationLogger.GetLogger().Info(String.Format("req: {0}", postBody));
                     var reqMsg = RequestFactory.Parse(postBody);
                     if (reqMsg != null)
                     {
-						var rsp = onRequestMsgReceived(reqMsg);
-						ApplicationLogger.GetLogger().Info(String.Format("rsp: {0}", rsp));
-                        return rsp;
+                        return redirectRequest(reqMsg);
+                    }
+                    else
+                    {
+                        return new ErrorRedirectResult("无法解析消息: " + postBody.ToString());
                     }
                 }
-                return "未知消息";
             }
         }
 
-        private string onRequestMsgReceived(Request reqMsg)
+        private RedirectResult redirectRequest(WeixinRequest reqMsg)
         {
-            Response rsp = null;
             if (reqMsg is TextRequest)
             {
                 var req = reqMsg as TextRequest;
                 var user = reqMsg.FromUserName;
 				var keyword = req.Content;
-                libStopwatch.Restart();
-				object error;
-                var result = Library.GetInstance().SearchBooksFor(user, keyword, out error);
-                if (error == null)
-                {
-                    rsp = LibrarySearchResponse.Create(Request, user, keyword, result.Books, result.MoreUrl);
-                    libStopwatch.Stop();
-                    ApplicationLogger.GetLogger().Info(String.Format("search library with {0} consume {1} ms",
-                        keyword,
-                        libStopwatch.ElapsedMilliseconds));
-                }
-                else
-                {
-                    rsp = new TextResponse(req.FromUserName)
-                    {
-                        Content = new Response.StringXmlCDataSection(String.Format("查询出错： {0}", error))
-                    };
-                }
+				return new RedirectResult(String.Format("/Library/Search?keyword={0}&user={1}" +
+                    HttpUtility.UrlEncode(keyword), HttpUtility.UrlEncode(user)));
             }
-            else if (reqMsg is ImageRequest)
+			else
             {
-                rsp = NewsResponse.GetTestMsg(reqMsg.FromUserName);
+                return new RedirectResult("/Home/Unknown");
             }
-            var msgStr = rsp == null ? null : rsp.ToString();
-			return msgStr;
+        }
+
+        public string WeixinValidate()
+        {
+            var str = Request["echostr"];
+            return str;
+        }
+
+        public string Unknown()
+        {
+            return "暂未支持";
+        }
+
+		public class ErrorRedirectResult : RedirectResult
+        {
+            public ErrorRedirectResult(string error)
+				: base(String.Format("/Home/Error?error={0}", HttpUtility.UrlEncode(error)))
+            {
+            }
+        }
+
+        public string Error()
+        {
+            var error = Request["error"];
+            return error;
         }
 
         public RedirectResult Image()
@@ -97,6 +105,8 @@ namespace GdutWeixin.Controllers
 
         public ActionResult About()
         {
+            ApplicationLogger.GetLogger().Info("About visited");
+
             ViewBag.Message = "你的应用程序说明页。";
 
             return View();

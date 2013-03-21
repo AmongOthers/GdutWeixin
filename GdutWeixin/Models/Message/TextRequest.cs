@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace GdutWeixin.Models.Message
 {
 	[XmlRoot("xml")]
-    public class TextRequest : Request
+    public class TextRequest : WeixinRequest
     {
         public string Content { get; set; }
     }

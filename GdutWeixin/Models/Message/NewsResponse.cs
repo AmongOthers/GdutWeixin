@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace GdutWeixin.Models.Message
 {
 	[XmlRoot("xml")]
-    public class NewsResponse : Response
+    public class NewsResponse : WeixinResponse
     {
         public StringXmlCDataSection Content { get; set; }
         public int ArticleCount

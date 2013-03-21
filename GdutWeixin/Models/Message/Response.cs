@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace GdutWeixin.Models.Message
 {
-    public abstract class Response
+    public abstract class WeixinResponse
     {
         public class StringXmlCDataSection : XmlCDataSection
         {
@@ -36,11 +36,11 @@ namespace GdutWeixin.Models.Message
 
         static NoNameSpaceXsn sXsn = new NoNameSpaceXsn();
 
-        public Response()
+        public WeixinResponse()
         {
         }
 
-        public Response(string reqFromUserName)
+        public WeixinResponse(string reqFromUserName)
         {
             ToUserName = new StringXmlCDataSection(reqFromUserName);
             FromUserName = new StringXmlCDataSection("tv_search");

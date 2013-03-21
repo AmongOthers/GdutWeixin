@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 namespace GdutWeixin.Models.Message
 {
 	[XmlRoot("xml")]
-    public class TextResponse : Response
+    public class TextResponse : WeixinResponse
     {
         public StringXmlCDataSection Content { get; set; }
 
@@ -19,7 +19,7 @@ namespace GdutWeixin.Models.Message
         public TextResponse(string reqFromUserName)
 			: base(reqFromUserName)
         {
-            MsgType = new Response.StringXmlCDataSection("text");
+            MsgType = new WeixinResponse.StringXmlCDataSection("text");
         }
     }
 }

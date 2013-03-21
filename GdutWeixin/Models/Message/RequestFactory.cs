@@ -10,7 +10,7 @@ namespace GdutWeixin.Models.Message
 {
     public class RequestFactory
     {
-        public static Request Parse(string msg)
+        public static WeixinRequest Parse(string msg)
         {
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(msg)))
             {

@@ -42,8 +42,8 @@ namespace GdutWeixin.Models.Library
                 var bookArticles = from book in books
                                    select new Article
                                    {
-                                       Title = new StringXmlCDataSection(String.Format("[{0}] {1} ({2})",
-                                           book.Index, book.Title, book.Author)),
+                                       Title = new StringXmlCDataSection(String.Format("[{0} (1)/(2)] {3} ({4})",
+                                           book.Index, book.Available, book.Total, book.Title, book.Author)),
                                        Description = new StringXmlCDataSection(keyword),
                                        PicUrl = new StringXmlCDataSection(converter.Convert("/Content/Images/question_mark.jpg")),
                                        Url = new StringXmlCDataSection(book.Url)

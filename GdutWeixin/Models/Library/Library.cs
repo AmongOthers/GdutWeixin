@@ -9,8 +9,9 @@ using System.Threading;
 using System.Web;
 using System.Xml.Serialization;
 using GdutWeixin.Models.Library;
+using GdutWeixin.Utils;
 
-namespace GdutWeixin.Utils
+namespace GdutWeixin.Models.Library
 {
     public class Library
     {

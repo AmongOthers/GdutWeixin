@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace GdutWeixin.Models.Message
 {
 	[XmlRoot("xml")]
-    public class ImageRequest : Request
+    public class ImageRequest : WeixinRequest
     {
         public string PicUrl { get; set; }
     }

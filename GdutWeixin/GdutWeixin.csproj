@@ -140,10 +140,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BaiduImageSearchEngine.cs" />
+    <Compile Include="Models\Library\BookDetails.cs" />
     <Compile Include="Models\Library\LibrarySearchResponse.cs" />
     <Compile Include="Models\Library\LibrarySearchResult.cs" />
     <Compile Include="Models\Library\LibraryTableResult.cs" />
@@ -160,8 +163,8 @@
     <Compile Include="Utils\CheckSignature.cs" />
     <Compile Include="Utils\DateTimeHelper.cs" />
     <Compile Include="Utils\FixedSizeQueue.cs" />
-    <Compile Include="Utils\Library.cs" />
-    <Compile Include="Utils\LibraryCache.cs" />
+    <Compile Include="Models\Library\Library.cs" />
+    <Compile Include="Models\Library\LibraryCache.cs" />
     <Compile Include="Utils\UrlToAbsConverter.cs" />
   </ItemGroup>
   <ItemGroup>
