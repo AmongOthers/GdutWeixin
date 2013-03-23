@@ -1,0 +1,767 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head><title>
+	广东工业大学图书馆书目检索系统 组配检索
+</title><link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/prototype.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/autocomplete.js"></script>
+    <script type="text/javascript">
+        var _islog = false;
+        var _suburl = "";
+        var shurl = _suburl + "user/mysearchhistory.aspx";
+        function ilogin()
+        {
+            new internallogin(iloginsuccess,_suburl);
+        }
+        function islogin()
+        {
+            $('islogoutspan').hide();
+            $('isloginspan').show();
+            $('loginmsg').show();
+            _islog = true;
+            /*更新评分信息*/
+            if ($('pingfencontent') != null)
+                getscore();
+           /*更新检索历史提示登录信息*/
+           if ($('sh_login_hint') != null)
+                $('sh_login_hint').hide();
+            /*如果是bookinfo则显示预约信息*/
+            var url1 = window.location.pathname;
+            if (url1.indexOf("bookinfo.aspx") >=0 )
+            {
+                //检查系统预约参数
+                if(0 == 0)
+                {
+                    listbookwithresv();
+                }
+            }
+        }
+        function islogout()
+        {
+            $('islogoutspan').show();
+            $('isloginspan').hide();
+            $('loginmsg').hide();
+            _islog = false;
+        }
+        function iloginsuccess()
+        {
+            var wurl = window.location.href;
+            var rurlIndex;
+            if ((rurlIndex = wurl.indexOf("login.aspx?ReturnUrl=")) != -1)
+            {
+                var rurl = decodeURIComponent(wurl.substr(rurlIndex + 21));
+                if (isie())
+                    window.location.href = rurl;
+            }
+            islogin();
+//            if (getscore != undefined && getscore != null && typeof getscore == 'function')
+//                getscore();
+        }
+        function iloginforsh()
+        {
+            islogin();
+            gotosh();
+        }
+        function ilogout()
+        {
+            internallogout(null,_suburl);
+            _islog = false;
+        }
+        function ilogout_callback()
+        {
+            islogout();
+        }
+        function gotosh()
+        {
+           if (_islog == false)
+           {
+                new internallogin(iloginforsh,_suburl);
+           }
+           else
+           {
+                window.location.href = shurl;
+           } 
+        }
+    </script>
+</head>
+<body>
+    
+    <!-- 头部-->
+    <div id="header" class="clearFix">
+        <div id="headerlogo">
+            <img id="ctl00_headerimg" src="images/headeropac4gif.gif" style="border-width:0px;" />
+        </div>
+        <div id="headertext">
+            <span id="ctl00_sitenamelbl">广东工业大学图书馆书目检索系统</span>
+        </div>
+        <div id="headermenu" class="clearFix" style="width:45%">
+            <div class="fl" style="width:56%">
+                        <span id="loginmsg" style="display:none;">
+                <!--<marquee width="150px" align="middle" behavior="scroll" scrollamount="2"></marquee>-->
+                登录成功。 如果您使用的是公共电脑，请在使用完毕后，务必退出登录，切记！
+            </span>
+            </div>
+            <div class="fr" style="width:42%">
+            &nbsp;<span id="islogoutspan" style="display:none"><a href="javascript:void(0)" onclick="ilogin()" class="redlink">登录</a></span>
+            <span id="isloginspan" style="display:none">
+
+            <a href="javascript:void(0)" onclick="ilogout()" class="redlink">退出</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            <a href="javascript:gotosh()">我的检索历史</a>
+            <br />
+            今天是&nbsp;&nbsp;&nbsp;&nbsp;<span id="ctl00_nowlbl">2013年03月23日  星期六</span>
+            </div>
+        </div>
+        
+    </div>
+    <!--内容-->
+    <div id="content">
+        
+<script type="text/javascript">
+var autocompleter;
+loadingfacetimg = new Image();
+loadingfacetimg.src = "images/loading.gif";
+var loadingfacet = "<div><span style=\"color:#f87600\"><img id=\"loadingfacetimg\" src=\"\"/>&nbsp;正在载入,请稍候...</span></div>";
+var searchurl = "";
+function gotopage(p)
+{
+    
+}
+function changepoint(pointvalue)
+{
+    if (autocompleter != null)
+    {
+        autocompleter._url = 'showsearchsuggestionAjax.aspx?st='+pointvalue;
+    }
+    else
+    {
+       new AutoCompleter('acdiv','ctl00_ContentPlaceHolder1_keywordstb','showsearchsuggestionAjax.aspx?st='+pointvalue);
+    }
+}
+function checkForResearch()
+{
+    if (!check())
+            return false;
+    createLoadingDiv("正在检索，请稍候...");
+    return true;
+}
+function check()
+{
+    if ($F('ctl00_ContentPlaceHolder1_keywordstb').strip().length < 1)
+    {
+        $('ctl00_ContentPlaceHolder1_keywordstb').innerText = '';
+        $('ctl00_ContentPlaceHolder1_keywordstb').focus();
+        return false;
+    }
+    else
+    {
+        createLoadingDiv("正在检索，请稍候...");
+        return true;
+    }
+}
+function pailie(page)
+{
+    if (searchurl == "")
+        searchurl = $F('ctl00_ContentPlaceHolder1_thissearchhf')
+    var sfvalue = $('sortddl').options[$('sortddl').selectedIndex].value;
+    var obvalue = $('orderbyddl').options[$('orderbyddl').selectedIndex].value;
+    var tmpparams = searchurl;
+    var sf_reg = new RegExp("sf=[^&]*","ig");
+    var ob_reg = new RegExp("ob=[^&]*","ig");
+    tmpparams = tmpparams.replace(sf_reg,"sf=" + sfvalue);
+    tmpparams = tmpparams.replace(ob_reg,"ob=" + obvalue);
+    searchurl = tmpparams;
+    showpagefl(page);
+}
+var loadingForHandleDiv;
+var showfacet = function()
+{
+    $('searchfacet').down(0).next(0).innerHTML = loadingfacet;
+    $('loadingfacetimg').src = loadingfacetimg.src;
+    var params = encodeURI($F('ctl00_ContentPlaceHolder1_thissearchhf'));
+    var showfacetAjax = new Ajax.Request(
+        'showfacetforsearchAjax.aspx',
+        {
+            method:'get',
+            parameters:params,
+            onComplete: showfacetResponse
+        }
+    );
+}
+function showfacetResponse(response)
+{
+    var result = response.responseText;
+    var r1 = result.indexOf("<div id=\"searchfacet\">");
+    var r2 = result.lastIndexOf("</div>");
+    if (r1 == -1)
+    {
+         $('searchfacet').down(0).next(0).innerHTML = "";
+    }
+    else
+    {
+        var result2 = result.substr(r1+22,r2-r1-22);
+        $('searchfacet').down(0).next(0).innerHTML = result2;
+    }
+}
+var loadingForHandleFLDiv;
+function showpagefl(page)
+{
+
+    if (searchurl == "")
+        searchurl = $F('ctl00_ContentPlaceHolder1_thissearchhf')
+    loadingForHandleFLDiv = createLoadingDiv("正在处理，请稍候...");
+    var tmpparams = searchurl;
+    var params;
+    var pageexist_reg = new RegExp("page=[0-9]*","ig");
+    if(pageexist_reg.test(tmpparams))
+    {
+        params = tmpparams.replace(pageexist_reg,"page="+page);
+    }
+    else
+    {
+        params = tmpparams + "&page=" + page;
+    }
+    searchurl = params;
+    params = encodeURIComponent(params);
+    var showpageAjax = new Ajax.Request(
+        'showpageforlucenesearchAjax.aspx',
+        {
+            method:'get',
+            parameters:params,
+            onComplete:showpageflResponse
+        }
+    );
+}
+function showpageflResponse(response)
+{
+    var result = response.responseText;
+    var r1 = result.indexOf("<div id=\"searchresultpagefl\">");
+    var r2 = result.lastIndexOf("</div>");
+    if (r1 == -1)
+    {
+        $('searchresultpagefl').innerHTML = '无此记录！';
+    }
+    else
+    {
+        var result2 = result.substr(r1+29,r2-r1-29);
+        $('searchresultpagefl').innerHTML = result2;
+    }
+    loadingForHandleFLDiv.remove();
+}
+var showfacetfl = function()
+{
+    $('searchfacetfl').down(0).next(0).innerHTML = loadingfacet;
+    $('loadingfacetimg').src = loadingfacetimg.src;
+    var params = encodeURIComponent($F('ctl00_ContentPlaceHolder1_thissearchhf'));
+    var showfacetAjax = new Ajax.Request(
+        'showfacetforlucenesearchAjax.aspx',
+        {
+            method:'get',
+            parameters:params,
+            onComplete: showfacetflResponse
+        }
+    );
+}
+function showfacetflResponse(response)
+{
+    var result = response.responseText;
+    var r1 = result.indexOf("<div id=\"searchfacetfl\">");
+    var r2 = result.lastIndexOf("</div>");
+    if (r1 == -1)
+    {
+         $('searchfacetfl').down(0).next(0).innerHTML = "";
+    }
+    else
+    {
+        var result2 = result.substr(r1+24,r2-r1-24);
+        $('searchfacetfl').down(0).next(0).innerHTML = result2;
+    }
+}
+var saveline = 0;
+function savethis(obj)
+{
+    if (obj.checked)
+    {
+        saveline_checkline();
+        //$(obj).up(0).up(0).className = $(obj).up(0).up(0).className + ' selected';
+    }
+    else
+    {
+        saveline_lback();
+        //$(obj).up(0).up(0).className = $(obj).up(0).up(0).className.replace(' selected','');
+    }
+    saveline_showmsg(obj);
+}
+function saveline_checkline()
+{
+    saveline++;
+}
+function saveline_lback()
+{
+    saveline--;
+}
+function saveline_init()
+{
+    saveline=0;
+    $('bodl_detail_msgnote').style.display = 'none'
+}
+function saveline_showmsg(obj)
+{
+    if (saveline <= 0)
+    {
+        $('bodl_detail_msgnote').style.display = 'none';
+        return;
+    }
+    var content = "您当前选择了" + saveline + "条记录<br/>";
+    
+    content += "您可以<a href=\"javascript:ctsavedisk()\" class=\"underline\">保存</a>&nbsp;&nbsp;<a href=\"javascript:ctsendemail()\" class=\"underline\">发Email</a><br/>";
+    
+    content += "<a href=\"javascript:cancelall()\" class=\"underline\">取消已选</a>"
+    $('bodl_detail_msgnote').down(1).innerHTML = content;
+    //orderline_alertmsg() + "<br/><a href=\"javascript:$('').click();\" style=\"text-decoration:underline;\">保存</a>";
+    if ($('bodl_detail_msgnote').style.display == 'none')
+    {
+        $('bodl_detail_msgnote').style.display = '';
+    }
+     var offsets = Position.positionedOffset($(obj));
+     var top = offsets[1];
+     var left = offsets[0];
+     $('bodl_detail_msgnote').style.top = top + "px";
+     $('bodl_detail_msgnote').style.marginLeft = left + 10 + "px";
+} 
+function chooseall(obj)
+{
+    var cbs = document.getElementsByName("searchresult_cb");
+    for (i = 0;i < cbs.length;i++)
+        cbs[i].checked = obj.checked;
+    if (obj.checked)
+    {
+        saveline = cbs.length;
+        saveline_showmsg(obj);
+    }
+    else
+    {
+        saveline = 0;
+        saveline_showmsg(obj);
+    }
+}
+function cancelall()
+{
+    $('searchresult_all_cb').checked = false;
+    var cbs = document.getElementsByName("searchresult_cb");
+    for (i = 0;i < cbs.length;i++)
+        cbs[i].checked = false;
+    saveline = 0;
+    $('bodl_detail_msgnote').style.display = 'none';
+}
+function cancelct()
+{
+    var content = "您当前选择了" + saveline + "条记录<br/>";
+    
+            content += "您可以<a href=\"javascript:ctsavedisk()\" class=\"underline\">保存</a>&nbsp;&nbsp;<a href=\"javascript:ctsendemail()\" class=\"underline\">发Email</a><br/>";
+    
+    content += "<a href=\"javascript:cancelall()\" class=\"underline\">取消已选</a>"
+    $('bodl_detail_msgnote').down(1).innerHTML = content;
+}
+function ctsendemail()
+{
+    var content = "我的邮箱:<br/><input type=\"text\" name=\"emailtb\" id=\"emailtb\" size=18><br/>";
+    content += "<a href=\"javascript:sendemail()\" class=\"underline\">发送</a>&nbsp;&nbsp;<a href=\"javascript:cancelct()\" class=\"underline\">取消</a>";
+    $('bodl_detail_msgnote').down(1).innerHTML = content;
+    $('emailtb').focus();
+}
+function ctsavedisk()
+{
+    var content = "请选择文件类型：<br/><select id=\"savefileselect\"><option value=\"excel\">excel</option><option value=\"txt\">txt</option></select>";
+    content += "&nbsp;&nbsp;<a href=\"javascript:savedisk()\" class=\"underline\">保存</a>&nbsp;&nbsp;<a href=\"javascript:cancelct()\" class=\"underline\">取消</a>";
+    $('bodl_detail_msgnote').down(1).innerHTML = content;
+}
+function getallselected()
+{
+    var result = '';
+    var cbs = document.getElementsByName("searchresult_cb");
+    for (i = 0;i < cbs.length;i++)
+        if (cbs[i].checked)
+            result += cbs[i].value + ",";
+    return result;
+}
+var loadingForSaveDiv;
+function sendemail()
+{
+    loadingForSaveDiv = createLoadingDiv("正在处理，请稍候...");
+    var params = "c=" + getallselected() + "&e=" + $('emailtb').value + "&l=-1";
+    var showfacetAjax = new Ajax.Request(
+        'sendemailforsearchresultAjax.aspx',
+        {
+            method:'get',
+            parameters:params,
+            onComplete: sendemailResponse
+        }
+    );
+}
+function sendemailResponse(response)
+{
+    var result = response.responseText;
+    loadingForSaveDiv.remove();
+    if (result == "1")
+    {
+        alert("已发送到您的邮箱，请注意查收！");
+    }
+    else
+    {
+        alert("发送失败！");
+    }
+    cancelct();
+}
+function savedisk()
+{
+    var filetype = $('savefileselect').options[$('savefileselect').selectedIndex].value;
+    var exporturl = "exportsearchresult.aspx?c=" + getallselected() + "&ft=" + filetype + "&l=-1";
+    window.open(exporturl);
+}
+function showdetailfacet(obj)
+{
+    if ($(obj).innerHTML == '收起')
+    {
+        $(obj).up(0).next(0).hide();
+        $(obj).innerHTML = '展开';
+    }
+    else
+    {
+        $(obj).up(0).next(0).show();
+        $(obj).innerHTML = '收起';
+    }
+}
+</script>
+ 
+<!--菜单 -->
+     <div id="pagemenu">
+         
+                <ul>
+            
+                <li>
+                    <a href='search.aspx' class="select">目录检索</a>
+                </li>
+            
+                <li>
+                    <a href='peri_nav_class.aspx' >分类导航</a>
+                </li>
+            
+                <li>
+                    <a href='book_rank.aspx' >读书指引</a>
+                </li>
+            
+                <li>
+                    <a href='xstb.aspx' >新书通报</a>
+                </li>
+            
+                <li>
+                    <a href='readerrecommend.aspx' >读者荐购</a>
+                </li>
+            
+                <li>
+                    <a href='overduebooks_f.aspx' >提醒服务</a>
+                </li>
+            
+                <li>
+                    <a href='user/userinfo.aspx' >我的图书馆</a>
+                </li>
+            
+                <li>
+                    <a href='http://library.gdut.edu.cn/' >图书馆首页</a>
+                </li>
+            
+                
+                </ul>
+              
+    </div>
+    <div id="pagesubmenu">
+        
+                <ul>
+            
+                <li>
+                    <a href="search.aspx" >快速检索</a>
+                </li>
+            
+                <li>
+                    <a href="search_more.aspx" class="select">高级检索</a>
+                </li>
+            
+                </ul>
+              
+    </div>
+
+ <form name="aspnetForm" method="post" action="searchresult.aspx?title_f=hello&amp;&amp;dt=ALL&amp;cl=ALL&amp;dp=8&amp;sf=M_PUB_YEAR&amp;ob=DESC&amp;sm=table&amp;dept=ALL&amp;st=2" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWGQK23JnRBALjlsagDAKF38vSAgLI2KbhBgLgrL+bCwKEwpvgAQKqoeKXCwKLleDOBQLN7dvtCAK7w4DNAQL5yLiyDwK7utrjDgLw0cOSBAL55JmJDgL+qfvfAwLmgJ6hAwLo/MCIAwKt4fnGAwKs4fnGAwKv4fnGAwKu4fnGAwKt4aXUBQKs4aXUBQKv4aXUBQKu4aXUBeFwPrYz4nNRrkaYlhR0WKqDw9P/" />
+</div>
+     <input type="hidden" name="ctl00$ContentPlaceHolder1$lastsearchhf" id="ctl00_ContentPlaceHolder1_lastsearchhf" value="dt=ALL&amp;cl=ALL&amp;dept=ALL&amp;sf=M_PUB_YEAR&amp;ob=DESC&amp;page=444&amp;dp=8&amp;st=2&amp;sm=table" />
+     <input type="hidden" name="ctl00$ContentPlaceHolder1$thissearchhf" id="ctl00_ContentPlaceHolder1_thissearchhf" value="title_f=hello&amp;&amp;dt=ALL&amp;cl=ALL&amp;dp=8&amp;sf=M_PUB_YEAR&amp;ob=DESC&amp;sm=table&amp;dept=ALL&amp;st=2" />
+ 
+
+<!-- 电子图书检索功能 begin-->
+<div id="searchresulttabmenu">
+    
+</div>
+<!-- 电子图书检索功能 end-->
+ <div id="searchresultmain">
+    <div id="searchresultpoint">
+        <div class="searchpointdiv">
+        检索：
+            <select name="ctl00$ContentPlaceHolder1$searchtypeddl" id="ctl00_ContentPlaceHolder1_searchtypeddl" onchange="changepoint(this.options[this.selectedIndex].value)">
+	<option selected="selected" value="ANYWORDS">任意字段关键词</option>
+	<option value="TITLEFORWARD">题名前方一致</option>
+	<option value="TITLEANY">题名内关键词</option>
+	<option value="AUTHORFORWARD">著者前方一致</option>
+	<option value="AUTHORANY">著者内关键词</option>
+	<option value="KEYWORDFORWARD">内容主题词</option>
+	<option value="PUBLISHERFORWARD">出版者名称</option>
+	<option value="CLCFORWARD">中图法分类号</option>
+	<option value="ISBNFORWARD">ISBN</option>
+	<option value="ISSNFORWARD">ISSN</option>
+	<option value="CALLNOFORWARD">索取号</option>
+
+</select>&nbsp;
+            <input name="ctl00$ContentPlaceHolder1$keywordstb" type="text" maxlength="250" id="ctl00_ContentPlaceHolder1_keywordstb" onkeypress="if (event.keyCode=='13') {$('ctl00_ContentPlaceHolder1_searchbtn').click();event.returnValue =false;}" autocomplete="off" style="width:293px;" /><input type="submit" name="ctl00$ContentPlaceHolder1$searchbtn" value="新检索" onclick="return check();" id="ctl00_ContentPlaceHolder1_searchbtn" class="btn" /><input type="submit" name="ctl00$ContentPlaceHolder1$researchbtn" value="在结果中检索" onclick="return checkForResearch();" id="ctl00_ContentPlaceHolder1_researchbtn" class="btn" />
+            <input type="button" class="btn" value="返回主检索界面" onclick="javascript:window.location='search.aspx'"/>
+        </div>
+        <div id="acdiv" class="autocompletediv">
+         </div>
+    </div>
+    <div id="searchcondition" class="searchcondition">
+        <span>检索条件：
+            <span id="ctl00_ContentPlaceHolder1_conditionlbl">题名前方一致=<font color="#ff0000">hello</font>&nbsp;&nbsp;</span>
+        </span>&nbsp;&nbsp;&nbsp;<span>结果数：
+            <span id="ctl00_ContentPlaceHolder1_countlbl" style="color:Red;">29</span>
+        </span>&nbsp;<a href="javascript:void(0)" title="此检索条件下的结果RSS源" style="display:none"><img src="images/rss.gif"/></a>
+    </div>
+    <div id="searchresult" class="clearFix">
+        
+            <div id="searchresultpagefl" class="left">
+            <div class="pd tbl">第<span class="rf"><span id="ctl00_ContentPlaceHolder1_dplblfl1">1</span></span>/<span id="ctl00_ContentPlaceHolder1_gplblfl1">4</span>页&nbsp;上一页&nbsp;
+                    <a id="ctl00_ContentPlaceHolder1_nexthlfl1" onclick="showpagefl(2)" href="javascript:void(0)">下一页</a>&nbsp;转到第<select name="ctl00$ContentPlaceHolder1$gotoddlfl1" id="ctl00_ContentPlaceHolder1_gotoddlfl1" onchange="showpagefl(this[this.selectedIndex].value)">
+	<option selected="selected" value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+
+</select>页&nbsp;&nbsp;&nbsp;排序方式：<select id="sortddl">
+                        <option value="M_TITLE" selected="selected">题&nbsp;&nbsp;名</option>
+                        <option value="M_PUBLISHER">出版社</option>
+                        <option value="M_PUB_YEAR">出版年</option>
+                        <option value="M_AUTHOR">著者</option>
+                        <option value="M_SUBJECT">主题词</option>
+                        <option value="M_CLC">分类号</option>
+                        <option value="M_CATALOGDATE">进馆日期</option>
+                    </select>
+                    &nbsp;<select id="orderbyddl">
+                        <option value="ASC" selected="selected">升序排列</option>
+                        <option value="DESC">降序排列</option>
+                    </select>&nbsp;
+                <input type="button" value="排列" onclick="pailie(1)" title="排列" />
+                 <script type="text/javascript">
+                    for(i=0;i<$('sortddl').options.length;i++)
+                    {
+                        if ($('sortddl').options[i].value == 'M_PUB_YEAR')
+                        {
+                            $('sortddl').options[i].selected = true;
+                            break;
+                        }       
+                    }
+                    for(i=0;i<$('orderbyddl').options.length;i++)
+                    {
+                        if ($('orderbyddl').options[i].value == 'DESC')
+                        {
+                            $('orderbyddl').options[i].selected = true;
+                            break;
+                        }       
+                    }
+                </script>
+            </div>
+            <div>
+                <ul class="msgnote" id="bodl_detail_msgnote" style="display:none;">
+                    <li class="top"></li>
+                    <li class="body"></li>
+                    <li class="bottom"></li>
+               </ul>
+                
+                              <table cellpadding="4" width="98%" border="1" class="tb">
+                              <thead class="tbhead">
+                                <tr>
+                                   <td width="5%">序号<input type="checkbox" title="全选/全不选" name="searchresult_all_cb" id="searchresult_all_cb" onclick="chooseall(this);"/></td>
+                                  <td width="33%">题名</td>
+                                  <td width="19%">责任者</td>
+                                  <td width="13%">出版者</td>
+                                  <td width="7%">出版年</td>
+                                  <td width="7%">索取号</td>
+                                  <td width="5%">馆藏</td>
+                                  <td width="5%">可借</td>
+                                  <td width="6%">相关资源</td>
+                                 </tr>
+                               </thead>
+                               <tbody>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="589315" onclick="savethis(this);"/>1</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=589315" target="_blank">嗨!新媒体：漫话新媒体艺术与设计＝Hello new media art and design</a></span></td>
+                                  <td>杨艺著</td>
+                                  <td>大连理工大学出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">J06-39/Y29</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">2</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="569262" onclick="savethis(this);"/>2</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=569262" target="_blank">哈罗!美利坚 [专著]＝Hello! America：一个中国家庭的美国生活琐记</a></span></td>
+                                  <td>闫庚函著</td>
+                                  <td>电子工业出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">I253.7/Y17</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">2</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="559514" onclick="savethis(this);"/>3</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=559514" target="_blank">电话英语说对了没? [专著]·情境会话篇</a></span></td>
+                                  <td>(美)亚历克斯·莱斯(Alex Rath)著；朱文宜译</td>
+                                  <td>中国人民大学出版社</td>
+                                  <td>2011</td>
+                                  <td class="tbr">H319.9/L12</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">2</td>
+                                  <td>
+                                    
+                                        <img onmouseover="this.style.cursor='pointer'" src="images/resource.gif" onclick="javascript:getbookresource('559514','电话英语说对了没? [专著]&#183;情境会话篇',this,'getbookresourceAjax.aspx')" width="25px" height="25px"/>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="555449" onclick="savethis(this);"/>4</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=555449" target="_blank">Hello, Mr. Package! [monograph]</a></span></td>
+                                  <td>[SendPoints Publishing Co.]</td>
+                                  <td>SendPoints Publishing Co.</td>
+                                  <td>c2010</td>
+                                  <td class="tbr">J534.2/S474</td>
+                                  <td class="tbr">1</td>
+                                  <td class="tbr">1</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="528335" onclick="savethis(this);"/>5</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=528335" target="_blank">Flex 4一学就会＝Hello! Flex 4</a></span></td>
+                                  <td>(加)Peter Armstrong著；张猛译</td>
+                                  <td>人民邮电出版社</td>
+                                  <td>2010</td>
+                                  <td class="tbr">TP311.56/A115</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">1</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="505132" onclick="savethis(this);"/>6</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=505132" target="_blank">Android基础教程 [专著]＝Hello, Android：introducing Google's mobile development platform</a></span></td>
+                                  <td>(美)Ed Burnette著；张波...等译</td>
+                                  <td>人民邮电出版社</td>
+                                  <td>2009</td>
+                                  <td class="tbr">TN929.53-39/B91</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">0</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="494720" onclick="savethis(this);"/>7</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=494720" target="_blank">美国年轻人常说的话 [专著]·你好,朋友</a></span></td>
+                                  <td>金莉主编</td>
+                                  <td>世界图书出版西安公司</td>
+                                  <td>2009</td>
+                                  <td class="tbr">H319.9/J670-5</td>
+                                  <td class="tbr">6</td>
+                                  <td class="tbr">5</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="348022" onclick="savethis(this);"/>8</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=348022" target="_blank">Hello,小狐狸</a></span></td>
+                                  <td>淡淡著</td>
+                                  <td>北方文艺出版社</td>
+                                  <td>2005</td>
+                                  <td class="tbr">I247.57/D21</td>
+                                  <td class="tbr">5</td>
+                                  <td class="tbr">5</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                             </tbody>
+                            </table>
+                        
+            </div>
+            <div class="pd tbr">第<span class="rf"><span id="ctl00_ContentPlaceHolder1_dplblfl2">1</span></span>/<span id="ctl00_ContentPlaceHolder1_gplblfl2">4</span>页&nbsp;
+                上一页&nbsp;
+                    <a id="ctl00_ContentPlaceHolder1_nexthlfl2" onclick="showpagefl(2)" href="javascript:void(0)">下一页</a>
+                &nbsp;转到第<select name="ctl00$ContentPlaceHolder1$gotoddlfl2" id="ctl00_ContentPlaceHolder1_gotoddlfl2" onchange="showpagefl(this[this.selectedIndex].value)">
+	<option selected="selected" value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+
+</select>页</div>
+        </div>
+            
+        <div class="clear"></div>
+        
+    </div>
+ </div>
+  <script type="text/javascript">
+    changepoint($('ctl00_ContentPlaceHolder1_searchtypeddl').options[$('ctl00_ContentPlaceHolder1_searchtypeddl').selectedIndex].value);
+    
+ </script>
+ 
+ </form>
+
+    </div>
+    <!--版权部分-->
+    <div id="footer">
+			<div class="clearFix footer">		
+				<div class="fl">
+					<img src="images/logo-sulcmis-opac.gif"/>
+				</div>
+				<div class="fl footertext">
+					<span id="ctl00_footertextlbl">Copyright &copy;2008-2009. SULCMIS OPAC 4.01 of Shenzhen University Library.  All rights reserved.<br />版权所有：深圳大学图书馆 E-mail:szulib@szu.edu.cn</span>
+				</div>
+			</div>
+    </div>
+</body>
+<script type="text/javascript">islogout()</script>
+</html>

@@ -13,6 +13,7 @@ using GdutWeixin.Utils;
 
 namespace GdutWeixin.Controllers
 {
+	[SessionState(System.Web.SessionState.SessionStateBehavior.Disabled)]
     public class HomeController : Controller
     {
         public ContentResult Index()

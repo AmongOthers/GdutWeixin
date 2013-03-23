@@ -17,20 +17,23 @@ namespace GdutWeixin.Models.Library
         {
         }
 
-        public static LibrarySearchResponse Create(HttpRequestBase request, string reqFromUserName, string keyword, List<Book> books, string moreUrl)
+        public static LibrarySearchResponse Create(HttpRequestBase request, LibrarySearchResult result)
         {
-            return new LibrarySearchResponse(request, reqFromUserName, keyword, books, moreUrl);
+            return new LibrarySearchResponse(request, result);
         }
 
-        private LibrarySearchResponse(HttpRequestBase request, string reqFromUserName, string keyword, List<Book> books, string moreUrl)
-            : base(reqFromUserName)
+        private LibrarySearchResponse(HttpRequestBase request, LibrarySearchResult result) 
+            : base(result.User)
         {
+			var keyword = result.Keyword;
+			var moreUrl = result.MoreUrl;
+			var books = result.Books;
             var converter = new UrlToAbsConverter(request);
             this.Articles = new List<Article>()
                 {
 					new Article
                     {
-						Title = new StringXmlCDataSection(String.Format("搜索 {0} 的结果", keyword)),
+						Title = new StringXmlCDataSection(String.Format("搜索 {0} 的结果: {1}/{2}页", keyword, result.CurrentPage, result.PageCount)),
 						Description = new StringXmlCDataSection(keyword),
 						PicUrl = new StringXmlCDataSection(converter.Convert("/Content/images/lib.jpg")),
 						Url = new StringXmlCDataSection(moreUrl),
@@ -44,8 +47,7 @@ namespace GdutWeixin.Models.Library
                                        Title = new StringXmlCDataSection(String.Format("[{0} {1}/{2}] {3} ({4})",
                                            book.Index, book.Available, book.Total, book.Title, book.Author)),
                                        Description = new StringXmlCDataSection(keyword),
-                                       PicUrl = new StringXmlCDataSection(converter.Convert("/Content/Images/question_mark.jpg")),
-                                       Url = new StringXmlCDataSection(book.Url)
+                                       Url = new StringXmlCDataSection(getDetailUrl(converter, book.Url))
                                    };
                 this.Articles.AddRange(bookArticles);
                 this.Articles.Add(new Article
@@ -62,6 +64,11 @@ namespace GdutWeixin.Models.Library
 					Title = new StringXmlCDataSection("没有匹配项")
                 });
             }
+        }
+
+        private static string getDetailUrl(UrlToAbsConverter converter, string postfix)
+        {
+            return converter.Convert("/Library/Details?url=" + HttpUtility.UrlEncode(postfix));
         }
     }
 }

@@ -9,7 +9,7 @@ namespace GdutWeixin.Models.Library
 {
     public class LibraryCache
     {
-        public FixedSizedQueue<LibrarySearchResult> mQueue = new FixedSizedQueue<LibrarySearchResult>(100);
+        public FixedSizedQueue<LibrarySearchResult> mQueue = new FixedSizedQueue<LibrarySearchResult>(1000);
 
         public LibrarySearchResult Try2HitByKeyword(string keyword)
         {

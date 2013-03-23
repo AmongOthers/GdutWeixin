@@ -10,7 +10,7 @@ namespace GdutWeixin.Tests
         [TestMethod]
         public void SearchImageFor_isbn()
         {
-            string isbn = "9787111213826";
+            string isbn = "9787111365464";
             var result = BaiduImageSearchEngine.GetInstance().SearchImageFor(isbn);
             Assert.AreEqual("http://t3.baidu.com/it/u=593184092,2598540015&fm=21&gp=0.jpg", result);
         }

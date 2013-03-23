@@ -11,5 +11,7 @@ namespace GdutWeixin.Models.Library
         public string User { get; set; }
         public List<Book> Books { get; set; }
         public string MoreUrl { get; set; }
+        public int PageCount { get; set; }
+        public int CurrentPage { get; set; }
     }
 }

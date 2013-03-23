@@ -13,14 +13,5 @@ namespace GdutWeixin.Tests
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
         }
-
-        [TestMethod]
-        public void Parse()
-        {
-            var html = File.OpenRead("example.html");
-            var books = LibraryTableResult.Parse(html);
-            Assert.IsTrue(books.Count > 0);
-            Assert.IsTrue(books[0].Url != null);
-        }
     }
 }

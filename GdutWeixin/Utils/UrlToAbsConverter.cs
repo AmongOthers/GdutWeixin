@@ -16,11 +16,14 @@ namespace GdutWeixin.Utils
 
         public string Convert(string url)
         {
-            return string.Format("{0}://{1}{2}",
+            return string.Format("{0}://{1}{2}{3}",
                 mRequest.IsSecureConnection ? "https" : "http",
                 mRequest.Url.Host,
-				//不用解释Port，因为Url的Host不会因为重定向而变换，但是Port却会
-                //mRequest.Url.Port == 80 ? "" : ":" + mRequest.Url.Port.ToString(),
+#if DEBUG
+                mRequest.Url.Host.StartsWith("localhost") ? ":" + mRequest.Url.Port.ToString() : "",
+#else 
+				"", 
+#endif
                 VirtualPathUtility.ToAbsolute(url));
         }
     }

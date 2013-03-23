@@ -146,7 +146,9 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaiduImageSearchEngine.cs" />
-    <Compile Include="Models\Library\BookDetails.cs" />
+    <Compile Include="Models\Library\BookCardInfo.cs" />
+    <Compile Include="Models\Library\BookInfo.cs" />
+    <Compile Include="Models\Library\DeptInfo.cs" />
     <Compile Include="Models\Library\LibrarySearchResponse.cs" />
     <Compile Include="Models\Library\LibrarySearchResult.cs" />
     <Compile Include="Models\Library\LibraryTableResult.cs" />
@@ -168,6 +170,8 @@
     <Compile Include="Utils\UrlToAbsConverter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bookinfo_exmaple.txt" />
+    <Content Include="Content\Details.css" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\ajax-loader.png" />
     <Content Include="Content\images\arrow.png" />
@@ -281,6 +285,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Library\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

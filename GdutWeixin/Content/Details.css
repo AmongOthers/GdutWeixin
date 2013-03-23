@@ -1,0 +1,14 @@
+.available
+{
+	color: green;
+}
+
+.lent
+{
+	color: red;
+}
+
+.readonly
+{
+	color: gray;
+}

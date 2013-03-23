@@ -13,29 +13,7 @@ namespace GdutWeixin.Models.Library
 	[XmlRoot("tbody")]
     public class LibraryTableResult
     {
-		static readonly Regex TBODY_REGEX = new Regex("<tbody>[\\s\\S]+</tbody>");
-
-        public static List<Book> Parse(Stream html)
-        {
-            string content;
-            using (var reader = new StreamReader(html))
-            {
-                content = reader.ReadToEnd();
-            }
-            Match match;
-            if (!String.IsNullOrEmpty(content) &&
-                (match = TBODY_REGEX.Match(content)).Success)
-            {
-                var tbody = match.Groups[0].ToString();
-                return parseTbody(tbody);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private static List<Book> parseTbody(string tbody)
+        public static List<Book> Parse(string tbody)
         {
             List<Book> books = new List<Book>();
             Book book = null;
@@ -60,7 +38,7 @@ namespace GdutWeixin.Models.Library
                             }
                             else if (reader.Name == "a")
                             {
-                                book.Url = getDetailUrl(reader.GetAttribute("href"));
+                                book.Url = reader.GetAttribute("href");
                             }
                             break;
                         case XmlNodeType.Text:
@@ -106,11 +84,6 @@ namespace GdutWeixin.Models.Library
                 }
             }
             return books;
-        }
-
-        private static string getDetailUrl(string postfix)
-        {
-            return "http://222.200.98.171:81/" + postfix;
         }
    }
 }

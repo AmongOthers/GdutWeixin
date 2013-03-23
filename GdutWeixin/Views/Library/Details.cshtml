@@ -1,0 +1,50 @@
+﻿@model GdutWeixin.Models.Library.BookInfo
+
+@{
+    ViewBag.Title = "详细信息";
+}
+
+@section Header {
+	<h1>@ViewBag.Title</h1>
+}
+
+@section Styles {
+    <link href="@Url.Content("~/Content/Details.css")" rel="stylesheet" type="text/css" />
+}
+
+<div>
+	<div data-role="collapsible-set">
+
+		<div data-role="collapsible" data-collapsed="false">
+			<h3>基本信息</h3>
+			<p>
+				<label>标题: </label><label>@Model.CardInfo.Title</label><br />
+				<label>作者: </label><label>@Model.CardInfo.Author</label><br />
+				<label>出版社: </label><label>@Model.CardInfo.Publisher</label><br />
+				<label>ISBN: </label><label>@Model.CardInfo.Isbn</label><br />
+			</p>
+		</div>
+	
+		<div data-role="collapsible">
+			<h3>内容简介</h3>
+			<p>@Model.CardInfo.Content</p>
+		</div>
+
+		<div data-role="collapsible">
+			<h3>馆藏信息(@Model.DeptInfos[0].Index)</h3>
+			<p>
+				<div data-role="content">  
+				<ul data-role="listview" data-inset="true">  
+					@foreach (GdutWeixin.Models.Library.DeptInfo deptInfo in @Model.DeptInfos) {
+						<li>
+							<span>@deptInfo.DeptPlace</span>
+							<span class="ui-li-count @deptInfo.StatusCode">@deptInfo.Status</span>
+						</li>  
+					}
+				</ul>  
+				</div>  
+			</p>
+		</div>
+
+	</div>
+</div>
