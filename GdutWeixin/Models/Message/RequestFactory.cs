@@ -25,6 +25,11 @@ namespace GdutWeixin.Models.Message
                     serializer = new XmlSerializer(typeof(ImageRequest));
                     return serializer.Deserialize(ms) as ImageRequest;
                 }
+                else if (msg.IndexOf("<MsgType><![CDATA[event]]></MsgType>") >= 0)
+                {
+                    serializer = new XmlSerializer(typeof(EventRequest));
+                    return serializer.Deserialize(ms) as EventRequest;
+                }
                 else
                 {
                     return null;

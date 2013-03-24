@@ -2,13 +2,24 @@
     ViewBag.Title = "About";
 }
 
-<h2>关于</h2>
-<p>
-     将内容放置在此处。
-</p>
+@section Header {
+	<h1>@ViewBag.Title</h1>
+}
 
-<ul data-role="listview" data-inset="true">
-    <li data-role="list-divider">导航</li>
-    <li>@Html.ActionLink("主页", "Index", "Home")</li>
-    <li>@Html.ActionLink("联系方式", "Contact", "Home")</li>
-</ul>
+<div data-role="collapsible-set">
+
+    <div data-role="collapsible" data-collapsed="false">
+        <h3>关于乐搜</h3>
+        <p>
+            <label>@ViewBag.About</label><br />
+            <label>联系方式: </label><br />
+            <label>@ViewBag.Contact</label>
+        </p>
+    </div>
+
+    <div data-role="collapsible">
+        <h3>功能简介</h3>
+        <p>@ViewBag.Func</p>
+    </div>
+
+</div>

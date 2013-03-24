@@ -63,16 +63,20 @@ namespace GdutWeixin.Controllers
                 var req = reqMsg as TextRequest;
 				var keyword = req.Content;
 
-                ApplicationLogger.GetLogger().Info(String.Format("{0} send {1}", user, keyword));
-
 				//表情的过滤
                 if (keyword.StartsWith("/:"))
                 {
                     return Content(new TextResponse(user, keyword).ToString());
                 }
+				//留言建议
                 else if (keyword.StartsWith("@"))
                 {
                     return Content(new TextResponse(user, " /::)") { FuncFlag = 1 }.ToString());
+                }
+				//关注
+                else if (keyword == "Hello2BizUser")
+                {
+                    return onSubscribed(reqMsg);
                 }
 
                 LibrarySearchOption option;
@@ -86,10 +90,36 @@ namespace GdutWeixin.Controllers
                     return Content(new TextResponse(user, errMsg).ToString());
                 }
             }
-			else
+            else if (reqMsg is EventRequest)
+            {
+                var req = reqMsg as EventRequest;
+                if (req.Event == "subscribe")
+                {
+                    return onSubscribed(req);
+                }
+                else if (req.Event == "unsubscribe")
+                {
+                    return onUnsubscribed(req);
+                }
+                else
+                {
+					return Content(new TextResponse(user, "暂未支持，敬请期待").ToString());
+                }
+            }
+            else
             {
                 return Content(new TextResponse(user, "暂未支持，敬请期待").ToString());
             }
+        }
+
+        private ContentResult onSubscribed(WeixinRequest reqMsg)
+        {
+            return Content(new TextResponse(reqMsg.FromUserName, Consts.WELCOME).ToString());
+        }
+
+        private ContentResult onUnsubscribed(EventRequest reqMsg)
+        {
+            return Content(new TextResponse(reqMsg.FromUserName, Consts.GOODBYE).ToString());
         }
 
         public RedirectResult Image()
@@ -99,10 +129,9 @@ namespace GdutWeixin.Controllers
 
         public ActionResult About()
         {
-            ApplicationLogger.GetLogger().Info("About visited");
-
-            ViewBag.Message = "你的应用程序说明页。";
-
+            ViewData["About"] = Consts.ABOUT;
+			ViewData["Contact"] = Consts.CONTACT;
+			ViewData["Func"] = Consts.FUNC;
             return View();
         }
 

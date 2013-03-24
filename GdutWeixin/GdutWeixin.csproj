@@ -146,6 +146,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaiduImageSearchEngine.cs" />
+    <Compile Include="Models\Consts.cs" />
     <Compile Include="Models\Library\BookCardInfo.cs" />
     <Compile Include="Models\Library\BookInfo.cs" />
     <Compile Include="Models\Library\DeptInfo.cs" />
@@ -154,11 +155,12 @@
     <Compile Include="Models\Library\LibrarySearchResult.cs" />
     <Compile Include="Models\Library\LibraryTableResult.cs" />
     <Compile Include="Models\Library\UserCommand.cs" />
+    <Compile Include="Models\Message\EventRequest.cs" />
     <Compile Include="Models\Message\ImageRequest.cs" />
     <Compile Include="Models\Message\NewsResponse.cs" />
-    <Compile Include="Models\Message\Request.cs" />
+    <Compile Include="Models\Message\WeixinRequest.cs" />
     <Compile Include="Models\Message\RequestFactory.cs" />
-    <Compile Include="Models\Message\Response.cs" />
+    <Compile Include="Models\Message\WeixinResponse.cs" />
     <Compile Include="Models\Message\TextRequest.cs" />
     <Compile Include="Models\Message\TextResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,13 +178,19 @@
     <Content Include="Content\Details.css" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\ajax-loader.png" />
-    <Content Include="Content\images\arrow.png" />
+    <Content Include="Content\images\green_circle.png" />
+    <Content Include="Content\images\red_circle.png" />
+    <Content Include="Content\images\frog.jpg" />
+    <Content Include="Content\images\green_btn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\images\icons-18-black.png" />
     <Content Include="Content\images\icons-18-white.png" />
     <Content Include="Content\images\icons-36-black.png" />
     <Content Include="Content\images\icons-36-white.png" />
     <Content Include="Content\images\lib.jpg" />
     <Content Include="Content\images\question_mark.jpg" />
+    <Content Include="Content\images\red_btn.png" />
     <Content Include="Content\jquery.mobile-1.1.0.css" />
     <Content Include="Content\jquery.mobile-1.1.0.min.css" />
     <Content Include="Content\jquery.mobile.structure-1.1.0.css" />
