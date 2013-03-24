@@ -149,9 +149,11 @@
     <Compile Include="Models\Library\BookCardInfo.cs" />
     <Compile Include="Models\Library\BookInfo.cs" />
     <Compile Include="Models\Library\DeptInfo.cs" />
+    <Compile Include="Models\Library\LibrarySearchOption.cs" />
     <Compile Include="Models\Library\LibrarySearchResponse.cs" />
     <Compile Include="Models\Library\LibrarySearchResult.cs" />
     <Compile Include="Models\Library\LibraryTableResult.cs" />
+    <Compile Include="Models\Library\UserCommand.cs" />
     <Compile Include="Models\Message\ImageRequest.cs" />
     <Compile Include="Models\Message\NewsResponse.cs" />
     <Compile Include="Models\Message\Request.cs" />

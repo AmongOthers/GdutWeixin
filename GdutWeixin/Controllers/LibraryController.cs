@@ -30,7 +30,11 @@ namespace GdutWeixin.Controllers
             //var keyword = Request["keyword"];
             var keyword = "thinking in java";
             var user = Request["user"];
-            return Library.GetInstance().GetRspForSearch(Request, user, keyword);
+            return Library.GetInstance().GetRspForSearch(Request, new LibrarySearchOption
+            {
+				Keyword = keyword,
+				User = user
+            });
         }
 
         public RedirectResult Conver()

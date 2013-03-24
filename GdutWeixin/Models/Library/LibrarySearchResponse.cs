@@ -22,6 +22,8 @@ namespace GdutWeixin.Models.Library
             return new LibrarySearchResponse(request, result);
         }
 
+		const string CMD = ".r (超时重试); .n(下一页); .p(上一页); . + 数字(快速翻页); @ + 信息(留言）; 测试中，欢迎拍砖吐槽";
+
         private LibrarySearchResponse(HttpRequestBase request, LibrarySearchResult result) 
             : base(result.User)
         {
@@ -47,6 +49,9 @@ namespace GdutWeixin.Models.Library
                                        Title = new StringXmlCDataSection(String.Format("[{0} {1}/{2}] {3} ({4})",
                                            book.Index, book.Available, book.Total, book.Title, book.Author)),
                                        Description = new StringXmlCDataSection(keyword),
+									   PicUrl = book.Available > 0 ?
+										   new StringXmlCDataSection(converter.Convert("/Content/Images/green.png")) :
+										   new StringXmlCDataSection(converter.Convert("/Content/Images/red.png")),
                                        Url = new StringXmlCDataSection(getDetailUrl(converter, book.Url))
                                    };
                 this.Articles.AddRange(bookArticles);

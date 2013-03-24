@@ -57,16 +57,38 @@ namespace GdutWeixin.Controllers
 
         private ContentResult onWeixinRequestReceived(WeixinRequest reqMsg)
         {
+			var user = reqMsg.FromUserName;
             if (reqMsg is TextRequest)
             {
                 var req = reqMsg as TextRequest;
-                var user = reqMsg.FromUserName;
 				var keyword = req.Content;
-                return Content(Library.GetInstance().GetRspForSearch(Request, user, keyword).ToString());
+
+                ApplicationLogger.GetLogger().Info(String.Format("{0} send {1}", user, keyword));
+
+				//表情的过滤
+                if (keyword.StartsWith("/:"))
+                {
+                    return Content(new TextResponse(user, keyword).ToString());
+                }
+                else if (keyword.StartsWith("@"))
+                {
+                    return Content(new TextResponse(user, " /::)") { FuncFlag = 1 }.ToString());
+                }
+
+                LibrarySearchOption option;
+                string errMsg;
+                if (UserCommand.GetInstance().OnMessage(user, keyword, out option, out errMsg))
+                {
+                    return Content(Library.GetInstance().GetRspForSearch(Request, option).ToString());
+                }
+                else
+                {
+                    return Content(new TextResponse(user, errMsg).ToString());
+                }
             }
 			else
             {
-                return Content("暂未支持");
+                return Content(new TextResponse(user, "暂未支持，敬请期待").ToString());
             }
         }
 

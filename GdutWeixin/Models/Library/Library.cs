@@ -18,7 +18,7 @@ namespace GdutWeixin.Models.Library
 {
     public class Library
     {
-        private LibraryCache mCache = new LibraryCache();
+        private LibraryCache mResultCache = new LibraryCache(10 * 1000);
 
         public static Library sInstance = null;
         public static Library GetInstance()
@@ -26,56 +26,25 @@ namespace GdutWeixin.Models.Library
             return sInstance == null ? (sInstance = new Library()) : sInstance;
         }
 
-        public class LibrarySearchOption
-        {
-            public class DeptPlaceOption
-            {
-                public const string ALL = "ALL";
-                //东风路校区
-                public const string DONGFENGLU = "578";
-            }
-
-            public class LanguageOption
-            {
-                public const string All = "ALL";
-                public const string Chinese = "1";
-                public const string English = "2";
-            }
-
-            public string DeptPlace { get; set; }
-            public string Language { get; set; }
-            public int Page { get; set; }
-
-            public LibrarySearchOption()
-            {
-                DeptPlace = DeptPlaceOption.ALL;
-                Language = LanguageOption.Chinese;
-                Page = 1;
-            }
-        }
-
         static readonly LibrarySearchOption DEFAULT = new LibrarySearchOption();
 
-        public string GetRspForSearch(HttpRequestBase request, string user, string keyword)
+        public string GetRspForSearch(HttpRequestBase request, LibrarySearchOption option)
         {
             WeixinResponse rsp = null;
             object error;
             var libStopwatch = Stopwatch.StartNew();
-            var result = Library.GetInstance().SearchBooksFor(user, keyword, out error);
+            var result = Library.GetInstance().SearchBooksFor(option, out error);
             if (error == null)
             {
                 libStopwatch.Stop();
                 rsp = LibrarySearchResponse.Create(request, result);
                 ApplicationLogger.GetLogger().Info(String.Format("search library with {0} consume {1} ms",
-                    keyword,
+                    option.Keyword,
                     libStopwatch.ElapsedMilliseconds));
             }
             else
             {
-                rsp = new TextResponse(user)
-                {
-                    Content = new WeixinResponse.StringXmlCDataSection(String.Format("查询出错： {0}", error))
-                };
+                rsp = new TextResponse(option.User, String.Format("查询出错： {0}", error));
             }
             return rsp.ToString();
         }
@@ -83,11 +52,14 @@ namespace GdutWeixin.Models.Library
         static readonly Regex TBODY_REGEX = new Regex("<tbody>[\\s\\S]+</tbody>");
         static readonly Regex PAGE_COUNT_REGEX = new Regex("<span id=\"ctl00_ContentPlaceHolder1_gplblfl1\">([0-9]+)</span>");
 
-        public LibrarySearchResult SearchBooksFor(string user, string keyword, out object error, LibrarySearchOption option = null)
+        public LibrarySearchResult SearchBooksFor(LibrarySearchOption option, out object error)
         {
             error = null;
+            var user = option.User;
+			var keyword = option.Keyword;
+			var page = option.Page;
             LibrarySearchResult cached;
-            if ((cached = mCache.Try2HitByKeyword(keyword)) != null)
+            if ((cached = mResultCache.Try2Hit(keyword, page)) != null)
             {
                 return cached;
             }
@@ -109,7 +81,9 @@ namespace GdutWeixin.Models.Library
                                 PageCount = pageCount,
 								CurrentPage = option.Page
                             };
-                mCache.Push(cached);
+				//记录查询结果的总页数
+                option.PageCount = pageCount;
+                mResultCache.Push(cached);
                 return cached;
             }
             catch (WebException e)

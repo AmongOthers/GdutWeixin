@@ -9,17 +9,23 @@ namespace GdutWeixin.Models.Library
 {
     public class LibraryCache
     {
-        public FixedSizedQueue<LibrarySearchResult> mQueue = new FixedSizedQueue<LibrarySearchResult>(1000);
+        FixedSizedQueue<LibrarySearchResult> mQueue;
 
-        public LibrarySearchResult Try2HitByKeyword(string keyword)
+        public LibraryCache(int size)
         {
-            var result = (from cache in mQueue where cache.Keyword == keyword select cache).FirstOrDefault();
+			mQueue = new FixedSizedQueue<LibrarySearchResult>(size);
+        }
+
+        public LibrarySearchResult Try2Hit(string keyword, int page)
+        {
+            var cacheKeyword = LibrarySearchResult.GenCacheKeyword(keyword, page);
+            var result = (from cache in mQueue where cache.CacheKeyword == cacheKeyword select cache).FirstOrDefault();
             return result;
         }
 
         public void Push(LibrarySearchResult result)
         {
-			if(Try2HitByKeyword(result.Keyword) == null)
+			if(Try2Hit(result.Keyword, result.CurrentPage) == null)
             {
 				mQueue.Enqueue(result);
             }

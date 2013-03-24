@@ -16,9 +16,10 @@ namespace GdutWeixin.Models.Message
         {
         }
 
-        public TextResponse(string reqFromUserName)
+        public TextResponse(string reqFromUserName, string content)
 			: base(reqFromUserName)
         {
+            Content = new StringXmlCDataSection(content);
             MsgType = new WeixinResponse.StringXmlCDataSection("text");
         }
     }
