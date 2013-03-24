@@ -43,7 +43,7 @@ namespace GdutWeixin.Models.Message
         public WeixinResponse(string reqFromUserName)
         {
             ToUserName = new StringXmlCDataSection(reqFromUserName);
-            FromUserName = new StringXmlCDataSection("tv_search");
+            FromUserName = new StringXmlCDataSection("loneso");
             CreateTime = Utils.DateTimeHelper.Timestamp(DateTime.Now).ToString();
         }
 

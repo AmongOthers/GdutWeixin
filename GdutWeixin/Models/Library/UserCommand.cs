@@ -23,7 +23,7 @@ namespace GdutWeixin.Models.Library
          * .p 上一页
 		 * .num 快速翻页
          */
-        static readonly Regex QUICK_PAGE_REGEX = new Regex("\\.([0-9])+");
+        static readonly Regex QUICK_PAGE_REGEX = new Regex("\\.([0-9]+)");
         bool isQuickPage(string msg, out int page)
         {
             page = -1;

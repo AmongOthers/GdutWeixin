@@ -8,7 +8,7 @@ namespace GdutWeixin.Utils
 {
     public class CheckSignature
     {
-        public static readonly string Token = "highschoolweixin";//必须和公众平台的token设置一致，或在方法中指定
+        public static readonly string Token = "loneso";//必须和公众平台的token设置一致，或在方法中指定
 
         /// <summary>
         /// 检查签名是否正确
