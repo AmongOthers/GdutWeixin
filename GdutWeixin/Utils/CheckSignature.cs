@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using GdutWeixin.Models;
 
 namespace GdutWeixin.Utils
 {
     public class CheckSignature
     {
-        public static readonly string Token = "loneso";//必须和公众平台的token设置一致，或在方法中指定
-
         /// <summary>
         /// 检查签名是否正确
         /// </summary>
@@ -32,7 +31,7 @@ namespace GdutWeixin.Utils
         /// <returns></returns>
         public static string GetSignature(string timestamp, string nonce, string token = null)
         {
-            token = token ?? Token;
+            token = token ?? Consts.TOKEN;
             var arr = new[] { token, timestamp, nonce }.OrderBy(z => z).ToArray();
             var arrString = string.Join("", arr);
             //var enText = FormsAuthentication.HashPasswordForStoringInConfigFile(arrString, "SHA1");//使用System.Web.Security程序集

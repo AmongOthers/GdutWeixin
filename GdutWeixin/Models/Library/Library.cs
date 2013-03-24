@@ -62,6 +62,7 @@ namespace GdutWeixin.Models.Library
             LibrarySearchResult cached;
             if ((cached = mResultCache.Try2Hit(keyword, page)) != null)
             {
+                option.PageCount = cached.PageCount;
                 return cached;
             }
             option = option == null ? DEFAULT : option;
