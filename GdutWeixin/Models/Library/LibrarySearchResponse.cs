@@ -22,7 +22,7 @@ namespace GdutWeixin.Models.Library
             return new LibrarySearchResponse(request, result);
         }
 
-		const string CMD = "命令： .r (超时重试); .n(下一页); .p(上一页); . + 数字(快速翻页); @ + 信息(留言, 欢迎拍砖吐槽)";
+		const string CMD = "命令： \".\" + r (超时重试); \".\" + n(下一页); \".\" + p(上一页); \".\" + 数字(快速翻页); @ + 信息(留言, 欢迎拍砖吐槽)";
 
         private LibrarySearchResponse(HttpRequestBase request, LibrarySearchResult result) 
             : base(result.User)
@@ -38,7 +38,7 @@ namespace GdutWeixin.Models.Library
 						Title = new StringXmlCDataSection(String.Format("搜索 {0} 的结果: {1}/{2}页", keyword, result.CurrentPage, result.PageCount)),
 						Description = new StringXmlCDataSection(keyword),
 						PicUrl = new StringXmlCDataSection(converter.Convert("/Content/images/lib.jpg")),
-						Url = new StringXmlCDataSection(moreUrl),
+						Url = new StringXmlCDataSection(converter.Convert("/Home/About")),
                     }
                 };
             if (books != null && books.Count > 0)

@@ -172,6 +172,7 @@
     <Compile Include="Models\Library\Library.cs" />
     <Compile Include="Models\Library\LibraryCache.cs" />
     <Compile Include="Utils\UrlToAbsConverter.cs" />
+    <Compile Include="Utils\XmlEncoder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bookinfo_exmaple.txt" />

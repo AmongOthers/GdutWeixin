@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Xml;
+using GdutWeixin.Utils;
 
 namespace GdutWeixin.Models.Library
 {
@@ -91,6 +92,8 @@ namespace GdutWeixin.Models.Library
 				//reset
                 mDeptInfos = new List<DeptInfo>();
 
+                content = HtmlEntityCorrect.Encode(content);
+
                 using (mReader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(content))))
                 {
                     DeptInfo deptInfo = null;
@@ -107,7 +110,7 @@ namespace GdutWeixin.Models.Library
                             }
                             else if (mReader.Name == "a")
                             {
-                                deptInfo.DeptPlace = mReader.ReadString().Trim();
+                                deptInfo.DeptPlace = HtmlEntityCorrect.Decode(mReader.ReadString().Trim());
 								mState = DeptInfoBuilderState.Index;
                             }
                             else if (mReader.Name == "td")
@@ -115,27 +118,27 @@ namespace GdutWeixin.Models.Library
                                 switch (mState)
                                 {
                                     case DeptInfoBuilderState.Index:
-                                        deptInfo.Index = mReader.ReadString().Trim();
+                                        deptInfo.Index = HtmlEntityCorrect.Decode(mReader.ReadString()).Trim();
                                         mState = DeptInfoBuilderState.Register;
                                         break;
                                     case DeptInfoBuilderState.Register:
-                                        deptInfo.Register = mReader.ReadString().Trim();
+                                        deptInfo.Register = HtmlEntityCorrect.Decode(mReader.ReadString()).Trim();
                                         mState = DeptInfoBuilderState.Volume;
                                         break;
                                     case DeptInfoBuilderState.Volume:
-                                        deptInfo.Volume = mReader.ReadString().Trim();
+                                        deptInfo.Volume = HtmlEntityCorrect.Decode(mReader.ReadString()).Trim();
                                         mState = DeptInfoBuilderState.Year;
                                         break;
                                     case DeptInfoBuilderState.Year:
-                                        deptInfo.Year = mReader.ReadString().Trim();
+                                        deptInfo.Year = HtmlEntityCorrect.Decode(mReader.ReadString()).Trim();
                                         mState = DeptInfoBuilderState.Status;
                                         break;
                                     case DeptInfoBuilderState.Status:
-                                        deptInfo.Status = mReader.ReadString().Trim();
+                                        deptInfo.Status = HtmlEntityCorrect.Decode(mReader.ReadString()).Trim();
                                         mState = DeptInfoBuilderState.Type;
                                         break;
                                     case DeptInfoBuilderState.Type:
-                                        deptInfo.Type = mReader.ReadString().Trim();
+                                        deptInfo.Type = HtmlEntityCorrect.Decode(mReader.ReadString()).Trim();
                                         mState = DeptInfoBuilderState.Other;
                                         break;
                                     default:

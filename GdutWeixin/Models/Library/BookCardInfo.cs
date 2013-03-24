@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
+using GdutWeixin.Utils;
 
 namespace GdutWeixin.Models.Library
 {
@@ -51,6 +52,7 @@ namespace GdutWeixin.Models.Library
                 mContentAndIsbnTexts.Clear();
 
                 content = HREF_REGEX.Replace(content, "");
+                content = HtmlEntityCorrect.Encode(content);
                 using (mReader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(content))))
                 {
                     while (mReader.Read())
@@ -58,10 +60,10 @@ namespace GdutWeixin.Models.Library
                         switch (mReader.NodeType)
                         {
 							case XmlNodeType.Text:
-                                this.onText(mReader.Value);
+                                this.onText(HtmlEntityCorrect.Decode(mReader.Value));
                                 break;
                             case XmlNodeType.Element:
-                                this.onElement(mReader.Name);
+                                this.onElement(HtmlEntityCorrect.Decode(mReader.Name));
                                 break;
                         }
                     }
@@ -145,7 +147,7 @@ namespace GdutWeixin.Models.Library
                 switch (mState)
                 {
                     case BookCardInfoBuilderState.Publisher:
-                        mBookCardInfo.Publisher = mReader.ReadString();
+                        mBookCardInfo.Publisher = HtmlEntityCorrect.Decode(mReader.ReadString());
                         mState = BookCardInfoBuilderState.ContentAndIsbn_Br;
                         break;
 					//遇到第二个a元素则内容和ISBN结束

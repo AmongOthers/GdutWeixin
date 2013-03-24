@@ -1,0 +1,1121 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head><title>
+	广东工业大学图书馆书目检索系统 简单检索
+</title><link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/prototype.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/autocomplete.js"></script>
+    <script type="text/javascript">
+        var _islog = false;
+        var _suburl = "";
+        var shurl = _suburl + "user/mysearchhistory.aspx";
+        function ilogin()
+        {
+            new internallogin(iloginsuccess,_suburl);
+        }
+        function islogin()
+        {
+            $('islogoutspan').hide();
+            $('isloginspan').show();
+            $('loginmsg').show();
+            _islog = true;
+            /*更新评分信息*/
+            if ($('pingfencontent') != null)
+                getscore();
+           /*更新检索历史提示登录信息*/
+           if ($('sh_login_hint') != null)
+                $('sh_login_hint').hide();
+            /*如果是bookinfo则显示预约信息*/
+            var url1 = window.location.pathname;
+            if (url1.indexOf("bookinfo.aspx") >=0 )
+            {
+                //检查系统预约参数
+                if(0 == 0)
+                {
+                    listbookwithresv();
+                }
+            }
+        }
+        function islogout()
+        {
+            $('islogoutspan').show();
+            $('isloginspan').hide();
+            $('loginmsg').hide();
+            _islog = false;
+        }
+        function iloginsuccess()
+        {
+            var wurl = window.location.href;
+            var rurlIndex;
+            if ((rurlIndex = wurl.indexOf("login.aspx?ReturnUrl=")) != -1)
+            {
+                var rurl = decodeURIComponent(wurl.substr(rurlIndex + 21));
+                if (isie())
+                    window.location.href = rurl;
+            }
+            islogin();
+//            if (getscore != undefined && getscore != null && typeof getscore == 'function')
+//                getscore();
+        }
+        function iloginforsh()
+        {
+            islogin();
+            gotosh();
+        }
+        function ilogout()
+        {
+            internallogout(null,_suburl);
+            _islog = false;
+        }
+        function ilogout_callback()
+        {
+            islogout();
+        }
+        function gotosh()
+        {
+           if (_islog == false)
+           {
+                new internallogin(iloginforsh,_suburl);
+           }
+           else
+           {
+                window.location.href = shurl;
+           } 
+        }
+    </script>
+</head>
+<body>
+    
+    <!-- 头部-->
+    <div id="header" class="clearFix">
+        <div id="headerlogo">
+            <img id="ctl00_headerimg" src="images/headeropac4gif.gif" style="border-width:0px;" />
+        </div>
+        <div id="headertext">
+            <span id="ctl00_sitenamelbl">广东工业大学图书馆书目检索系统</span>
+        </div>
+        <div id="headermenu" class="clearFix" style="width:45%">
+            <div class="fl" style="width:56%">
+                        <span id="loginmsg" style="display:none;">
+                <!--<marquee width="150px" align="middle" behavior="scroll" scrollamount="2"></marquee>-->
+                登录成功。 如果您使用的是公共电脑，请在使用完毕后，务必退出登录，切记！
+            </span>
+            </div>
+            <div class="fr" style="width:42%">
+            &nbsp;<span id="islogoutspan" style="display:none"><a href="javascript:void(0)" onclick="ilogin()" class="redlink">登录</a></span>
+            <span id="isloginspan" style="display:none">
+
+            <a href="javascript:void(0)" onclick="ilogout()" class="redlink">退出</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            <a href="javascript:gotosh()">我的检索历史</a>
+            <br />
+            今天是&nbsp;&nbsp;&nbsp;&nbsp;<span id="ctl00_nowlbl">2013年03月24日  星期日</span>
+            </div>
+        </div>
+        
+    </div>
+    <!--内容-->
+    <div id="content">
+        
+<script type="text/javascript">
+var autocompleter;
+loadingfacetimg = new Image();
+loadingfacetimg.src = "images/loading.gif";
+var loadingfacet = "<div><span style=\"color:#f87600\"><img id=\"loadingfacetimg\" src=\"\"/>&nbsp;正在载入,请稍候...</span></div>";
+var searchurl = "";
+function gotopage(p)
+{
+    
+}
+function changepoint(pointvalue)
+{
+    if (autocompleter != null)
+    {
+        autocompleter._url = 'showsearchsuggestionAjax.aspx?st='+pointvalue;
+    }
+    else
+    {
+       new AutoCompleter('acdiv','ctl00_ContentPlaceHolder1_keywordstb','showsearchsuggestionAjax.aspx?st='+pointvalue);
+    }
+}
+function checkForResearch()
+{
+    if (!check())
+            return false;
+    createLoadingDiv("正在检索，请稍候...");
+    return true;
+}
+function check()
+{
+    if ($F('ctl00_ContentPlaceHolder1_keywordstb').strip().length < 1)
+    {
+        $('ctl00_ContentPlaceHolder1_keywordstb').innerText = '';
+        $('ctl00_ContentPlaceHolder1_keywordstb').focus();
+        return false;
+    }
+    else
+    {
+        createLoadingDiv("正在检索，请稍候...");
+        return true;
+    }
+}
+function pailie(page)
+{
+    if (searchurl == "")
+        searchurl = $F('ctl00_ContentPlaceHolder1_thissearchhf')
+    var sfvalue = $('sortddl').options[$('sortddl').selectedIndex].value;
+    var obvalue = $('orderbyddl').options[$('orderbyddl').selectedIndex].value;
+    var tmpparams = searchurl;
+    var sf_reg = new RegExp("sf=[^&]*","ig");
+    var ob_reg = new RegExp("ob=[^&]*","ig");
+    tmpparams = tmpparams.replace(sf_reg,"sf=" + sfvalue);
+    tmpparams = tmpparams.replace(ob_reg,"ob=" + obvalue);
+    searchurl = tmpparams;
+    showpagefl(page);
+}
+var loadingForHandleDiv;
+var showfacet = function()
+{
+    $('searchfacet').down(0).next(0).innerHTML = loadingfacet;
+    $('loadingfacetimg').src = loadingfacetimg.src;
+    var params = encodeURI($F('ctl00_ContentPlaceHolder1_thissearchhf'));
+    var showfacetAjax = new Ajax.Request(
+        'showfacetforsearchAjax.aspx',
+        {
+            method:'get',
+            parameters:params,
+            onComplete: showfacetResponse
+        }
+    );
+}
+function showfacetResponse(response)
+{
+    var result = response.responseText;
+    var r1 = result.indexOf("<div id=\"searchfacet\">");
+    var r2 = result.lastIndexOf("</div>");
+    if (r1 == -1)
+    {
+         $('searchfacet').down(0).next(0).innerHTML = "";
+    }
+    else
+    {
+        var result2 = result.substr(r1+22,r2-r1-22);
+        $('searchfacet').down(0).next(0).innerHTML = result2;
+    }
+}
+var loadingForHandleFLDiv;
+function showpagefl(page)
+{
+
+    if (searchurl == "")
+        searchurl = $F('ctl00_ContentPlaceHolder1_thissearchhf')
+    loadingForHandleFLDiv = createLoadingDiv("正在处理，请稍候...");
+    var tmpparams = searchurl;
+    var params;
+    var pageexist_reg = new RegExp("page=[0-9]*","ig");
+    if(pageexist_reg.test(tmpparams))
+    {
+        params = tmpparams.replace(pageexist_reg,"page="+page);
+    }
+    else
+    {
+        params = tmpparams + "&page=" + page;
+    }
+    searchurl = params;
+    params = encodeURIComponent(params);
+    var showpageAjax = new Ajax.Request(
+        'showpageforlucenesearchAjax.aspx',
+        {
+            method:'get',
+            parameters:params,
+            onComplete:showpageflResponse
+        }
+    );
+}
+function showpageflResponse(response)
+{
+    var result = response.responseText;
+    var r1 = result.indexOf("<div id=\"searchresultpagefl\">");
+    var r2 = result.lastIndexOf("</div>");
+    if (r1 == -1)
+    {
+        $('searchresultpagefl').innerHTML = '无此记录！';
+    }
+    else
+    {
+        var result2 = result.substr(r1+29,r2-r1-29);
+        $('searchresultpagefl').innerHTML = result2;
+    }
+    loadingForHandleFLDiv.remove();
+}
+var showfacetfl = function()
+{
+    $('searchfacetfl').down(0).next(0).innerHTML = loadingfacet;
+    $('loadingfacetimg').src = loadingfacetimg.src;
+    var params = encodeURIComponent($F('ctl00_ContentPlaceHolder1_thissearchhf'));
+    var showfacetAjax = new Ajax.Request(
+        'showfacetforlucenesearchAjax.aspx',
+        {
+            method:'get',
+            parameters:params,
+            onComplete: showfacetflResponse
+        }
+    );
+}
+function showfacetflResponse(response)
+{
+    var result = response.responseText;
+    var r1 = result.indexOf("<div id=\"searchfacetfl\">");
+    var r2 = result.lastIndexOf("</div>");
+    if (r1 == -1)
+    {
+         $('searchfacetfl').down(0).next(0).innerHTML = "";
+    }
+    else
+    {
+        var result2 = result.substr(r1+24,r2-r1-24);
+        $('searchfacetfl').down(0).next(0).innerHTML = result2;
+    }
+}
+var saveline = 0;
+function savethis(obj)
+{
+    if (obj.checked)
+    {
+        saveline_checkline();
+        //$(obj).up(0).up(0).className = $(obj).up(0).up(0).className + ' selected';
+    }
+    else
+    {
+        saveline_lback();
+        //$(obj).up(0).up(0).className = $(obj).up(0).up(0).className.replace(' selected','');
+    }
+    saveline_showmsg(obj);
+}
+function saveline_checkline()
+{
+    saveline++;
+}
+function saveline_lback()
+{
+    saveline--;
+}
+function saveline_init()
+{
+    saveline=0;
+    $('bodl_detail_msgnote').style.display = 'none'
+}
+function saveline_showmsg(obj)
+{
+    if (saveline <= 0)
+    {
+        $('bodl_detail_msgnote').style.display = 'none';
+        return;
+    }
+    var content = "您当前选择了" + saveline + "条记录<br/>";
+    
+    content += "您可以<a href=\"javascript:ctsavedisk()\" class=\"underline\">保存</a>&nbsp;&nbsp;<a href=\"javascript:ctsendemail()\" class=\"underline\">发Email</a><br/>";
+    
+    content += "<a href=\"javascript:cancelall()\" class=\"underline\">取消已选</a>"
+    $('bodl_detail_msgnote').down(1).innerHTML = content;
+    //orderline_alertmsg() + "<br/><a href=\"javascript:$('').click();\" style=\"text-decoration:underline;\">保存</a>";
+    if ($('bodl_detail_msgnote').style.display == 'none')
+    {
+        $('bodl_detail_msgnote').style.display = '';
+    }
+     var offsets = Position.positionedOffset($(obj));
+     var top = offsets[1];
+     var left = offsets[0];
+     $('bodl_detail_msgnote').style.top = top + "px";
+     $('bodl_detail_msgnote').style.marginLeft = left + 10 + "px";
+} 
+function chooseall(obj)
+{
+    var cbs = document.getElementsByName("searchresult_cb");
+    for (i = 0;i < cbs.length;i++)
+        cbs[i].checked = obj.checked;
+    if (obj.checked)
+    {
+        saveline = cbs.length;
+        saveline_showmsg(obj);
+    }
+    else
+    {
+        saveline = 0;
+        saveline_showmsg(obj);
+    }
+}
+function cancelall()
+{
+    $('searchresult_all_cb').checked = false;
+    var cbs = document.getElementsByName("searchresult_cb");
+    for (i = 0;i < cbs.length;i++)
+        cbs[i].checked = false;
+    saveline = 0;
+    $('bodl_detail_msgnote').style.display = 'none';
+}
+function cancelct()
+{
+    var content = "您当前选择了" + saveline + "条记录<br/>";
+    
+            content += "您可以<a href=\"javascript:ctsavedisk()\" class=\"underline\">保存</a>&nbsp;&nbsp;<a href=\"javascript:ctsendemail()\" class=\"underline\">发Email</a><br/>";
+    
+    content += "<a href=\"javascript:cancelall()\" class=\"underline\">取消已选</a>"
+    $('bodl_detail_msgnote').down(1).innerHTML = content;
+}
+function ctsendemail()
+{
+    var content = "我的邮箱:<br/><input type=\"text\" name=\"emailtb\" id=\"emailtb\" size=18><br/>";
+    content += "<a href=\"javascript:sendemail()\" class=\"underline\">发送</a>&nbsp;&nbsp;<a href=\"javascript:cancelct()\" class=\"underline\">取消</a>";
+    $('bodl_detail_msgnote').down(1).innerHTML = content;
+    $('emailtb').focus();
+}
+function ctsavedisk()
+{
+    var content = "请选择文件类型：<br/><select id=\"savefileselect\"><option value=\"excel\">excel</option><option value=\"txt\">txt</option></select>";
+    content += "&nbsp;&nbsp;<a href=\"javascript:savedisk()\" class=\"underline\">保存</a>&nbsp;&nbsp;<a href=\"javascript:cancelct()\" class=\"underline\">取消</a>";
+    $('bodl_detail_msgnote').down(1).innerHTML = content;
+}
+function getallselected()
+{
+    var result = '';
+    var cbs = document.getElementsByName("searchresult_cb");
+    for (i = 0;i < cbs.length;i++)
+        if (cbs[i].checked)
+            result += cbs[i].value + ",";
+    return result;
+}
+var loadingForSaveDiv;
+function sendemail()
+{
+    loadingForSaveDiv = createLoadingDiv("正在处理，请稍候...");
+    var params = "c=" + getallselected() + "&e=" + $('emailtb').value + "&l=-1";
+    var showfacetAjax = new Ajax.Request(
+        'sendemailforsearchresultAjax.aspx',
+        {
+            method:'get',
+            parameters:params,
+            onComplete: sendemailResponse
+        }
+    );
+}
+function sendemailResponse(response)
+{
+    var result = response.responseText;
+    loadingForSaveDiv.remove();
+    if (result == "1")
+    {
+        alert("已发送到您的邮箱，请注意查收！");
+    }
+    else
+    {
+        alert("发送失败！");
+    }
+    cancelct();
+}
+function savedisk()
+{
+    var filetype = $('savefileselect').options[$('savefileselect').selectedIndex].value;
+    var exporturl = "exportsearchresult.aspx?c=" + getallselected() + "&ft=" + filetype + "&l=-1";
+    window.open(exporturl);
+}
+function showdetailfacet(obj)
+{
+    if ($(obj).innerHTML == '收起')
+    {
+        $(obj).up(0).next(0).hide();
+        $(obj).innerHTML = '展开';
+    }
+    else
+    {
+        $(obj).up(0).next(0).show();
+        $(obj).innerHTML = '收起';
+    }
+}
+</script>
+ 
+<!--菜单 -->
+     <div id="pagemenu">
+         
+                <ul>
+            
+                <li>
+                    <a href='search.aspx' class="select">目录检索</a>
+                </li>
+            
+                <li>
+                    <a href='peri_nav_class.aspx' >分类导航</a>
+                </li>
+            
+                <li>
+                    <a href='book_rank.aspx' >读书指引</a>
+                </li>
+            
+                <li>
+                    <a href='xstb.aspx' >新书通报</a>
+                </li>
+            
+                <li>
+                    <a href='readerrecommend.aspx' >读者荐购</a>
+                </li>
+            
+                <li>
+                    <a href='overduebooks_f.aspx' >提醒服务</a>
+                </li>
+            
+                <li>
+                    <a href='user/userinfo.aspx' >我的图书馆</a>
+                </li>
+            
+                <li>
+                    <a href='http://library.gdut.edu.cn/' >图书馆首页</a>
+                </li>
+            
+                
+                </ul>
+              
+    </div>
+    <div id="pagesubmenu">
+        
+                <ul>
+            
+                <li>
+                    <a href="search.aspx" class="select">快速检索</a>
+                </li>
+            
+                <li>
+                    <a href="search_more.aspx" >高级检索</a>
+                </li>
+            
+                </ul>
+              
+    </div>
+
+ <form name="aspnetForm" method="post" action="searchresult.aspx?anywords=c%2b%2b&amp;dt=ALL&amp;cl=ALL&amp;dp=20&amp;sf=M_PUB_YEAR&amp;ob=DESC&amp;sm=table&amp;dept=ALL" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEW0wEC3+PRwQgC45bGoAwChd/L0gICyNim4QYC4Ky/mwsChMKb4AECqqHilwsCi5XgzgUCze3b7QgCu8OAzQEC+ci4sg8Cu7ra4w4C8NHDkgQC+eSZiQ4C/qn73wMC5oCeoQMC6PzAiAMCreH5xgMCrOH5xgMCr+H5xgMCruH5xgMCqeH5xgMCqOH5xgMCq+H5xgMCuuH5xgMCteH5xgMCreG5xQMCreG1xQMCreGxxQMCreGNxQMCreGJxQMCreGFxQMCreGBxQMCreGdxQMCreHZxgMCreHVxgMCrOG5xQMCrOG1xQMCrOGxxQMCrOGNxQMCrOGJxQMCrOGFxQMCrOGBxQMCrOGdxQMCrOHZxgMCrOHVxgMCr+G5xQMCr+G1xQMCr+GxxQMCr+GNxQMCr+GJxQMCr+GFxQMCr+GBxQMCr+GdxQMCr+HZxgMCr+HVxgMCruG5xQMCruG1xQMCruGxxQMCruGNxQMCruGJxQMCruGFxQMCruGBxQMCruGdxQMCruHZxgMCruHVxgMCqeG5xQMCqeG1xQMCqeGxxQMCqeGNxQMCqeGJxQMCqeGFxQMCqeGBxQMCqeGdxQMCqeHZxgMCqeHVxgMCqOG5xQMCqOG1xQMCqOGxxQMCqOGNxQMCqOGJxQMCqOGFxQMCqOGBxQMCqOGdxQMCqOHZxgMCqOHVxgMCq+G5xQMCq+G1xQMCq+GxxQMCq+GNxQMCq+GJxQMCq+GFxQMCq+GBxQMCq+GdxQMCq+HZxgMCq+HVxgMCuuG5xQMCuuG1xQMCuuGxxQMCuuGNxQMCuuGJxQMCuuGFxQMCuuGBxQMCuuGdxQMCuuHZxgMCuuHVxgMCteG5xQMCteG1xQMCteGxxQMCteGNxQMCteGJxQMCteGFxQMCteGBxQMCteGdxQMCreGl1AUCrOGl1AUCr+Gl1AUCruGl1AUCqeGl1AUCqOGl1AUCq+Gl1AUCuuGl1AUCteGl1AUCreHl1wUCreHp1wUCreHt1wUCreHR1wUCreHV1wUCreHZ1wUCreHd1wUCreHB1wUCreGF1AUCreGJ1AUCrOHl1wUCrOHp1wUCrOHt1wUCrOHR1wUCrOHV1wUCrOHZ1wUCrOHd1wUCrOHB1wUCrOGF1AUCrOGJ1AUCr+Hl1wUCr+Hp1wUCr+Ht1wUCr+HR1wUCr+HV1wUCr+HZ1wUCr+Hd1wUCr+HB1wUCr+GF1AUCr+GJ1AUCruHl1wUCruHp1wUCruHt1wUCruHR1wUCruHV1wUCruHZ1wUCruHd1wUCruHB1wUCruGF1AUCruGJ1AUCqeHl1wUCqeHp1wUCqeHt1wUCqeHR1wUCqeHV1wUCqeHZ1wUCqeHd1wUCqeHB1wUCqeGF1AUCqeGJ1AUCqOHl1wUCqOHp1wUCqOHt1wUCqOHR1wUCqOHV1wUCqOHZ1wUCqOHd1wUCqOHB1wUCqOGF1AUCqOGJ1AUCq+Hl1wUCq+Hp1wUCq+Ht1wUCq+HR1wUCq+HV1wUCq+HZ1wUCq+Hd1wUCq+HB1wUCq+GF1AUCq+GJ1AUCuuHl1wUCuuHp1wUCuuHt1wUCuuHR1wUCuuHV1wUCuuHZ1wUCuuHd1wUCuuHB1wUCuuGF1AUCuuGJ1AUCteHl1wUCteHp1wUCteHt1wUCteHR1wUCteHV1wUCteHZ1wUCteHd1wUCteHB1wX8wGv+AQL1I7tnfAIDuI3jGqBN/A==" />
+</div>
+     <input type="hidden" name="ctl00$ContentPlaceHolder1$lastsearchhf" id="ctl00_ContentPlaceHolder1_lastsearchhf" value="dt=ALL&amp;cl=ALL&amp;dept=ALL&amp;sf=M_PUB_YEAR&amp;ob=DESC&amp;page=1&amp;dp=20&amp;sm=table" />
+     <input type="hidden" name="ctl00$ContentPlaceHolder1$thissearchhf" id="ctl00_ContentPlaceHolder1_thissearchhf" value="anywords=c%2b%2b&amp;dt=ALL&amp;cl=ALL&amp;dp=20&amp;sf=M_PUB_YEAR&amp;ob=DESC&amp;sm=table&amp;dept=ALL" />
+ 
+
+<!-- 电子图书检索功能 begin-->
+<div id="searchresulttabmenu">
+    
+</div>
+<!-- 电子图书检索功能 end-->
+ <div id="searchresultmain">
+    <div id="searchresultpoint">
+        <div class="searchpointdiv">
+        检索：
+            <select name="ctl00$ContentPlaceHolder1$searchtypeddl" id="ctl00_ContentPlaceHolder1_searchtypeddl" onchange="changepoint(this.options[this.selectedIndex].value)">
+	<option selected="selected" value="ANYWORDS">任意字段关键词</option>
+	<option value="TITLEFORWARD">题名前方一致</option>
+	<option value="TITLEANY">题名内关键词</option>
+	<option value="AUTHORFORWARD">著者前方一致</option>
+	<option value="AUTHORANY">著者内关键词</option>
+	<option value="KEYWORDFORWARD">内容主题词</option>
+	<option value="PUBLISHERFORWARD">出版者名称</option>
+	<option value="CLCFORWARD">中图法分类号</option>
+	<option value="ISBNFORWARD">ISBN</option>
+	<option value="ISSNFORWARD">ISSN</option>
+	<option value="CALLNOFORWARD">索取号</option>
+
+</select>&nbsp;
+            <input name="ctl00$ContentPlaceHolder1$keywordstb" type="text" maxlength="250" id="ctl00_ContentPlaceHolder1_keywordstb" onkeypress="if (event.keyCode=='13') {$('ctl00_ContentPlaceHolder1_searchbtn').click();event.returnValue =false;}" autocomplete="off" style="width:293px;" /><input type="submit" name="ctl00$ContentPlaceHolder1$searchbtn" value="新检索" onclick="return check();" id="ctl00_ContentPlaceHolder1_searchbtn" class="btn" /><input type="submit" name="ctl00$ContentPlaceHolder1$researchbtn" value="在结果中检索" onclick="return checkForResearch();" id="ctl00_ContentPlaceHolder1_researchbtn" class="btn" />
+            <input type="button" class="btn" value="返回主检索界面" onclick="javascript:window.location='search.aspx'"/>
+        </div>
+        <div id="acdiv" class="autocompletediv">
+         </div>
+    </div>
+    <div id="searchcondition" class="searchcondition">
+        <span>检索条件：
+            <span id="ctl00_ContentPlaceHolder1_conditionlbl">任意词=<font color="#ff0000">c++</font>&nbsp;&nbsp;</span>
+        </span>&nbsp;&nbsp;&nbsp;<span>结果数：
+            <span id="ctl00_ContentPlaceHolder1_countlbl" style="color:Red;">1930</span>
+        </span>&nbsp;<a href="javascript:void(0)" title="此检索条件下的结果RSS源" style="display:none"><img src="images/rss.gif"/></a>
+    </div>
+    <div id="searchresult" class="clearFix">
+        
+            <div id="searchresultpagefl" class="left">
+            <div class="pd tbl">第<span class="rf"><span id="ctl00_ContentPlaceHolder1_dplblfl1">1</span></span>/<span id="ctl00_ContentPlaceHolder1_gplblfl1">97</span>页&nbsp;上一页&nbsp;
+                    <a id="ctl00_ContentPlaceHolder1_nexthlfl1" onclick="showpagefl(2)" href="javascript:void(0)">下一页</a>&nbsp;转到第<select name="ctl00$ContentPlaceHolder1$gotoddlfl1" id="ctl00_ContentPlaceHolder1_gotoddlfl1" onchange="showpagefl(this[this.selectedIndex].value)">
+	<option selected="selected" value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+	<option value="5">5</option>
+	<option value="6">6</option>
+	<option value="7">7</option>
+	<option value="8">8</option>
+	<option value="9">9</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+	<option value="13">13</option>
+	<option value="14">14</option>
+	<option value="15">15</option>
+	<option value="16">16</option>
+	<option value="17">17</option>
+	<option value="18">18</option>
+	<option value="19">19</option>
+	<option value="20">20</option>
+	<option value="21">21</option>
+	<option value="22">22</option>
+	<option value="23">23</option>
+	<option value="24">24</option>
+	<option value="25">25</option>
+	<option value="26">26</option>
+	<option value="27">27</option>
+	<option value="28">28</option>
+	<option value="29">29</option>
+	<option value="30">30</option>
+	<option value="31">31</option>
+	<option value="32">32</option>
+	<option value="33">33</option>
+	<option value="34">34</option>
+	<option value="35">35</option>
+	<option value="36">36</option>
+	<option value="37">37</option>
+	<option value="38">38</option>
+	<option value="39">39</option>
+	<option value="40">40</option>
+	<option value="41">41</option>
+	<option value="42">42</option>
+	<option value="43">43</option>
+	<option value="44">44</option>
+	<option value="45">45</option>
+	<option value="46">46</option>
+	<option value="47">47</option>
+	<option value="48">48</option>
+	<option value="49">49</option>
+	<option value="50">50</option>
+	<option value="51">51</option>
+	<option value="52">52</option>
+	<option value="53">53</option>
+	<option value="54">54</option>
+	<option value="55">55</option>
+	<option value="56">56</option>
+	<option value="57">57</option>
+	<option value="58">58</option>
+	<option value="59">59</option>
+	<option value="60">60</option>
+	<option value="61">61</option>
+	<option value="62">62</option>
+	<option value="63">63</option>
+	<option value="64">64</option>
+	<option value="65">65</option>
+	<option value="66">66</option>
+	<option value="67">67</option>
+	<option value="68">68</option>
+	<option value="69">69</option>
+	<option value="70">70</option>
+	<option value="71">71</option>
+	<option value="72">72</option>
+	<option value="73">73</option>
+	<option value="74">74</option>
+	<option value="75">75</option>
+	<option value="76">76</option>
+	<option value="77">77</option>
+	<option value="78">78</option>
+	<option value="79">79</option>
+	<option value="80">80</option>
+	<option value="81">81</option>
+	<option value="82">82</option>
+	<option value="83">83</option>
+	<option value="84">84</option>
+	<option value="85">85</option>
+	<option value="86">86</option>
+	<option value="87">87</option>
+	<option value="88">88</option>
+	<option value="89">89</option>
+	<option value="90">90</option>
+	<option value="91">91</option>
+	<option value="92">92</option>
+	<option value="93">93</option>
+	<option value="94">94</option>
+	<option value="95">95</option>
+	<option value="96">96</option>
+	<option value="97">97</option>
+
+</select>页&nbsp;&nbsp;&nbsp;排序方式：<select id="sortddl">
+                        <option value="M_TITLE" selected="selected">题&nbsp;&nbsp;名</option>
+                        <option value="M_PUBLISHER">出版社</option>
+                        <option value="M_PUB_YEAR">出版年</option>
+                        <option value="M_AUTHOR">著者</option>
+                        <option value="M_SUBJECT">主题词</option>
+                        <option value="M_CLC">分类号</option>
+                        <option value="M_CATALOGDATE">进馆日期</option>
+                    </select>
+                    &nbsp;<select id="orderbyddl">
+                        <option value="ASC" selected="selected">升序排列</option>
+                        <option value="DESC">降序排列</option>
+                    </select>&nbsp;
+                <input type="button" value="排列" onclick="pailie(1)" title="排列" />
+                 <script type="text/javascript">
+                    for(i=0;i<$('sortddl').options.length;i++)
+                    {
+                        if ($('sortddl').options[i].value == 'M_PUB_YEAR')
+                        {
+                            $('sortddl').options[i].selected = true;
+                            break;
+                        }       
+                    }
+                    for(i=0;i<$('orderbyddl').options.length;i++)
+                    {
+                        if ($('orderbyddl').options[i].value == 'DESC')
+                        {
+                            $('orderbyddl').options[i].selected = true;
+                            break;
+                        }       
+                    }
+                </script>
+            </div>
+            <div>
+                <ul class="msgnote" id="bodl_detail_msgnote" style="display:none;">
+                    <li class="top"></li>
+                    <li class="body"></li>
+                    <li class="bottom"></li>
+               </ul>
+                
+                              <table cellpadding="4" width="98%" border="1" class="tb">
+                              <thead class="tbhead">
+                                <tr>
+                                   <td width="5%">序号<input type="checkbox" title="全选/全不选" name="searchresult_all_cb" id="searchresult_all_cb" onclick="chooseall(this);"/></td>
+                                  <td width="33%">题名</td>
+                                  <td width="19%">责任者</td>
+                                  <td width="13%">出版者</td>
+                                  <td width="7%">出版年</td>
+                                  <td width="7%">索取号</td>
+                                  <td width="5%">馆藏</td>
+                                  <td width="5%">可借</td>
+                                  <td width="6%">相关资源</td>
+                                 </tr>
+                               </thead>
+                               <tbody>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="602450" onclick="savethis(this);"/>1</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=602450" target="_blank">C++ primer plus [monograph]</a></span></td>
+                                  <td>Stephen Prata.</td>
+                                  <td>Posts & Telecom Press</td>
+                                  <td>c 2012</td>
+                                  <td class="tbr">TP312C++/P912</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">0</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="598121" onclick="savethis(this);"/>2</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=598121" target="_blank">新标准C++程序设计教程 [专著]</a></span></td>
+                                  <td>郭炜编著</td>
+                                  <td>清华大学出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/G960</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">0</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="598104" onclick="savethis(this);"/>3</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=598104" target="_blank">Visual C++数字图像处理与工程应用实践 [专著]＝The engineering application and digital image processing of Visual C++</a></span></td>
+                                  <td>俞朝晖, 庞也驰, 于涛编著</td>
+                                  <td>中国铁道出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312VC/Y76</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">1</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="598090" onclick="savethis(this);"/>4</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=598090" target="_blank">C++程序设计语言 [专著]</a></span></td>
+                                  <td>赵宏主编；李敏,王恺,王刚编著</td>
+                                  <td>南开大学出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C++/Z44</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">1</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="597971" onclick="savethis(this);"/>5</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=597971" target="_blank">21天学通C++ [中译文]</a></span></td>
+                                  <td>(美)Siddhartha Rao著；袁国忠译</td>
+                                  <td>人民邮电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/L986.1</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">0</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="597861" onclick="savethis(this);"/>6</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=597861" target="_blank">数据结构与程序构建 [专著]</a></span></td>
+                                  <td>马春江, 付勇智, 孟繁军编著</td>
+                                  <td>清华大学出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP311.1/M144</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">3</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="597793" onclick="savethis(this);"/>7</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=597793" target="_blank">面向对象技术与工具 [专著]</a></span></td>
+                                  <td>陈文宇 ... [等] 编著</td>
+                                  <td>电子工业出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP311.5/C48(2)</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">2</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="597619" onclick="savethis(this);"/>8</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=597619" target="_blank">C++高级程序设计实验与习题指导 [专著]</a></span></td>
+                                  <td>田秀霞主编</td>
+                                  <td>清华大学出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C-42/T58</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">1</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="597600" onclick="savethis(this);"/>9</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=597600" target="_blank">C++程序设计学习与实验指导 [专著]</a></span></td>
+                                  <td>刘维富, 陈建平, 葛建芳编著</td>
+                                  <td>清华大学出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/L752-6</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">0</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="596540" onclick="savethis(this);"/>10</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=596540" target="_blank">C++程序设计 [专著]</a></span></td>
+                                  <td>杨长兴,刘卫国主编</td>
+                                  <td>中国水利水电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/Y277(2)</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">0</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="596537" onclick="savethis(this);"/>11</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=596537" target="_blank">C++编程惯用法 [专著]：高级程序员常用方法和技巧</a></span></td>
+                                  <td>(美) Robert B. Murray著；王昕译</td>
+                                  <td>人民邮电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/M874=1</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">1</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="595744" onclick="savethis(this);"/>12</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=595744" target="_blank">Visual C++并行编程实战 [专著]</a></span></td>
+                                  <td>Colin Campbell, Ade Miller著；凌杰译</td>
+                                  <td>机械工业出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/K211</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">2</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="595417" onclick="savethis(this);"/>13</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=595417" target="_blank">C++ Primer Plus中文版 [专著]＝C++ Primer Plus</a></span></td>
+                                  <td>(美) Stephen Prata著；张海龙, 袁国忠译</td>
+                                  <td>人民邮电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C++/P97</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">1</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="595342" onclick="savethis(this);"/>14</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=595342" target="_blank">C++程序设计实践教程 [专著]</a></span></td>
+                                  <td>刘卫国, 杨长兴主编</td>
+                                  <td>中国水利水电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/L752.1-2(2))</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">1</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="594866" onclick="savethis(this);"/>15</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=594866" target="_blank">程序设计基础 (C语言) 实验与习题指导</a></span></td>
+                                  <td>杨永斌, 丁明勇主编</td>
+                                  <td>科学出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/Y291.5</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">1</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="594714" onclick="savethis(this);"/>16</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=594714" target="_blank">C++实践之路 [专著]</a></span></td>
+                                  <td>(美)Bartosz Milewski著；周良忠译</td>
+                                  <td>人民邮电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/M261</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">0</td>
+                                  <td>
+                                    
+                                        <img onmouseover="this.style.cursor='pointer'" src="images/resource.gif" onclick="javascript:getbookresource('594714','C++实践之路 [专著]',this,'getbookresourceAjax.aspx')" width="25px" height="25px"/>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="594587" onclick="savethis(this);"/>17</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=594587" target="_blank">好学的C++程序设计</a></span></td>
+                                  <td>张祖浩, 沈天晴编著</td>
+                                  <td>人民邮电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/Z363.2-2</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">0</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="594507" onclick="savethis(this);"/>18</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=594507" target="_blank">Imperfect C++中文版 [专著]＝Imperfect C++ practical solutions for real-life programming</a></span></td>
+                                  <td>(美) Matthew Wilson著；荣耀, 刘未鹏译</td>
+                                  <td>人民邮电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/W444-2</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">2</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="594477" onclick="savethis(this);"/>19</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=594477" target="_blank">C/C++程序设计学习辅导 [专著]</a></span></td>
+                                  <td>李婷, 李云峰编著</td>
+                                  <td>中国水利水电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/L340.7</td>
+                                  <td class="tbr">4</td>
+                                  <td class="tbr">2</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                            <tr>
+                                  <td><input type="checkbox" name="searchresult_cb" value="594249" onclick="savethis(this);"/>20</td>
+                                  <td><span class="title"><a href="bookinfo.aspx?ctrlno=594249" target="_blank">C/C++程序设计 [专著]</a></span></td>
+                                  <td>李云峰, 李婷编著</td>
+                                  <td>中国水利水电出版社</td>
+                                  <td>2012</td>
+                                  <td class="tbr">TP312C/L362.1</td>
+                                  <td class="tbr">3</td>
+                                  <td class="tbr">0</td>
+                                  <td>
+                                    
+                                  </td>
+                                 </tr>
+                        
+                             </tbody>
+                            </table>
+                        
+            </div>
+            <div class="pd tbr">第<span class="rf"><span id="ctl00_ContentPlaceHolder1_dplblfl2">1</span></span>/<span id="ctl00_ContentPlaceHolder1_gplblfl2">97</span>页&nbsp;
+                上一页&nbsp;
+                    <a id="ctl00_ContentPlaceHolder1_nexthlfl2" onclick="showpagefl(2)" href="javascript:void(0)">下一页</a>
+                &nbsp;转到第<select name="ctl00$ContentPlaceHolder1$gotoddlfl2" id="ctl00_ContentPlaceHolder1_gotoddlfl2" onchange="showpagefl(this[this.selectedIndex].value)">
+	<option selected="selected" value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+	<option value="5">5</option>
+	<option value="6">6</option>
+	<option value="7">7</option>
+	<option value="8">8</option>
+	<option value="9">9</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+	<option value="13">13</option>
+	<option value="14">14</option>
+	<option value="15">15</option>
+	<option value="16">16</option>
+	<option value="17">17</option>
+	<option value="18">18</option>
+	<option value="19">19</option>
+	<option value="20">20</option>
+	<option value="21">21</option>
+	<option value="22">22</option>
+	<option value="23">23</option>
+	<option value="24">24</option>
+	<option value="25">25</option>
+	<option value="26">26</option>
+	<option value="27">27</option>
+	<option value="28">28</option>
+	<option value="29">29</option>
+	<option value="30">30</option>
+	<option value="31">31</option>
+	<option value="32">32</option>
+	<option value="33">33</option>
+	<option value="34">34</option>
+	<option value="35">35</option>
+	<option value="36">36</option>
+	<option value="37">37</option>
+	<option value="38">38</option>
+	<option value="39">39</option>
+	<option value="40">40</option>
+	<option value="41">41</option>
+	<option value="42">42</option>
+	<option value="43">43</option>
+	<option value="44">44</option>
+	<option value="45">45</option>
+	<option value="46">46</option>
+	<option value="47">47</option>
+	<option value="48">48</option>
+	<option value="49">49</option>
+	<option value="50">50</option>
+	<option value="51">51</option>
+	<option value="52">52</option>
+	<option value="53">53</option>
+	<option value="54">54</option>
+	<option value="55">55</option>
+	<option value="56">56</option>
+	<option value="57">57</option>
+	<option value="58">58</option>
+	<option value="59">59</option>
+	<option value="60">60</option>
+	<option value="61">61</option>
+	<option value="62">62</option>
+	<option value="63">63</option>
+	<option value="64">64</option>
+	<option value="65">65</option>
+	<option value="66">66</option>
+	<option value="67">67</option>
+	<option value="68">68</option>
+	<option value="69">69</option>
+	<option value="70">70</option>
+	<option value="71">71</option>
+	<option value="72">72</option>
+	<option value="73">73</option>
+	<option value="74">74</option>
+	<option value="75">75</option>
+	<option value="76">76</option>
+	<option value="77">77</option>
+	<option value="78">78</option>
+	<option value="79">79</option>
+	<option value="80">80</option>
+	<option value="81">81</option>
+	<option value="82">82</option>
+	<option value="83">83</option>
+	<option value="84">84</option>
+	<option value="85">85</option>
+	<option value="86">86</option>
+	<option value="87">87</option>
+	<option value="88">88</option>
+	<option value="89">89</option>
+	<option value="90">90</option>
+	<option value="91">91</option>
+	<option value="92">92</option>
+	<option value="93">93</option>
+	<option value="94">94</option>
+	<option value="95">95</option>
+	<option value="96">96</option>
+	<option value="97">97</option>
+
+</select>页</div>
+        </div>
+            
+        <div class="clear"></div>
+        
+    </div>
+ </div>
+  <script type="text/javascript">
+    changepoint($('ctl00_ContentPlaceHolder1_searchtypeddl').options[$('ctl00_ContentPlaceHolder1_searchtypeddl').selectedIndex].value);
+    
+ </script>
+ 
+ </form>
+
+    </div>
+    <!--版权部分-->
+    <div id="footer">
+			<div class="clearFix footer">		
+				<div class="fl">
+					<img src="images/logo-sulcmis-opac.gif"/>
+				</div>
+				<div class="fl footertext">
+					<span id="ctl00_footertextlbl">Copyright &copy;2008-2009. SULCMIS OPAC 4.01 of Shenzhen University Library.  All rights reserved.<br />版权所有：深圳大学图书馆 E-mail:szulib@szu.edu.cn</span>
+				</div>
+			</div>
+    </div>
+</body>
+<script type="text/javascript">islogout()</script>
+</html>

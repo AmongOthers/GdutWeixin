@@ -102,9 +102,13 @@
     <Compile Include="LibraryTests.cs" />
     <Compile Include="BaiduImageSearchEngineTests.cs" />
     <Compile Include="BookInfoTests.cs" />
+    <Compile Include="XmlEncoderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
+    <Content Include="cpp.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="details.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

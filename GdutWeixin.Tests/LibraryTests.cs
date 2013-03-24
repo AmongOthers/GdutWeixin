@@ -28,11 +28,16 @@ namespace GdutWeixin.Tests
             stream = File.OpenRead("hello.htm");
             Library.GetInstance().Parse(stream, out books, out pageCount);
             Assert.AreEqual(8, books.Count);
+            Assert.AreEqual("Posts & Telecom Press", books[0].Publisher);
             Assert.AreEqual(4, pageCount);
             stream = File.OpenRead("java.htm");
             Library.GetInstance().Parse(stream, out books, out pageCount);
             Assert.AreEqual(8, books.Count);
             Assert.AreEqual(163, pageCount);
+            stream = File.OpenRead("cpp.htm");
+            Library.GetInstance().Parse(stream, out books, out pageCount);
+            Assert.AreEqual(20, books.Count);
+            Assert.AreEqual(97, pageCount);
         }
     }
 }

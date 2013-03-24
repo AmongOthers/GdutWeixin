@@ -79,9 +79,9 @@ namespace GdutWeixin
 
         private void doWithError(Exception e)
         {
-            Debug.Fail(e.Message);
             // log the error using log4net.
             _logger.Error(e.Message, e);
+            Debug.Fail(e.Message);
         }
     }
 }

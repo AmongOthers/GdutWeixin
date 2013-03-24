@@ -42,6 +42,9 @@ namespace GdutWeixin.Controllers
                 using (var reader = new StreamReader(Request.InputStream))
                 {
                     postBody = reader.ReadToEnd();
+
+					ApplicationLogger.GetLogger().Info(postBody);
+
                     var reqMsg = RequestFactory.Parse(postBody);
                     if (reqMsg != null)
                     {

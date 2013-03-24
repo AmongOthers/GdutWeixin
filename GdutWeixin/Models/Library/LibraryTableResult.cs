@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
+using GdutWeixin.Utils;
 
 namespace GdutWeixin.Models.Library
 {
@@ -17,6 +19,7 @@ namespace GdutWeixin.Models.Library
         {
             List<Book> books = new List<Book>();
             Book book = null;
+            tbody = HtmlEntityCorrect.Encode(tbody);
             using (var reader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(tbody))))
             {
                 string currentElementName = null;
@@ -44,33 +47,40 @@ namespace GdutWeixin.Models.Library
                         case XmlNodeType.Text:
                             if (currentElementName == "a")
                             {
-                                book.Title = reader.Value;
+                                book.Title = HtmlEntityCorrect.Decode(reader.Value);
                             }
                             else if (currentElementName == "td")
                             {
                                 if (tdCount == 3)
                                 {
-                                    book.Author = reader.Value;
+                                    book.Author = HtmlEntityCorrect.Decode(reader.Value);
                                 }
                                 else if (tdCount == 4)
                                 {
-                                    book.Publisher = reader.Value;
+                                    try
+                                    {
+                                        book.Publisher = HtmlEntityCorrect.Decode(reader.Value);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine(e);
+                                    }
                                 }
                                 else if (tdCount == 5)
                                 {
-                                    book.PublishYear = reader.Value;
+                                    book.PublishYear = HtmlEntityCorrect.Decode(reader.Value);
                                 }
                                 else if (tdCount == 6)
                                 {
-                                    book.Index = reader.Value;
+                                    book.Index = HtmlEntityCorrect.Decode(reader.Value);
                                 }
                                 else if (tdCount == 7)
                                 {
-                                    book.Total = Int16.Parse(reader.Value);
+                                    book.Total = Int16.Parse(HtmlEntityCorrect.Decode(reader.Value));
                                 }
                                 else if (tdCount == 8)
                                 {
-                                    book.Available = Int16.Parse(reader.Value);
+                                    book.Available = Int16.Parse(HtmlEntityCorrect.Decode(reader.Value));
                                 }
                             }
                             break;
