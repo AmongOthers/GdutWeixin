@@ -29,19 +29,18 @@ namespace GdutWeixin.Models.Library
 
         static readonly LibrarySearchOption DEFAULT = new LibrarySearchOption();
 
-        public string GetRspForSearch(HttpRequestBase request, LibrarySearchOption option)
+        public string GetRspForSearch(HttpSessionStateBase session, HttpRequestBase request, LibrarySearchOption option)
         {
             WeixinResponse rsp = null;
             object error;
             var libStopwatch = Stopwatch.StartNew();
-            var result = Library.GetInstance().SearchBooksFor(option, out error);
+            var result = Library.GetInstance().SearchBooksFor(session, option, out error);
             if (error == null)
             {
                 libStopwatch.Stop();
                 rsp = LibrarySearchResponse.Create(request, result);
-                ApplicationLogger.GetLogger().Info(String.Format("search library with {0} consume {1} ms",
-                    option.Keyword,
-                    libStopwatch.ElapsedMilliseconds));
+                ApplicationLogger.GetLogger().Info(String.Format("(" + session.SessionID  + ")"
+                    + "search library with " + option.Keyword + " consume " + libStopwatch.ElapsedMilliseconds));
             }
             else
             {
@@ -53,7 +52,7 @@ namespace GdutWeixin.Models.Library
         static readonly Regex TBODY_REGEX = new Regex("<tbody>[\\s\\S]+</tbody>");
         static readonly Regex PAGE_COUNT_REGEX = new Regex("<span id=\"ctl00_ContentPlaceHolder1_gplblfl1\">([0-9]+)</span>");
 
-        public LibrarySearchResult SearchBooksFor(LibrarySearchOption option, out object error)
+        public LibrarySearchResult SearchBooksFor(HttpSessionStateBase session, LibrarySearchOption option, out object error)
         {
             error = null;
             var user = option.User;
@@ -62,6 +61,7 @@ namespace GdutWeixin.Models.Library
             LibrarySearchResult cached;
             if ((cached = mResultCache.Try2Hit(keyword, page)) != null)
             {
+                ApplicationLogger.GetLogger().Info("(" + session.SessionID + ")" + keyword + " " + page + " hited");
                 option.PageCount = cached.PageCount;
                 return cached;
             }
@@ -86,6 +86,8 @@ namespace GdutWeixin.Models.Library
 				//记录查询结果的总页数
                 option.PageCount = pageCount;
                 mResultCache.Push(cached);
+                ApplicationLogger.GetLogger().Info("(" + session.SessionID + ")" +
+                    "push cache: " + keyword + " " + page + " current cache count: " + mResultCache.Count);
                 return cached;
             }
             catch (WebException e)
@@ -145,7 +147,7 @@ namespace GdutWeixin.Models.Library
         private string getSearchUrl(string keyword, LibrarySearchOption option)
         {
             var encodedKeyword = HttpUtility.UrlEncode(keyword, System.Text.Encoding.GetEncoding("GB2312"));
-            var url = String.Format("http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&title_f={0}&dept={1}&cl={2}&page={3}",
+            var url = String.Format("http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&anywords={0}&dept={1}&cl={2}&page={3}",
                 encodedKeyword, option.DeptPlace, option.Language, option.Page);
             return url;
         }

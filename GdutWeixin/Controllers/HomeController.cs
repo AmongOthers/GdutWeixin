@@ -13,7 +13,7 @@ using GdutWeixin.Utils;
 
 namespace GdutWeixin.Controllers
 {
-	[SessionState(System.Web.SessionState.SessionStateBehavior.Disabled)]
+	[SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
     public class HomeController : Controller
     {
         public ContentResult Index()
@@ -43,8 +43,6 @@ namespace GdutWeixin.Controllers
                 {
                     postBody = reader.ReadToEnd();
 
-					ApplicationLogger.GetLogger().Info(postBody);
-
                     var reqMsg = RequestFactory.Parse(postBody);
                     if (reqMsg != null)
                     {
@@ -58,6 +56,12 @@ namespace GdutWeixin.Controllers
             }
         }
 
+        public string Test()
+        {
+            Thread.Sleep(10 * 1000);
+            return Session.SessionID + "@" + DateTime.Now;
+        }
+
         private ContentResult onWeixinRequestReceived(WeixinRequest reqMsg)
         {
 			var user = reqMsg.FromUserName;
@@ -66,17 +70,23 @@ namespace GdutWeixin.Controllers
                 var req = reqMsg as TextRequest;
 				var keyword = req.Content;
 
-				//表情的过滤
-                if (keyword.StartsWith("/:"))
+				//ping测试
+                if (keyword == "@p")
+                {
+                    var now = DateTimeHelper.Timestamp();
+                    return Content(new TextResponse(user, (now - long.Parse(req.CreateTime)).ToString()).ToString());
+                }
+                //表情的过滤
+                else if (keyword.StartsWith("/:"))
                 {
                     return Content(new TextResponse(user, keyword).ToString());
                 }
-				//留言建议
+                //留言建议
                 else if (keyword.StartsWith("@"))
                 {
                     return Content(new TextResponse(user, " /::)") { FuncFlag = 1 }.ToString());
                 }
-				//关注
+                //关注
                 else if (keyword == "Hello2BizUser")
                 {
                     return onSubscribed(reqMsg);
@@ -84,14 +94,21 @@ namespace GdutWeixin.Controllers
 
                 LibrarySearchOption option;
                 string errMsg;
+
+                ContentResult result = null;
+                var stopWatch = Stopwatch.StartNew();
                 if (UserCommand.GetInstance().OnMessage(user, keyword, out option, out errMsg))
                 {
-                    return Content(Library.GetInstance().GetRspForSearch(Request, option).ToString());
+                    result = Content(Library.GetInstance().GetRspForSearch(Session, Request, option).ToString());
                 }
                 else
                 {
-                    return Content(new TextResponse(user, errMsg).ToString());
+                    result = Content(new TextResponse(user, errMsg).ToString());
                 }
+				stopWatch.Stop();
+				ApplicationLogger.GetLogger().Info("(" + Session.SessionID + ")" +
+                    user + " search for " + keyword + " consume " + stopWatch.ElapsedMilliseconds);
+                return result;
             }
             else if (reqMsg is EventRequest)
             {

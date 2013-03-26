@@ -81,7 +81,7 @@ namespace GdutWeixin
         {
             // log the error using log4net.
             _logger.Error(e.Message, e);
-            Debug.Fail(e.Message);
+            Debug.Fail(e.StackTrace);
         }
     }
 }

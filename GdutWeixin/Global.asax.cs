@@ -28,6 +28,16 @@ namespace GdutWeixin
 			this.Error += MvcApplication_Error;
         }
 
+        //protected void Application_BeginRequest()
+        //{
+        //}
+
+		//在使用cookie作为session的依据的时候，为了在一个session中session保持不变，需要在backend对Session进行写入
+        //protected void Session_Start(Object sender, EventArgs e)
+        //{
+        //    Session["init"] = 0;
+        //}
+
         private void MvcApplication_Error(object sender, EventArgs e)
         {
             var error = Server.GetLastError();

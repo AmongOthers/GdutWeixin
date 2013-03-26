@@ -35,12 +35,12 @@ namespace GdutWeixin.Utils
         /// <returns></returns>
         public static long Timestamp(DateTime dateTime)
         {
-            return (dateTime.Ticks - BaseTime.Ticks) / 10000000 - 8 * 60 * 60;
+            return (dateTime.Ticks - BaseTime.Ticks) / 10000000;
         }
 
         public static long Timestamp()
         {
-            return Timestamp(DateTime.Now);
+            return Timestamp(DateTime.UtcNow);
         }
     }
 }
