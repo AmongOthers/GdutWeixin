@@ -1,0 +1,92 @@
+﻿@{
+    Layout = null;
+}
+
+@{
+    ViewBag.Title = "图书搜索";
+}
+
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <meta name="viewport" content="width=device-width" />
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        @Styles.Render("~/Content/mobileCss")
+        @Styles.Render("~/Content/gdut/search.css")
+
+    </head>
+	<body>
+        <div data-role="page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="c">
+				<div data-role="controlgroup" class="info">
+					<label class="keyword">嵌入式系统开发和设计原理</label>
+					<input type="text" placeholder="搜索" />
+				</div>
+				<div data-role="controlgroup" class="search">
+					<input type="text" placeholder="关键字" />
+					<a href="#" data-role="button" data-inline="true" data-theme="b" class="btn">取消</a>
+				</div>
+            </div>
+
+            <div data-role="content">
+				<ul data-role="listview" class="resultList"  data-theme="d">
+					<!--
+                    <li>
+                        <div class="bookLeft">
+                            <p>标题</p>
+                            <p>作者 / 出版社 / 2030</p>
+                            <p>[索引号]</p>
+							<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">详细信息</a>
+                        </div>
+                        <div class="bookRight">
+                            <p>1 / 3</p>
+                            <img src="/Content/images/red_heart.png" alt="">
+                        </div>
+						<div class="clearfix"></div>
+                    </li>
+						-->
+				</ul>
+            </div>
+
+			<!--
+			<div data-role="footer" data-position="fixed">
+				<div data-role="controlgroup" data-type="horizontal">
+					<a href="#" data-role="button" data-icon="arrow-d">下一页</a>
+					<a href="#" data-role="button" data-icon="arrow-u">上一页</a>
+				</div>
+			</div>
+			-->
+        </div>
+
+        @Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
+		@Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
+		@Scripts.Render("~/Scripts/handlebars.js")
+		@Scripts.Render("~/Scripts/gdut/search.js");
+
+		<script type="text/x-handlebars-template" id="books">
+			{{#each books}}
+				<li>
+					<div class="bookLeft">
+						<label>{{Title}}</label>
+						<p>{{Author}} / {{Publisher}} / {{PublishYear}}</p>
+						<p>[{{Index}}]</p>
+						<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">详细信息</a>
+					</div>
+					<div class="bookRight">
+						<p class="{{#if IsAvailable}}bookAvailable{{else}}bookNotAvailable{{/if}}">{{Available}} / {{Total}}</p>
+						<div class="bookFavoriate notInFavoriate" data-index="{{Index}}">
+							<img class="inFavoriate" alt="favoriate" src="Content/images/red_heart.png">
+							<img class="notInFavoriate" alt="favoriate" src="Content/images/empty_heart.png">
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</li>
+			{{/each}}
+		</script>
+    </body>
+</html>
+
+

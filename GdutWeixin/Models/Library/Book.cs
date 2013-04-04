@@ -14,6 +14,13 @@ namespace GdutWeixin.Models.Library
         public string Index { get; set; }
         public int Total { get; set; }
         public int Available { get; set; }
+        public bool IsAvailable
+        {
+            get
+            {
+                return Available > 0;
+            }
+        }
         public string Url { get; set; }
     }
 }

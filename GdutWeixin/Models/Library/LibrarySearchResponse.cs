@@ -17,18 +17,17 @@ namespace GdutWeixin.Models.Library
         {
         }
 
-        public static LibrarySearchResponse Create(HttpRequestBase request, LibrarySearchResult result)
+        public static LibrarySearchResponse Create(HttpRequestBase request, LibrarySearchResultRecord result)
         {
             return new LibrarySearchResponse(request, result);
         }
 
 		const string CMD = "命令： \".\" + r (超时重试); \".\" + n(下一页); \".\" + p(上一页); \".\" + 数字(快速翻页); @ + 信息(留言, 欢迎拍砖吐槽)";
 
-        private LibrarySearchResponse(HttpRequestBase request, LibrarySearchResult result) 
+        private LibrarySearchResponse(HttpRequestBase request, LibrarySearchResultRecord result) 
             : base(result.User)
         {
 			var keyword = result.Keyword;
-			var moreUrl = result.MoreUrl;
 			var books = result.Books;
             var converter = new UrlToAbsConverter(request);
             this.Articles = new List<Article>()

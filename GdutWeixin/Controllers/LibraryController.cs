@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using GdutWeixin.Models;
 using GdutWeixin.Models.Library;
 using GdutWeixin.Models.Message;
@@ -25,29 +26,42 @@ namespace GdutWeixin.Controllers
             return View();
         }
 
-        public string Search()
+        public ActionResult Result(LibrarySearchOption option)
+        {
+            option.PageSize = 50;
+            ViewData["Keyword"] = option.Keyword;
+            ViewData["Page"] = option.Page;
+            return View();
+        }
+
+        public JsonResult Search()
         {
             var keyword = Request["keyword"];
-            var user = Request["user"];
-            return Library.GetInstance().GetRspForSearch(Session, Request, new LibrarySearchOption
+            int pageSize = 0;
+            if (Request["pageSize"] != null)
             {
-				Keyword = keyword,
-				User = user
-            });
+				pageSize = Int16.Parse(Request["pageSize"]);
+            }
+            int page = 0;
+            if (Request["page"] != null)
+            {
+				page = Int16.Parse(Request["page"]);
+            }
+            LibrarySearchResult result;
+            Library.GetInstance().Search(new LibrarySearchOption
+            {
+                Keyword = keyword,
+                PageSize = pageSize,
+                Page = page
+            }, out result);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public RedirectResult Conver()
         {
             var url = Request["url"];
             var bookInfo = Library.GetInstance().GetBookInfo(url);
-            return new RedirectResult(BaiduImageSearchEngine.GetInstance().SearchImageFor(bookInfo.CardInfo.Isbn));
-        }
-
-        public JsonResult DetailsJson()
-        {
-			var url = "bookinfo.aspx?ctrlno=508536";
-            var bookInfo = Library.GetInstance().GetBookInfo(url);
-            return Json(bookInfo, JsonRequestBehavior.AllowGet);
+            return Redirect(BaiduImageSearchEngine.GetInstance().SearchImageFor(bookInfo.CardInfo.Isbn));
         }
 
         public ActionResult Details()

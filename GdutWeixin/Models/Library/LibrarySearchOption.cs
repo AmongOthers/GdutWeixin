@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -23,6 +24,7 @@ namespace GdutWeixin.Models.Library
 
         public string User { get; set; }
         public string Keyword { get; set; }
+        public int PageSize { get; set; }
         public int Page { get; set; }
         public int PageCount { get; set; }
         public string DeptPlace { get; set; }
@@ -32,6 +34,7 @@ namespace GdutWeixin.Models.Library
         {
             DeptPlace = DeptPlaceOption.ALL;
             Language = LanguageOption.All;
+            PageSize = 8;
             Page = 1;
             PageCount = -1;
         }

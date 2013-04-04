@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "搜索 " + ViewBag.Keyword + " 的结果";
+}
+
+@section Header {
+	<h1>@ViewBag.Title</h1>
+}
+
+<p class="result"></p>
+
+@section scripts {
+	@Scripts.Render("~/bundles/jquerytmpl")
+
+	<script>
+		$(function () {
+			alert($.template);
+		});
+	</script>
+	<!--
+	<script>
+		$(function () {
+			$.ajax("Search", { keyword: "@ViewBag.Keyword", page: 1 }).done(function (data, textStatus, jqXHR) {
+				if (data.Error === null) {
+				}
+				else {
+					onSearchError(data.Error);
+				}
+			}).error(function (jqXHR, textStatus, errorThrown) {
+				onAjaxError(textStatus, errorThrown);
+			});
+			var onSearchError = function (error) {
+			}
+			var onAjaxError = function (status, error) {
+			}
+		});
+	</script>
+		-->
+}

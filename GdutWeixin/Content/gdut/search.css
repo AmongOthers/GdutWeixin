@@ -1,0 +1,103 @@
+﻿body {
+	text-align: center;
+}
+div[data-role="header"] {
+	padding: 5px 0px;
+	height: 40px;
+}
+div[data-role="header"] .ui-btn-text {
+	font-size: 1.2em;
+}
+div[data-role="header"] div[data-role="controlgroup"] {
+	margin-bottom: 0px;
+}
+div[data-role="content"] {
+	padding: 0px;
+}
+ul.resultList {
+	margin: 0px !important; 
+}
+ul.resultList li{
+	border: none;
+	border-top: 1px dashed #ddd;
+}
+ul.resultList li:first-of-type 
+{
+	border-top: none;
+}
+.bookLeft {
+	float: left;
+	width: 250px;
+}
+.bookLeft .ui-li-desc {
+	margin: 5px;
+	word-wrap: inherit;
+	overflow: inherit;
+	white-space: inherit;
+}
+.bookRight {
+	margin: 5px 0px;
+	float: right;
+}
+.bookRight p {
+	margin: 0px;
+	font-size: 1.2em;
+}
+.bookRight p.bookAvailable {
+	color: #008800;
+}
+.bookRight p.bookNotAvailable {
+	color: #f00;
+}
+div.bookFavoriate {
+	height: 80px;
+}
+div.inFavoriate img.inFavoriate {
+	display: block;
+}
+div.inFavoriate img.notInFavoriate {
+	display: none;
+}
+div.notInFavoriate img.inFavoriate {
+	display: none;
+}
+div.notInFavoriate img.notInFavoriate {
+	display: block;
+}
+.clearfix {
+	clear: both;
+}
+div.info {
+	display: none;
+	position: relative;
+}
+div.info label {
+	display: inline-block;
+	line-height: 40px;
+	width: 200px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+div.info input[type="text"] {
+	position: absolute;
+	right: 10px;
+	width: 40px;
+	display: inline-block;
+}
+div.search {
+	text-align: center;
+}
+div.search input[type="text"] {
+	width: 200px;
+	display: inline-block;
+}
+div.search .btn { 
+	margin-left: 10px;
+}
+ul {
+	text-align: center;
+}
+li {
+	text-align: center;
+}

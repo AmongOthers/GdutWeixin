@@ -73,8 +73,7 @@ namespace GdutWeixin.Controllers
 				//ping测试
                 if (keyword == "@p")
                 {
-                    var now = DateTimeHelper.Timestamp();
-                    return Content(new TextResponse(user, (now - long.Parse(req.CreateTime)).ToString()).ToString());
+                    return Content(new TextResponse(user, reqMsg.HowMuchSecondsPassedAfterCreated.ToString()).ToString());
                 }
                 //表情的过滤
                 else if (keyword.StartsWith("/:"))

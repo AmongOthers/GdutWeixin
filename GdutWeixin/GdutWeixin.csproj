@@ -152,8 +152,11 @@
     <Compile Include="Models\Library\DeptInfo.cs" />
     <Compile Include="Models\Library\LibrarySearchOption.cs" />
     <Compile Include="Models\Library\LibrarySearchResponse.cs" />
-    <Compile Include="Models\Library\LibrarySearchResult.cs" />
+    <Compile Include="Models\Library\LibrarySearchResultRecord.cs" />
     <Compile Include="Models\Library\LibraryTableResult.cs" />
+    <Compile Include="Models\Library\PingCache.cs" />
+    <Compile Include="Models\Library\RequestPing.cs" />
+    <Compile Include="Models\Library\LibrarySearchResult.cs" />
     <Compile Include="Models\Library\UserCommand.cs" />
     <Compile Include="Models\Message\EventRequest.cs" />
     <Compile Include="Models\Message\ImageRequest.cs" />
@@ -179,6 +182,7 @@
     <Content Include="Content\Details.css" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\ajax-loader.png" />
+    <Content Include="Content\images\empty_heart.png" />
     <Content Include="Content\images\green_circle.png" />
     <Content Include="Content\images\red_circle.png" />
     <Content Include="Content\images\frog.jpg" />
@@ -192,12 +196,14 @@
     <Content Include="Content\images\lib.jpg" />
     <Content Include="Content\images\question_mark.jpg" />
     <Content Include="Content\images\red_btn.png" />
+    <Content Include="Content\images\red_heart.png" />
     <Content Include="Content\jquery.mobile-1.1.0.css" />
     <Content Include="Content\jquery.mobile-1.1.0.min.css" />
     <Content Include="Content\jquery.mobile.structure-1.1.0.css" />
     <Content Include="Content\jquery.mobile.structure-1.1.0.min.css" />
     <Content Include="Content\jquery.mobile.theme-1.1.0.css" />
     <Content Include="Content\jquery.mobile.theme-1.1.0.min.css" />
+    <Content Include="Content\gdut\search.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -254,8 +260,14 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="App_Readme\Handlebarsjs_README.md" />
+    <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <None Include="Properties\PublishProfiles\JoinIn.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\gdut\search.js" />
+    <Content Include="Scripts\handlebars.js" />
+    <Content Include="Scripts\handlebars.min.js" />
+    <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
@@ -272,6 +284,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="search.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -297,6 +310,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Library\Details.cshtml" />
+    <Content Include="Views\Library\Index.cshtml" />
+    <Content Include="Views\Library\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

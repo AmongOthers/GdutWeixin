@@ -33,7 +33,8 @@
             var url1 = window.location.pathname;
             if (url1.indexOf("bookinfo.aspx") >=0 )
             {
-                //检查系统预约参数
+                //检查系统预约参数
+
                 if(0 == 0)
                 {
                     listbookwithresv();
@@ -102,7 +103,8 @@
             <div class="fl" style="width:56%">
                         <span id="loginmsg" style="display:none;">
                 <!--<marquee width="150px" align="middle" behavior="scroll" scrollamount="2"></marquee>-->
-                登录成功。 如果您使用的是公共电脑，请在使用完毕后，务必退出登录，切记！
+                登录成功。 如果您使用的是公共电脑，请在使用完毕后，务必退出登录，切记！
+
             </span>
             </div>
             <div class="fr" style="width:42%">
@@ -530,7 +532,7 @@ function showdetailfacet(obj)
 	<option value="CALLNOFORWARD">索取号</option>
 
 </select>&nbsp;
-            <input name="ctl00$ContentPlaceHolder1$keywordstb" type="text" maxlength="250" id="ctl00_ContentPlaceHolder1_keywordstb" onkeypress="if (event.keyCode=='13') {$('ctl00_ContentPlaceHolder1_searchbtn').click();event.returnValue =false;}" autocomplete="off" style="width:293px;" /><input type="submit" name="ctl00$ContentPlaceHolder1$searchbtn" value="新检索" onclick="return check();" id="ctl00_ContentPlaceHolder1_searchbtn" class="btn" /><input type="submit" name="ctl00$ContentPlaceHolder1$researchbtn" value="在结果中检索" onclick="return checkForResearch();" id="ctl00_ContentPlaceHolder1_researchbtn" class="btn" />
+            <input name="ctl00$ContentPlaceHolder1$keywordstb" type="text" maxlength="250" id="ctl00_ContentPlaceHolder1_keywordstb" onkeypress="if (event.keyCode=='13') {$('ctl00_ContentPlaceHolder1_$searchBtn').click();event.returnValue =false;}" autocomplete="off" style="width:293px;" /><input type="submit" name="ctl00$ContentPlaceHolder1$$searchBtn" value="新检索" onclick="return check();" id="ctl00_ContentPlaceHolder1_$searchBtn" class="btn" /><input type="submit" name="ctl00$ContentPlaceHolder1$re$searchBtn" value="在结果中检索" onclick="return checkForResearch();" id="ctl00_ContentPlaceHolder1_re$searchBtn" class="btn" />
             <input type="button" class="btn" value="返回主检索界面" onclick="javascript:window.location='search.aspx'"/>
         </div>
         <div id="acdiv" class="autocompletediv">

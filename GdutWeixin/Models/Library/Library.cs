@@ -52,13 +52,13 @@ namespace GdutWeixin.Models.Library
         static readonly Regex TBODY_REGEX = new Regex("<tbody>[\\s\\S]+</tbody>");
         static readonly Regex PAGE_COUNT_REGEX = new Regex("<span id=\"ctl00_ContentPlaceHolder1_gplblfl1\">([0-9]+)</span>");
 
-        public LibrarySearchResult SearchBooksFor(HttpSessionStateBase session, LibrarySearchOption option, out object error)
+        public LibrarySearchResultRecord SearchBooksFor(HttpSessionStateBase session, LibrarySearchOption option, out object error)
         {
             error = null;
             var user = option.User;
 			var keyword = option.Keyword;
 			var page = option.Page;
-            LibrarySearchResult cached;
+            LibrarySearchResultRecord cached;
             if ((cached = mResultCache.Try2Hit(keyword, page)) != null)
             {
                 ApplicationLogger.GetLogger().Info("(" + session.SessionID + ")" + keyword + " " + page + " hited");
@@ -66,34 +66,65 @@ namespace GdutWeixin.Models.Library
                 return cached;
             }
             option = option == null ? DEFAULT : option;
-            var url = getSearchUrl(keyword, option);
-            try
+            LibrarySearchResult result;
+            if (Search(option, out result))
             {
-                var request = WebRequest.Create(url) as HttpWebRequest;
-                Stream stream = (request.GetResponse() as HttpWebResponse).GetResponseStream();
-                List<Book> books = null;
-                int pageCount = 0;
-                Parse(stream, out books, out pageCount);
-                cached = new LibrarySearchResult
+                cached = new LibrarySearchResultRecord
                             {
                                 Keyword = keyword,
                                 User = user,
-                                Books = books,
-                                MoreUrl = url,
-                                PageCount = pageCount,
+                                Books = result.Books,
+                                PageCount = result.PageCount,
 								CurrentPage = option.Page
                             };
 				//记录查询结果的总页数
-                option.PageCount = pageCount;
+                option.PageCount = result.PageCount;
                 mResultCache.Push(cached);
                 ApplicationLogger.GetLogger().Info("(" + session.SessionID + ")" +
                     "push cache: " + keyword + " " + page + " current cache count: " + mResultCache.Count);
                 return cached;
             }
-            catch (WebException e)
+            else
             {
-                error = e;
                 return null;
+            }
+        }
+
+        public bool Search(LibrarySearchOption option, out LibrarySearchResult result)
+        {
+#if DEBUG
+            using (var reader = new StreamReader(System.IO.File.OpenRead(
+    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "search.txt"))))
+            {
+                var serializer = new JavaScriptSerializer();
+                result = serializer.Deserialize<LibrarySearchResult>(reader.ReadToEnd());
+                result.Books = result.Books.GetRange(0, option.PageSize);
+            }
+            return true;
+#endif
+			List<Book> books = null;
+            int pageCount = 0;
+			var url = getSearchUrl(option);
+            try
+            {
+                var request = WebRequest.Create(url) as HttpWebRequest;
+                Stream stream = (request.GetResponse() as HttpWebResponse).GetResponseStream();
+                Parse(stream, out books, out pageCount);
+                result = new LibrarySearchResult
+                {
+					Books = books,
+					PageCount = pageCount,
+					Error = null
+                };
+                return true;
+            }
+			catch(WebException e)
+            {
+                result = new LibrarySearchResult
+                {
+					Error = e
+                };
+                return false;
             }
         }
 
@@ -144,11 +175,11 @@ namespace GdutWeixin.Models.Library
             return bookInfo;
         }
 
-        private string getSearchUrl(string keyword, LibrarySearchOption option)
+        private string getSearchUrl(LibrarySearchOption option)
         {
-            var encodedKeyword = HttpUtility.UrlEncode(keyword, System.Text.Encoding.GetEncoding("GB2312"));
-            var url = String.Format("http://222.200.98.171:81/searchresult.aspx?dt=0&dp=8&sf=M_PUB_YEAR&ob=DESC&sm=table&anywords={0}&dept={1}&cl={2}&page={3}",
-                encodedKeyword, option.DeptPlace, option.Language, option.Page);
+            var encodedKeyword = HttpUtility.UrlEncode(option.Keyword, System.Text.Encoding.GetEncoding("GB2312"));
+            var url = String.Format("http://222.200.98.171:81/searchresult.aspx?dt=0&sf=M_PUB_YEAR&ob=DESC&sm=table&anywords={0}&dept={1}&cl={2}&page={3}&dp={4}",
+                encodedKeyword, option.DeptPlace, option.Language, option.Page, option.PageSize);
             return url;
         }
     }
