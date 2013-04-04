@@ -2,14 +2,10 @@
 	text-align: center;
 }
 div[data-role="header"] {
-	padding: 5px 0px;
-	height: 40px;
+	padding: 0px;
 }
 div[data-role="header"] .ui-btn-text {
 	font-size: 1.2em;
-}
-div[data-role="header"] div[data-role="controlgroup"] {
-	margin-bottom: 0px;
 }
 div[data-role="content"] {
 	padding: 0px;
@@ -21,13 +17,16 @@ ul.resultList li{
 	border: none;
 	border-top: 1px dashed #ddd;
 }
+.ui-li {
+	background-image: none;
+}
 ul.resultList li:first-of-type 
 {
 	border-top: none;
 }
 .bookLeft {
 	float: left;
-	width: 250px;
+	width: 230px;
 }
 .bookLeft .ui-li-desc {
 	margin: 5px;
@@ -38,6 +37,8 @@ ul.resultList li:first-of-type
 .bookRight {
 	margin: 5px 0px;
 	float: right;
+	width: 40px;
+	padding-left: 20px;
 }
 .bookRight p {
 	margin: 0px;
@@ -69,31 +70,21 @@ div.notInFavoriate img.notInFavoriate {
 }
 div.info {
 	display: none;
-	position: relative;
 }
 div.info label {
 	display: inline-block;
-	line-height: 40px;
-	width: 200px;
+	width: 14em;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-div.info input[type="text"] {
-	position: absolute;
-	right: 10px;
-	width: 40px;
+div.info .ui-input-text {
 	display: inline-block;
+	width: 3em;
 }
-div.search {
-	text-align: center;
-}
-div.search input[type="text"] {
-	width: 200px;
+div.search .ui-input-text {
 	display: inline-block;
-}
-div.search .btn { 
-	margin-left: 10px;
+	width: 14em;
 }
 ul {
 	text-align: center;

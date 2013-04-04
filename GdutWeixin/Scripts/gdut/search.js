@@ -2,6 +2,10 @@
 	//选择器
 	var $resultList = $(".resultList");
 	var onSearchDone = function (books, pageCount) {
+		for (var i = 0; i < books.length; i++) {
+			var book = books[i];
+			book.IsInFavoriate = localStorage.getItem(book.Index) !== null;
+		}
 		$(booksTemplate({ books: books })).appendTo($resultList);
 		$resultList.listview("refresh");
 		$(".resultList a[data-role='button']").button();
@@ -63,11 +67,27 @@
 	});
 
 	//加入收藏
-	$resultList.on("click", "div.bookFavoriate", function () {
+	var $addTip = $(".addIntoFavoriate");
+	var $removeTip = $(".removeFromFavoriate");
+	$resultList.on("click", "div.bookRight", function () {
 		if ($(this).hasClass("notInFavoriate")) {
 			$(this).removeClass("notInFavoriate");
 			$(this).addClass("inFavoriate");
+			localStorage.setItem($(this).data("index"), "");
+			$addTip.popup("open", { positionTo: $(this) });
+			setTimeout(function () {
+				$addTip.popup("close");
+			}, 500);
 		}
+		else {
+			$(this).removeClass("inFavoriate");
+			$(this).addClass("notInFavoriate");
+			localStorage.removeItem($(this).data("index"));
+			$removeTip.popup("open", { positionTo: $(this) });
+			setTimeout(function () {
+				$removeTip.popup("close");
+			}, 500);
+			}
 	});
 });
 

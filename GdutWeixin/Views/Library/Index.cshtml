@@ -21,17 +21,23 @@
 	<body>
         <div data-role="page">
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="c">
-				<div data-role="controlgroup" class="info">
+				<div class="info">
 					<label class="keyword">嵌入式系统开发和设计原理</label>
-					<input type="text" placeholder="搜索" />
+					<input type="text" placeholder="搜索" data-inline="true" />
 				</div>
-				<div data-role="controlgroup" class="search">
+				<div class="search">
 					<input type="text" placeholder="关键字" />
 					<a href="#" data-role="button" data-inline="true" data-theme="b" class="btn">取消</a>
 				</div>
             </div>
 
             <div data-role="content">
+				<div data-role="popup" class="addIntoFavoriate" data-theme="e">
+					<p>已加入到收藏中<p>
+				</div>
+				<div data-role="popup" class="removeFromFavoriate" data-theme="e">
+					<p>已从收藏中移除<p>
+				</div>
 				<ul data-role="listview" class="resultList"  data-theme="d">
 					<!--
                     <li>
@@ -61,7 +67,6 @@
 			-->
         </div>
 
-        @Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
 		@Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
 		@Scripts.Render("~/Scripts/handlebars.js")
 		@Scripts.Render("~/Scripts/gdut/search.js");
@@ -75,9 +80,9 @@
 						<p>[{{Index}}]</p>
 						<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">详细信息</a>
 					</div>
-					<div class="bookRight">
+					<div class="bookRight {{#if IsInFavoriate}}inFavoriate{{else}}notInFavoriate{{/if}}" data-index="{{Index}}">
 						<p class="{{#if IsAvailable}}bookAvailable{{else}}bookNotAvailable{{/if}}">{{Available}} / {{Total}}</p>
-						<div class="bookFavoriate notInFavoriate" data-index="{{Index}}">
+						<div class="bookFavoriate">
 							<img class="inFavoriate" alt="favoriate" src="Content/images/red_heart.png">
 							<img class="notInFavoriate" alt="favoriate" src="Content/images/empty_heart.png">
 						</div>
