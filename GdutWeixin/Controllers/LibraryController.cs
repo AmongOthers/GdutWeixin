@@ -70,5 +70,15 @@ namespace GdutWeixin.Controllers
             var bookInfo = Library.GetInstance().GetBookInfo(url);
             return View(bookInfo);
         }
+#if DEBUG
+        public void StartTest()
+        {
+			var expectedCount = Request["count"];
+            if (expectedCount != null)
+            {
+                Library.GetInstance().StartTest(Int16.Parse(expectedCount));
+            }
+        }
+#endif
     }
 }

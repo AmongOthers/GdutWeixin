@@ -3,12 +3,22 @@
 }
 div[data-role="header"] {
 	padding: 0px;
+	height: 55px;
+}
+div[data-role="page"] {
+	background-image: none;
+	background-color: #fff;
 }
 div[data-role="header"] .ui-btn-text {
 	font-size: 1.2em;
 }
 div[data-role="content"] {
 	padding: 0px;
+}
+.resultCount {
+	text-align: right;
+	display: none;
+	margin-right: 1em;
 }
 ul.resultList {
 	margin: 0px !important; 
@@ -20,9 +30,9 @@ ul.resultList li{
 .ui-li {
 	background-image: none;
 }
-ul.resultList li:first-of-type 
+ul.resultList li:last-of-type 
 {
-	border-top: none;
+	border-bottom: 1px solid #ddd;
 }
 .bookLeft {
 	float: left;
@@ -43,6 +53,7 @@ ul.resultList li:first-of-type
 .bookRight p {
 	margin: 0px;
 	font-size: 1.2em;
+	width: 7em;
 }
 .bookRight p.bookAvailable {
 	color: #008800;
@@ -68,12 +79,17 @@ div.notInFavoriate img.notInFavoriate {
 .clearfix {
 	clear: both;
 }
-div.info {
+div.bookInfo div.search {
+	display: none;
+}
+div.bookSearch div.info {
 	display: none;
 }
 div.info label {
 	display: inline-block;
 	width: 14em;
+	height: 55px;
+	line-height: 55px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -82,13 +98,51 @@ div.info .ui-input-text {
 	display: inline-block;
 	width: 3em;
 }
-div.search .ui-input-text {
+div.search .ui-input-search {
 	display: inline-block;
-	width: 14em;
+	width: 10em;
+}
+div.search .ui-input-search.error {
+	border-color: #f00;
 }
 ul {
 	text-align: center;
 }
 li {
 	text-align: center;
+}
+div.bookSearch .moreBtn {
+	display: none;
+}
+.moreBtn {
+	margin: 0px;
+	border: none;
+	border-bottom: solid 1px #ddd;
+	position: relative;
+}
+.moreBtn .ui-btn-inner {
+	background-color: #fff;
+	background-image: none;
+	border: none;
+	height: 40px;
+}
+.moreBtn .ui-btn-text {
+	display: inline-block;
+	height: 40px;
+}
+.moreBtn.notLoading img {
+	display: none;
+}
+.moreBtn.loading img {
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+}
+.moreBtn.notLoading span.moreText {
+	line-height: 40px;
+	margin: 0px;
+	display: inline-block;
+}
+.moreBtn.loading span.moreText {
+	display: none;
 }

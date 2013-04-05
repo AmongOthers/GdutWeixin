@@ -22,11 +22,11 @@
         <div data-role="page">
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="c">
 				<div class="info">
-					<label class="keyword">嵌入式系统开发和设计原理</label>
+					<label class="keyword"></label>
 					<input type="text" placeholder="搜索" data-inline="true" />
 				</div>
 				<div class="search">
-					<input type="text" placeholder="关键字" />
+					<input type="search" placeholder="关键字" />
 					<a href="#" data-role="button" data-inline="true" data-theme="b" class="btn">取消</a>
 				</div>
             </div>
@@ -38,33 +38,14 @@
 				<div data-role="popup" class="removeFromFavoriate" data-theme="e">
 					<p>已从收藏中移除<p>
 				</div>
+				<p class="resultCount">搜索结果</p>
 				<ul data-role="listview" class="resultList"  data-theme="d">
-					<!--
-                    <li>
-                        <div class="bookLeft">
-                            <p>标题</p>
-                            <p>作者 / 出版社 / 2030</p>
-                            <p>[索引号]</p>
-							<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">详细信息</a>
-                        </div>
-                        <div class="bookRight">
-                            <p>1 / 3</p>
-                            <img src="/Content/images/red_heart.png" alt="">
-                        </div>
-						<div class="clearfix"></div>
-                    </li>
-						-->
 				</ul>
+				<a href="#" data-role="button" data-corners="false" class="moreBtn notLoading">
+					<span class="moreText">更多</span>
+					<img src="Content/images/loading.gif" alt="loading" />
+				</a>
             </div>
-
-			<!--
-			<div data-role="footer" data-position="fixed">
-				<div data-role="controlgroup" data-type="horizontal">
-					<a href="#" data-role="button" data-icon="arrow-d">下一页</a>
-					<a href="#" data-role="button" data-icon="arrow-u">上一页</a>
-				</div>
-			</div>
-			-->
         </div>
 
 		@Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")

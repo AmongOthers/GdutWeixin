@@ -51,6 +51,11 @@ namespace GdutWeixin.Models.Library
 
         static readonly Regex TBODY_REGEX = new Regex("<tbody>[\\s\\S]+</tbody>");
         static readonly Regex PAGE_COUNT_REGEX = new Regex("<span id=\"ctl00_ContentPlaceHolder1_gplblfl1\">([0-9]+)</span>");
+        static readonly Regex RESULT_COUNT_REGEX = 
+            new Regex("<span id=\"ctl00_ContentPlaceHolder1_countlbl\" style=\"color:Red;\">([0-9]+)</span>");
+		//在浏览器(chrome, ie10)中查看是上面的页面，但是程序访问却是得到下面的页面
+        static readonly Regex RESULT_COUNT_REGEX_1 = 
+            new Regex("<span id=\"ctl00_ContentPlaceHolder1_countlbl\"><font color=\"Red\">([0-9]+)</font></span>");
 
         public LibrarySearchResultRecord SearchBooksFor(HttpSessionStateBase session, LibrarySearchOption option, out object error)
         {
@@ -90,30 +95,59 @@ namespace GdutWeixin.Models.Library
             }
         }
 
-        public bool Search(LibrarySearchOption option, out LibrarySearchResult result)
-        {
 #if DEBUG
+		int expectedCount = 60;
+        int pageIndex = 0;
+
+        public void StartTest(int expectedCount)
+        {
+            this.expectedCount = expectedCount;
+            pageIndex = 0;
+        }
+
+        LibrarySearchResult getLocalResult()
+        {
             using (var reader = new StreamReader(System.IO.File.OpenRead(
     Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "search.txt"))))
             {
                 var serializer = new JavaScriptSerializer();
-                result = serializer.Deserialize<LibrarySearchResult>(reader.ReadToEnd());
-                result.Books = result.Books.GetRange(0, option.PageSize);
+				return serializer.Deserialize<LibrarySearchResult>(reader.ReadToEnd());
             }
-            return true;
+        }
 #endif
+
+        public bool Search(LibrarySearchOption option, out LibrarySearchResult result)
+        {
+			/*
+#if DEBUG
+			result = getLocalResult();
+			result.ResultCount = expectedCount;
+			if (pageIndex < expectedCount / option.PageSize)
+			{
+				pageIndex++;
+				result.Books = result.Books.GetRange(0, option.PageSize);
+			}
+			else
+			{
+				result.Books = result.Books.GetRange(0, expectedCount - pageIndex * option.PageSize);
+			}
+			return true;
+#endif
+			*/
 			List<Book> books = null;
             int pageCount = 0;
+            int resultCount = 0;
 			var url = getSearchUrl(option);
             try
             {
                 var request = WebRequest.Create(url) as HttpWebRequest;
                 Stream stream = (request.GetResponse() as HttpWebResponse).GetResponseStream();
-                Parse(stream, out books, out pageCount);
+                Parse(stream, out books, out pageCount, out resultCount);
                 result = new LibrarySearchResult
                 {
 					Books = books,
 					PageCount = pageCount,
+					ResultCount = resultCount,
 					Error = null
                 };
                 return true;
@@ -128,7 +162,7 @@ namespace GdutWeixin.Models.Library
             }
         }
 
-        public void Parse(Stream stream, out List<Book> books, out int pageCount)
+        public void Parse(Stream stream, out List<Book> books, out int pageCount, out int resultCount)
         {
             using (var reader = new StreamReader(stream))
             {
@@ -153,6 +187,17 @@ namespace GdutWeixin.Models.Library
                 else
                 {
                     pageCount = 0;
+                }
+                match = ((match = RESULT_COUNT_REGEX.Match(content)).Success) ? match :
+                    RESULT_COUNT_REGEX_1.Match(content);
+                if (match.Success)
+                {
+                    var resultCountStr = match.Groups[1].Value;
+                    resultCount = Int16.Parse(resultCountStr);
+                }
+                else
+                {
+                    resultCount = 0;
                 }
             }
         }
