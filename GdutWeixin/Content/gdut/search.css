@@ -3,7 +3,6 @@
 }
 div[data-role="header"] {
 	padding: 0px;
-	height: 55px;
 }
 div[data-role="page"] {
 	background-image: none;
@@ -15,10 +14,25 @@ div[data-role="header"] .ui-btn-text {
 div[data-role="content"] {
 	padding: 0px;
 }
-.resultCount {
-	text-align: right;
+.bookBanner {
 	display: none;
-	margin-right: 1em;
+	background-color: #fff;
+	padding: 5px 15px;
+	text-align: left;
+	height: 50px;
+	position: relative;
+}
+.bookBanner .ui-btn {
+	display: inline-block;
+	/*近于垂直居中*/
+	position: absolute;
+	top: 50%;
+	margin-top: -17px;
+}
+.bookBanner p {
+	float: right;
+	line-height: 50px;
+	margin: 0px;
 }
 ul.resultList {
 	margin: 0px !important; 
@@ -30,8 +44,10 @@ ul.resultList li{
 .ui-li {
 	background-image: none;
 }
-ul.resultList li:last-of-type 
-{
+ul.resultList li:first-of-type {
+	border-top: none;
+}
+ul.resultList li:last-of-type {
 	border-bottom: 1px solid #ddd;
 }
 .bookLeft {
@@ -79,15 +95,49 @@ div.notInFavoriate img.notInFavoriate {
 .clearfix {
 	clear: both;
 }
-div.bookInfo div.search {
+div.search {
+	height: 55px;
+}
+div.info {
+	height: 55px;
+}
+div[data-role="page"].bookInfo div.search {
 	display: none;
 }
-div.bookSearch div.info {
+div[data-role="page"].bookSearch div.info {
 	display: none;
+}
+div[data-role="page"].bookSearch .moreBtn {
+	display: none;
+}
+div[data-role="page"].bookInit div.info {
+	display: none;
+}
+/*如果不加这句hack，那么从初始化界面到我的收藏界面，然后再回到初始化界面，就会发现我的收藏按钮的位置上浮*/
+#search.bookInit {
+	padding-top: 111px !important;
+}
+.openFavoriateBtn {
+	display: none;
+}
+div[data-role="page"].bookInit .moreBtn {
+	display: none;
+}
+div[data-role="page"].bookInit .openFavoriateBtn {
+	display: inline-block;
+}
+label.myFavoriateTitle {
+	display: inline-block;
+	width: 10em;
+	height: 55px;
+	line-height: 55px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 div.info label {
 	display: inline-block;
-	width: 14em;
+	width: 10em;
 	height: 55px;
 	line-height: 55px;
 	overflow: hidden;
@@ -104,15 +154,6 @@ div.search .ui-input-search {
 }
 div.search .ui-input-search.error {
 	border-color: #f00;
-}
-ul {
-	text-align: center;
-}
-li {
-	text-align: center;
-}
-div.bookSearch .moreBtn {
-	display: none;
 }
 .moreBtn {
 	margin: 0px;
@@ -145,4 +186,69 @@ div.bookSearch .moreBtn {
 }
 .moreBtn.loading span.moreText {
 	display: none;
+}
+
+/*详细页面*/
+.ui-dialog {
+	background-color: #fff !important;
+}
+.bookBasicInfo li {
+	text-align: left;
+	padding-bottom: 5px;
+}
+.bookBasicInfo li:last-of-type {
+	padding-bottom: 0px;
+}
+.available {
+	color: green;
+}
+.lent {
+	color: red;
+}
+.readonly {
+	color: gray;
+}
+.bookContent {
+	text-align: left;
+}
+
+/*收藏页面*/
+.openSearch {
+	float: right;
+}
+ul.favoriateList {
+	margin: 0px !important;
+}
+ul.favoriateList li{
+	border: none;
+	border-top: 1px dashed #ddd;
+}
+ul.favoriateList li:first-of-type {
+	border-top: none;
+}
+ul.favoriateList li:last-of-type {
+	border-bottom: 1px solid #ddd;
+}
+.favoriateList .favoriateIndex {
+}
+.favoriateList .ui-li-desc {
+	margin: 5px;
+	word-wrap: inherit;
+	overflow: inherit;
+	white-space: inherit;
+}
+.favoriateList .ui-btn {
+	position: absolute;
+	top: 10px;
+	right: 5px;
+}
+.favoriateList li.done {
+	color: #ddd;
+}
+.favoriateList li.done .ui-li-heading {
+	text-decoration: line-through;
+	color: black;
+}
+.favoriateList li.done .favoriateIndex {
+	color: #ddd;
 }

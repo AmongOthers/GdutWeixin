@@ -71,6 +71,10 @@ namespace GdutWeixin.Tests
             Assert.AreEqual("中文图书", deptInfo.Type);
             Assert.IsTrue(bookInfo.CardInfo.Content.StartsWith("责任者规范汉译姓: 霍顿。"));
             Assert.IsTrue(bookInfo.CardInfo.Content.EndsWith("责任者规范汉译姓: 霍顿。"));
+
+            stream = File.OpenRead("details3.htm");
+            bookInfo = BookInfo.Build(stream);
+            Assert.IsTrue(bookInfo.CardInfo.Content.Length == 0);
         }
     }
 }

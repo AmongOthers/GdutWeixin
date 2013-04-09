@@ -19,56 +19,86 @@
 
     </head>
 	<body>
-        <div data-role="page">
+        <div data-role="page" id="search">
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="c">
 				<div class="info">
+					<a href="#favoriate" data-transition="none" data-role="button" data-inline="true" data-icon="arrow-l" data-theme="b">书单</a>
 					<label class="keyword"></label>
 					<input type="text" placeholder="搜索" data-inline="true" />
 				</div>
 				<div class="search">
 					<input type="search" placeholder="关键字" />
-					<a href="#" data-role="button" data-inline="true" data-theme="b" class="btn">取消</a>
+					<a href="#" data-role="button" data-inline="true" data-theme="b" class="btn">搜索</a>
+				</div>
+				<div class="bookBanner ui-body-a">
+					<a href="#" data-role="button" data-mini="true" class="back2Top">回到顶部</a>
+					<p class="resultCount">搜索结果</p>
+					<div class="clearfix"></div>
 				</div>
             </div>
 
             <div data-role="content">
 				<div data-role="popup" class="addIntoFavoriate" data-theme="e">
-					<p>已加入到收藏中<p>
+					<p>已加入到书单中<p>
 				</div>
 				<div data-role="popup" class="removeFromFavoriate" data-theme="e">
-					<p>已从收藏中移除<p>
+					<p>已从书单中移除<p>
 				</div>
-				<p class="resultCount">搜索结果</p>
-				<ul data-role="listview" class="resultList"  data-theme="d">
-				</ul>
+				<a href="#favoriate" data-role="button" data-theme="b" data-inline="true" class="openFavoriateBtn">我的书单</a>
+				<ul data-role="listview" class="resultList"  data-theme="d"></ul>
 				<a href="#" data-role="button" data-corners="false" class="moreBtn notLoading">
 					<span class="moreText">更多</span>
-					<img src="Content/images/loading.gif" alt="loading" />
+					<img src="/Content/images/loading.gif" alt="loading" />
 				</a>
             </div>
         </div>
 
+		<div data-role="page" id="favoriate">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="c">
+				<div>
+					<label class="myFavoriateTitle">我的书单</label>
+					<a href="#search" data-transition="none" data-role="button" data-inline="true" data-icon="arrow-r" data-theme="b" data-iconpos="right" class="openSearch">搜索</a>
+				</div>
+			</div>
+			<div data-role="content">
+				<ul data-role="listview" class="favoriateList touch" data-theme="d"></ul>
+			</div>
+		</div>
+
 		@Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
 		@Scripts.Render("~/Scripts/handlebars.js")
-		@Scripts.Render("~/Scripts/gdut/search.js");
+		@Scripts.Render("~/Scripts/gdut/search.js")
 
 		<script type="text/x-handlebars-template" id="books">
-			{{#each books}}
+			{{#each this}}
 				<li>
 					<div class="bookLeft">
-						<label>{{Title}}</label>
+						<h1>{{Title}}</h1>
 						<p>{{Author}} / {{Publisher}} / {{PublishYear}}</p>
 						<p>[{{Index}}]</p>
-						<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">详细信息</a>
+						<a href="/Library/Details?url={{Url}}" data-role="button" data-inline="true" data-mini="true" data-theme="b" data-rel="dialog">详细信息</a>
 					</div>
-					<div class="bookRight {{#if IsInFavoriate}}inFavoriate{{else}}notInFavoriate{{/if}}" data-index="{{Index}}">
+					<div class="bookRight {{#if IsInFavoriate}}inFavoriate{{else}}notInFavoriate{{/if}}" data-index="{{Index}}" data-key="{{LocalKey}}" data-json="{{BookJson}}">
 						<p class="{{#if IsAvailable}}bookAvailable{{else}}bookNotAvailable{{/if}}">{{Available}} / {{Total}}</p>
 						<div class="bookFavoriate">
-							<img class="inFavoriate" alt="favoriate" src="Content/images/red_heart.png">
-							<img class="notInFavoriate" alt="favoriate" src="Content/images/empty_heart.png">
+							<img class="inFavoriate" alt="favoriate" src="/Content/images/red_heart.png">
+							<img class="notInFavoriate" alt="favoriate" src="/Content/images/empty_heart.png">
 						</div>
 					</div>
 					<div class="clearfix"></div>
+				</li>
+			{{/each}}
+		</script>
+
+		<script type="text/x-handlebars-template" id="favoriateBooks">
+			{{#each this}}
+				<li data-index="{{Index}}" data-key="{{LocalKey}}" {{#if IsDone}}class="done"{{/if}}>
+					<div>
+						<h1><span class="favoriateIndex">{{Index}}</span></h1>
+						<p class="favoriateTitle">{{Title}}</p>
+						<p>{{Author}} / {{Publisher}} / {{PublishYear}}</p>
+						<a href="/Library/Details?url={{Url}}" data-role="button" data-inline="true" data-mini="true" data-theme="b" data-rel="dialog">详细信息</a>
+					</div>
 				</li>
 			{{/each}}
 		</script>

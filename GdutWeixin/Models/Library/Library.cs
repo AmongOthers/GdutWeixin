@@ -118,7 +118,6 @@ namespace GdutWeixin.Models.Library
 
         public bool Search(LibrarySearchOption option, out LibrarySearchResult result)
         {
-			/*
 #if DEBUG
 			result = getLocalResult();
 			result.ResultCount = expectedCount;
@@ -133,7 +132,6 @@ namespace GdutWeixin.Models.Library
 			}
 			return true;
 #endif
-			*/
 			List<Book> books = null;
             int pageCount = 0;
             int resultCount = 0;

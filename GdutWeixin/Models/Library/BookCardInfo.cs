@@ -100,7 +100,7 @@ namespace GdutWeixin.Models.Library
                 {
 					var isbnText = mContentAndIsbnTexts[isbnIndex];
 					getIsbn(isbnText);
-                    mBookCardInfo.Content = mContentAndIsbnTexts[isbnIndex - 1].Trim();
+                    mBookCardInfo.Content = mContentAndIsbnTexts[isbnIndex - 1].Trim().Trim(')').Trim('）');
                 }
             }
 
