@@ -208,6 +208,17 @@ var onSearchPageInit = function () {
 	});
 };
 
+var onSearchPageShow = function () {
+	var $inFavoriteBooks = $(".bookRight.inFavoriate");
+	$inFavoriteBooks.each(function () {
+		var key = ($(this).data("key"));
+		if (localStorage.getItem(key) === null) {
+			$(this).removeClass("inFavoriate");
+			$(this).addClass("notInFavoriate");
+		}
+	});
+};
+
 var onFavoriatePageInit = function () {
 	$(document).on("swipeleft", ".favoriateList li.ui-li", function (event) {
 		var listItem = $(this);
@@ -230,6 +241,9 @@ var onFavoriatePageInit = function () {
 			listItem.remove();
 			localStorage.removeItem(listItem.data("key"));
 		}
+	});
+	$(".favoriateType input[type='radio']").on("change", function () {
+		showFavoriateAccordingToSelection();
 	});
 };
 
@@ -260,14 +274,31 @@ var onFavoriatePageShow = function () {
 	}
 	$favoriateList.listview("refresh");
 	$("a[data-role='button']", $favoriateList).button();
+	showFavoriateAccordingToSelection();
+};
+
+var showFavoriateAccordingToSelection = function () {
+	var $favoriateList = $(".favoriateList");
+	var favoriateType = $(".favoriateType input[type='radio']:checked").val();
+	if (favoriateType == "all") {
+		$favoriateList.removeClass("active done");
+	} else if (favoriateType == "active") {
+		$favoriateList.addClass("active");
+		$favoriateList.removeClass("done");
+	} else {
+		$favoriateList.addClass("done");
+		$favoriateList.removeClass("active");
+	}
 };
 
 var getBooksTemplate = function () {
-	return Handlebars.compile($("#books").html());
+	//return Handlebars.compile($("#books").html());
+	return Handlebars.templates["books"];
 };
 
 var getFavoriateBooksTemplate = function () {
-	return Handlebars.compile($("#favoriateBooks").html());
+	//return Handlebars.compile($("#favoriateBooks").html());
+	return Handlebars.templates["favoriate"];
 };
 
 var librarySearch = function (keyword, page, onSearchDone, onSearchError, onAjaxError) {
@@ -293,3 +324,4 @@ var getURLParameter = function (name) {
 $(document).on("pageinit", "#favoriate", onFavoriatePageInit);
 $(document).on("pageshow", "#favoriate", onFavoriatePageShow);
 $(document).on("pageinit", "#search", onSearchPageInit);
+$(document).on("pageshow", "#search", onSearchPageShow);

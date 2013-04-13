@@ -30,7 +30,7 @@ namespace GdutWeixin.Models.Library
             var match = QUICK_PAGE_REGEX.Match(msg);
             if (match.Success)
             {
-                page = Int16.Parse(match.Groups[1].Value);
+                page = Int32.Parse(match.Groups[1].Value);
                 return true;
             }
             return false;

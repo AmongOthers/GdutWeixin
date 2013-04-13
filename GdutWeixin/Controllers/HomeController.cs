@@ -62,6 +62,24 @@ namespace GdutWeixin.Controllers
             return Session.SessionID + "@" + DateTime.Now;
         }
 
+
+        static List<NewsResponse.Article> sArticles = new List<NewsResponse.Article> { 
+			new NewsResponse.Article {
+				Title = new WeixinResponse.StringXmlCDataSection("欢迎使用WebApp, 点击登录"),
+				Description = new WeixinResponse.StringXmlCDataSection("首次使用加载较慢(特别是2G移动网络)，请耐心等候"),
+			}
+        };
+
+		private static NewsResponse getWebAppRsp(string user, HttpRequestBase request) {
+            if (sArticles[0].Url == null)
+            {
+				var converter = new UrlToAbsConverter(request);
+				sArticles[0].Url = new WeixinResponse.StringXmlCDataSection(converter.Convert("/Library"));
+                sArticles[0].PicUrl = new WeixinResponse.StringXmlCDataSection(converter.Convert("/Content/Images/frog.jpg"));
+            }
+            return new NewsResponse(user) { Articles = sArticles };
+        }
+
         private ContentResult onWeixinRequestReceived(WeixinRequest reqMsg)
         {
 			var user = reqMsg.FromUserName;
@@ -74,6 +92,13 @@ namespace GdutWeixin.Controllers
                 if (keyword == "@p")
                 {
                     return Content(new TextResponse(user, reqMsg.HowMuchSecondsPassedAfterCreated.ToString()).ToString());
+                }
+				//web界面登录
+                else if (keyword == "?")
+                {
+                    var rsp = getWebAppRsp(user, Request).ToString();
+                    Console.WriteLine(rsp);
+                    return Content(rsp);
                 }
                 //表情的过滤
                 else if (keyword.StartsWith("/:"))

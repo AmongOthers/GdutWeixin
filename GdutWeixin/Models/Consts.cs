@@ -12,12 +12,5 @@ namespace GdutWeixin.Models
         public const string FUNC = "图书馆图书搜索，发送关键字进行查询。由于微信超过5秒即超时没有响应，此时请发送 \".\" + r 重试。返回条目中绿灯表示有可借，红灯表示无可借。点击条目可以进入该书的详细信息页面。";
         public static readonly string WELCOME = String.Join("\n\n", new string[] { ABOUT, CONTACT, FUNC });
         public const string GOODBYE = "下马饮君酒，问君何所之？\n君言不得意，归卧南山陲。\n但去莫复问，白云无尽时。";
-#if DEBUG
-        public const string ACCOUNT = "tv_search";
-        public const string TOKEN = "highschoolweixin";
-#else 
-        public const string ACCOUNT = "loneso";
-        public const string TOKEN = "loneso";//必须和公众平台的token设置一致，或在方法中指定
-#endif
     }
 }

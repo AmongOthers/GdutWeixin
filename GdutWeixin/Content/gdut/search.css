@@ -54,6 +54,11 @@ ul.resultList li:last-of-type {
 	float: left;
 	width: 230px;
 }
+.bookLeft h1 {
+	word-wrap: inherit;
+	overflow: inherit;
+	white-space: inherit;
+}
 .bookLeft .ui-li-desc {
 	margin: 5px;
 	word-wrap: inherit;
@@ -107,7 +112,7 @@ div[data-role="page"].bookInfo div.search {
 div[data-role="page"].bookSearch div.info {
 	display: none;
 }
-div[data-role="page"].bookSearch .moreBtn {
+div[data-role="page"].bookInit .moreBtn {
 	display: none;
 }
 div[data-role="page"].bookInit div.info {
@@ -134,6 +139,8 @@ label.myFavoriateTitle {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	/*为了居中对齐的丑陋的hack，和右边按钮平衡*/
+	margin-left: 70px;
 }
 div.info label {
 	display: inline-block;
@@ -147,6 +154,9 @@ div.info label {
 div.info .ui-input-text {
 	display: inline-block;
 	width: 3em;
+}
+div.info .ui-btn {
+	float: left;
 }
 div.search .ui-input-search {
 	display: inline-block;
@@ -223,13 +233,14 @@ ul.favoriateList li{
 	border: none;
 	border-top: 1px dashed #ddd;
 }
-ul.favoriateList li:first-of-type {
-	border-top: none;
-}
 ul.favoriateList li:last-of-type {
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px dashed #ddd;
 }
 .favoriateList .favoriateIndex {
+}
+.favoriateList .favoriateTitle {
+	font-weight: bold;
+	font-size: 0.8em;
 }
 .favoriateList .ui-li-desc {
 	margin: 5px;
@@ -241,6 +252,18 @@ ul.favoriateList li:last-of-type {
 	position: absolute;
 	top: 10px;
 	right: 5px;
+}
+.favoriateList.active li:not(.done) {
+	display: block;
+}
+.favoriateList.done li:not(.done) {
+	display: none;
+}
+.favoriateList.done li.done {
+	display: block;
+}
+.favoriateList.active li.done {
+	display: none;
 }
 .favoriateList li.done {
 	color: #ddd;

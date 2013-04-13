@@ -1,0 +1,18 @@
+{{#each this}}
+	<li>
+		<div class="bookLeft">
+			<h1>{{Title}}</h1>
+			<p>{{Author}} / {{Publisher}} / {{PublishYear}}</p>
+			<p>[{{Index}}]</p>
+			<a href="/Library/Details?url={{Url}}" data-role="button" data-inline="true" data-mini="true" data-theme="b" data-rel="dialog">详细信息</a>
+		</div>
+		<div class="bookRight {{#if IsInFavoriate}}inFavoriate{{else}}notInFavoriate{{/if}}" data-index="{{Index}}" data-key="{{LocalKey}}" data-json="{{BookJson}}">
+			<p class="{{#if IsAvailable}}bookAvailable{{else}}bookNotAvailable{{/if}}">{{Available}} / {{Total}}</p>
+			<div class="bookFavoriate">
+				<img class="inFavoriate" alt="favoriate" src="/Content/images/red_heart.png">
+				<img class="notInFavoriate" alt="favoriate" src="/Content/images/empty_heart.png">
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</li>
+{{/each}}

@@ -118,6 +118,7 @@ namespace GdutWeixin.Models.Library
 
         public bool Search(LibrarySearchOption option, out LibrarySearchResult result)
         {
+			/*
 #if DEBUG
 			result = getLocalResult();
 			result.ResultCount = expectedCount;
@@ -132,6 +133,7 @@ namespace GdutWeixin.Models.Library
 			}
 			return true;
 #endif
+			*/
 			List<Book> books = null;
             int pageCount = 0;
             int resultCount = 0;
@@ -180,7 +182,7 @@ namespace GdutWeixin.Models.Library
                 if (match.Success)
                 {
                     var pageCountStr = match.Groups[1].Value;
-                    pageCount = Int16.Parse(pageCountStr);
+                    pageCount = Int32.Parse(pageCountStr);
                 }
                 else
                 {
@@ -191,7 +193,7 @@ namespace GdutWeixin.Models.Library
                 if (match.Success)
                 {
                     var resultCountStr = match.Groups[1].Value;
-                    resultCount = Int16.Parse(resultCountStr);
+                    resultCount = Int32.Parse(resultCountStr);
                 }
                 else
                 {
