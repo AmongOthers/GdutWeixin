@@ -40,12 +40,12 @@ namespace GdutWeixin.Controllers
             int pageSize = 0;
             if (Request["pageSize"] != null)
             {
-				pageSize = Int16.Parse(Request["pageSize"]);
+				pageSize = Int32.Parse(Request["pageSize"]);
             }
             int page = 0;
             if (Request["page"] != null)
             {
-				page = Int16.Parse(Request["page"]);
+				page = Int32.Parse(Request["page"]);
             }
             LibrarySearchResult result;
             Library.GetInstance().Search(new LibrarySearchOption
@@ -76,7 +76,7 @@ namespace GdutWeixin.Controllers
 			var expectedCount = Request["count"];
             if (expectedCount != null)
             {
-                Library.GetInstance().StartTest(Int16.Parse(expectedCount));
+                Library.GetInstance().StartTest(Int32.Parse(expectedCount));
             }
         }
 #endif

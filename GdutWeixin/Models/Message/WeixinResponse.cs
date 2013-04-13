@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -42,8 +43,9 @@ namespace GdutWeixin.Models.Message
 
         public WeixinResponse(string reqFromUserName)
         {
+			var account = ConfigurationManager.AppSettings["Account"];
             ToUserName = new StringXmlCDataSection(reqFromUserName);
-            FromUserName = new StringXmlCDataSection(Consts.ACCOUNT);
+            FromUserName = new StringXmlCDataSection(account);
             CreateTime = Utils.DateTimeHelper.Timestamp(DateTime.Now).ToString();
         }
 

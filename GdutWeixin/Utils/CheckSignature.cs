@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -31,7 +32,7 @@ namespace GdutWeixin.Utils
         /// <returns></returns>
         public static string GetSignature(string timestamp, string nonce, string token = null)
         {
-            token = token ?? Consts.TOKEN;
+            token = token ?? ConfigurationManager.AppSettings["Token"];
             var arr = new[] { token, timestamp, nonce }.OrderBy(z => z).ToArray();
             var arrString = string.Join("", arr);
             //var enText = FormsAuthentication.HashPasswordForStoringInConfigFile(arrString, "SHA1");//使用System.Web.Security程序集

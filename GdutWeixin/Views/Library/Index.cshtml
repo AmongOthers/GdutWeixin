@@ -60,48 +60,26 @@
 					<a href="#search" data-transition="none" data-role="button" data-inline="true" data-icon="arrow-r" data-theme="b" data-iconpos="right" class="openSearch">搜索</a>
 				</div>
 			</div>
-			<div data-role="content">
+            <div data-role="content">
+                <fieldset class="favoriateType" data-role="controlgroup" data-mini="true" data-type="horizontal">
+                    <input type="radio" name="favoriateType" id="allFavoriate" value="all" checked="checked" />
+                    <label for="allFavoriate">全部</label>
+
+                    <input type="radio" name="favoriateType" id="activeFavoriate" value="active" />
+                    <label for="activeFavoriate">未完成</label>
+
+                    <input type="radio" name="favoriateType" id="doneFavoriate" value="done" />
+                    <label for="doneFavoriate">已完成</label>
+                </fieldset>
 				<ul data-role="listview" class="favoriateList touch" data-theme="d"></ul>
 			</div>
 		</div>
 
 		@Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
-		@Scripts.Render("~/Scripts/handlebars.js")
+		@Scripts.Render("~/Scripts/handlebars.runtime.js")
+		@Scripts.Render("~/Scripts/gdut/gdut.handlebars.js")
 		@Scripts.Render("~/Scripts/gdut/search.js")
 
-		<script type="text/x-handlebars-template" id="books">
-			{{#each this}}
-				<li>
-					<div class="bookLeft">
-						<h1>{{Title}}</h1>
-						<p>{{Author}} / {{Publisher}} / {{PublishYear}}</p>
-						<p>[{{Index}}]</p>
-						<a href="/Library/Details?url={{Url}}" data-role="button" data-inline="true" data-mini="true" data-theme="b" data-rel="dialog">详细信息</a>
-					</div>
-					<div class="bookRight {{#if IsInFavoriate}}inFavoriate{{else}}notInFavoriate{{/if}}" data-index="{{Index}}" data-key="{{LocalKey}}" data-json="{{BookJson}}">
-						<p class="{{#if IsAvailable}}bookAvailable{{else}}bookNotAvailable{{/if}}">{{Available}} / {{Total}}</p>
-						<div class="bookFavoriate">
-							<img class="inFavoriate" alt="favoriate" src="/Content/images/red_heart.png">
-							<img class="notInFavoriate" alt="favoriate" src="/Content/images/empty_heart.png">
-						</div>
-					</div>
-					<div class="clearfix"></div>
-				</li>
-			{{/each}}
-		</script>
-
-		<script type="text/x-handlebars-template" id="favoriateBooks">
-			{{#each this}}
-				<li data-index="{{Index}}" data-key="{{LocalKey}}" {{#if IsDone}}class="done"{{/if}}>
-					<div>
-						<h1><span class="favoriateIndex">{{Index}}</span></h1>
-						<p class="favoriateTitle">{{Title}}</p>
-						<p>{{Author}} / {{Publisher}} / {{PublishYear}}</p>
-						<a href="/Library/Details?url={{Url}}" data-role="button" data-inline="true" data-mini="true" data-theme="b" data-rel="dialog">详细信息</a>
-					</div>
-				</li>
-			{{/each}}
-		</script>
     </body>
 </html>
 

@@ -76,11 +76,11 @@ namespace GdutWeixin.Models.Library
                                 }
                                 else if (tdCount == 7)
                                 {
-                                    book.Total = Int16.Parse(HtmlEntityCorrect.Decode(reader.Value));
+                                    book.Total = Int32.Parse(HtmlEntityCorrect.Decode(reader.Value));
                                 }
                                 else if (tdCount == 8)
                                 {
-                                    book.Available = Int16.Parse(HtmlEntityCorrect.Decode(reader.Value));
+                                    book.Available = Int32.Parse(HtmlEntityCorrect.Decode(reader.Value));
                                 }
                             }
                             break;
